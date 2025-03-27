@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/upstars-global/front-platform-core/compare/v1.2.0...v1.2.1) (2025-03-27)
+
+### 🐛 Bug Fixes
+
+* try to use module instead of common js
+ ([943a573](https://github.com/upstars-global/front-platform-core/commit/943a57371785ff9940dcdf895ecbd96b6cd6b2e6))
+
 ## [1.2.0](https://github.com/upstars-global/front-platform-core/compare/v1.1.3...v1.2.0) (2025-03-27)
 
 ### 🐛 Bug Fixes
