@@ -1,3 +1,5 @@
+[Back](../readme.md)
+
 # Semantic Release Commit Guidelines
 
 This document describes the commit message conventions used in our project to enable [semantic-release](https://semantic-release.gitbook.io/semantic-release/) automation. These commit types determine how the project version is incremented (major, minor, patch) and how the changelog is generated.

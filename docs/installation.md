@@ -1,3 +1,5 @@
+[Back](../readme.md)
+
 ## Configuration for Projects Using `front-platform-core`
 
 To use `front-platform-core` as a Git dependency without precompiled JavaScript, make sure your project is correctly configured to resolve TypeScript and Vite aliases.
