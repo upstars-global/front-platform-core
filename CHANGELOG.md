@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/upstars-global/front-platform-core/compare/v1.1.2...v1.1.3) (2025-03-27)
+
+### 🐛 Bug Fixes
+
+* disable Slack notification on release
+ ([9a78169](https://github.com/upstars-global/front-platform-core/commit/9a78169c024a769cf39b44e836377b1d3769c923))
+
 ## [1.1.2](https://github.com/upstars-global/front-platform-core/compare/v1.1.1...v1.1.2) (2025-03-27)
 
 ### 🐛 Bug Fixes
