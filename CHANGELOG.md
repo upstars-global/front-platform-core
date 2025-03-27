@@ -1,3 +1,10 @@
+## [1.3.0](https://github.com/upstars-global/front-platform-core/compare/v1.2.1...v1.3.0) (2025-03-27)
+
+### 🚀 Features
+
+* test new github app tokens
+ ([4e4c6e8](https://github.com/upstars-global/front-platform-core/commit/4e4c6e8bbfa39254c39e32326849216af70add0e))
+
 ## [1.2.1](https://github.com/upstars-global/front-platform-core/compare/v1.2.0...v1.2.1) (2025-03-27)
 
 ### 🐛 Bug Fixes
