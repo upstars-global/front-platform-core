@@ -1,6 +1,6 @@
-import { readFileSync } from "node:fs";
+const fs = require("node:fs");
 // eslint-disable-next-line n/no-sync
-const commitPartial = readFileSync("./changelog-template-commit.hbs", { encoding: "utf-8" });
+const commitPartial = fs.readFileSync("./changelog-template-commit.hbs", { encoding: "utf-8" });
 
 function finalizeContext (context) {
     for (const commitGroup of context.commitGroups) {
@@ -12,7 +12,7 @@ function finalizeContext (context) {
     return context;
 }
 
-export default {
+module.exports = {
     branches: [ "main" ],
     preset: "conventionalcommits",
     plugins: [
