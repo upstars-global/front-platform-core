@@ -10,7 +10,7 @@ const timestamp = new Date().toLocaleString("en-US", { timeZone: "UTC" }); // Re
 
 if (!SLACK_WEBHOOK_URL) {
     console.error("❌ Error: SLACK_WEBHOOK_URL is not set.");
-    process.exit(0);
+    process.exit(1);
 }
 
 // Get the first 10 lines from CHANGELOG.md (latest updates)
