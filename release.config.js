@@ -1,5 +1,4 @@
-const fs = require("node:fs");
-// eslint-disable-next-line n/no-sync
+import * as fs from "node:fs";
 const commitPartial = fs.readFileSync("./changelog-template-commit.hbs", { encoding: "utf-8" });
 
 function finalizeContext (context) {
@@ -12,7 +11,7 @@ function finalizeContext (context) {
     return context;
 }
 
-module.exports = {
+export default {
     branches: [ "main" ],
     preset: "conventionalcommits",
     plugins: [
@@ -61,7 +60,6 @@ module.exports = {
         } ],
         "@semantic-release/changelog",
         [ "@semantic-release/exec", {
-            // eslint-disable-next-line @stylistic/js/max-len
             prepareCmd: "node -e \"let pkg=require('./package.json'); pkg.version='${nextRelease.version}'; require('fs').writeFileSync('package.json', JSON.stringify(pkg, null, 2));\"",
             // successCmd: "node send-slack-notification.js \"${nextRelease.version}\" \"${process.env.REPO_URL}\"",
         } ],
