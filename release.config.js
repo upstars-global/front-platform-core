@@ -23,11 +23,11 @@ export default {
                 { type: "perf", release: "patch" },
                 { type: "refactor", release: "patch" },
                 { type: "revert", release: "patch" },
+                { type: "chore", release: "patch" },
 
                 { type: "style", release: false },
                 { type: "docs", release: false },
                 { type: "test", release: false },
-                { type: "chore", release: false },
 
                 { breaking: true, release: "major" },
             ]
