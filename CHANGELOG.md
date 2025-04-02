@@ -1,3 +1,17 @@
+## [1.0.1](https://github.com/upstars-global/front-platform-core/compare/v1.0.0...v1.0.1) (2025-04-02)
+
+### 🔧 Maintenance
+
+* update "chore" release settings
+ ([364ca34](https://github.com/upstars-global/front-platform-core/commit/364ca34de9aa6987ebf8a7467c10f08da54a1b01))
+
+
+
+### 📖 Documentation
+
+* update docs, add local-dev.md
+ ([8eb0d96](https://github.com/upstars-global/front-platform-core/commit/8eb0d96013fe74cfddb0fee29c23ed3867234881))
+
 ## 1.0.0 (2025-03-27)
 
 ### 🐛 Bug Fixes
