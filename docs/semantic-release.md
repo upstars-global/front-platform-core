@@ -32,18 +32,18 @@ BREAKING CHANGE: FP-100 - rewrite auth module interfaces
 
 ## Commit Types and When to Use Them
 
-| Type              | Description                                              | Version Impact   |
-|-------------------|----------------------------------------------------------|------------------|
-| `feat`            | A new feature or capability                              | `minor`          |
-| `fix`             | A bug fix                                                | `patch`          |
-| `perf`            | A code change that improves performance                  | `patch`          |
-| `refactor`        | Code restructuring without changing functionality        | `patch`          |
-| `revert`          | Revert of a previous commit                              | `patch`          |
-| `style`           | Code style changes (formatting, no logic impact)         | none             |
-| `docs`            | Documentation changes only                               | none             |
-| `test`            | Adding or updating tests                                 | none             |
-| `chore`           | Routine tasks (e.g., dependency updates, config changes) | none             |
-| `BREAKING CHANGE` | Introduces incompatible API changes                      | `major`          |
+| Type              | Description                                              | Version Impact |
+|-------------------|----------------------------------------------------------|----------------|
+| `feat`            | A new feature or capability                              | `minor`        |
+| `fix`             | A bug fix                                                | `patch`        |
+| `perf`            | A code change that improves performance                  | `patch`        |
+| `refactor`        | Code restructuring without changing functionality        | `patch`        |
+| `revert`          | Revert of a previous commit                              | `patch`        |
+| `chore`           | Routine tasks (e.g., dependency updates, config changes) | `patch`        |
+| `style`           | Code style changes (formatting, no logic impact)         | none           |
+| `docs`            | Documentation changes only                               | none           |
+| `test`            | Adding or updating tests                                 | none           |
+| `BREAKING CHANGE` | Introduces incompatible API changes                      | `major`        |
 
 ## Best Practices
 

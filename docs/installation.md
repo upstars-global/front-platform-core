@@ -9,7 +9,7 @@ To use `front-platform-core` as a Git dependency without precompiled JavaScript,
 Add the package to your dependencies (via Git):
 
 ```bash
-  npm install myrepo/front-platform-core#v1.0.0
+  yarn add myrepo/front-platform-core#v1.0.0
 ```
 
 ### tsconfig.json

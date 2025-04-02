@@ -5,3 +5,4 @@
 
 ## How to use
 - [Installation docs](./docs/installation.md)
+- [Local develop](./docs/local-dev.md)
