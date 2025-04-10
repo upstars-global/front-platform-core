@@ -21,7 +21,6 @@ export enum PublicApiV1ErrorType {
   NOT_FOUND = 'NOT_FOUND',
   UNAUTHORIZED = 'UNAUTHORIZED',
 }
-
 export type PublicApiV1ResponsePagination = {
   pageNumber: number;
   perPage: number;
