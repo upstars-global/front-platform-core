@@ -1,3 +1,10 @@
+## [1.1.0](https://github.com/upstars-global/front-platform-core/compare/v1.0.1...v1.1.0) (2025-04-10)
+
+### 🚀 Features
+
+* **FP-2948:** test commit
+ ([590d4cd](https://github.com/upstars-global/front-platform-core/commit/590d4cd01afdef3a7874860e3a5ef793aeb8995f))
+
 ## [1.0.1](https://github.com/upstars-global/front-platform-core/compare/v1.0.0...v1.0.1) (2025-04-02)
 
 ### 🔧 Maintenance
