@@ -9,7 +9,7 @@ This document describes the commit message conventions used in our project to en
 Each commit message must follow the **Conventional Commits** specification, optionally including a JIRA task reference:
 
 ```
-<type>[<JIRA-TICKET>]: <short description>
+<type>(<JIRA-TICKET>): <short description>
 
 <optional body>
 
@@ -19,15 +19,15 @@ Each commit message must follow the **Conventional Commits** specification, opti
 ### Examples
 
 ```
-feat[XX-142]: add support for multi-step login
+feat(XX-142): add support for multi-step login
 ```
 
 ```
-fix[XX-188]: resolve Vite production build issue
+fix(XX-188): resolve Vite production build issue
 ```
 
 ```
-BREAKING CHANGE[XX-100]: rewrite auth module interfaces
+BREAKING CHANGE(XX-100): rewrite auth module interfaces
 ```
 
 ## Commit Types and When to Use Them
