@@ -1,4 +1,4 @@
-import type { Method } from '@core/shared/libs/http';
+import type { Method } from '../../types';
 
 export type JsonApiParams = {
   data?: Record<string, unknown>;
