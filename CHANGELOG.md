@@ -1,3 +1,17 @@
+## [1.2.0](https://github.com/upstars-global/front-platform-core/compare/v1.1.0...v1.2.0) (2025-04-15)
+
+### 🚀 Features
+
+* remove [@core](https://github.com/core) alias, update docs
+ ([00a84b3](https://github.com/upstars-global/front-platform-core/commit/00a84b353e32365e8e6775e587b9a4e58db66c26))
+
+
+
+### 📖 Documentation
+
+* fix semantic release commit text type notation doc
+ ([0c6f31d](https://github.com/upstars-global/front-platform-core/commit/0c6f31da69b3f4192bf193a12cc85c2bdcc09d67))
+
 ## [1.1.0](https://github.com/upstars-global/front-platform-core/compare/v1.0.1...v1.1.0) (2025-04-10)
 
 ### 🚀 Features
