@@ -2,6 +2,16 @@ import { v4 as uuid } from 'uuid';
 import { jsonHttp } from '../../http';
 import { type PublicApiV1Params, type PublicApiV1Response, SecuredType, SecuredUrlType } from './types';
 
+/**
+ * add "/public-api/v2/json/" + "secured/" or "anon/" (depends on the `secured` options in arguments, "anon" default)
+ * and trim the url you passed
+ *
+ * POST method - default
+ *
+ * publicApiV2({ url: "verify-email" }); // /public-api/v2/json/anon/verify-email
+ *
+ * publicApiV2({ url: "verify-email", secured: true }); // /public-api/v2/json/secured/verify-email
+ */
 export function publicApiV2<R = unknown>(params: PublicApiV1Params) {
   const { url, type, secured = false, data = {} } = params;
   const trimmedUrl = url[0] === '/' ? url.slice(1) : url;
