@@ -29,3 +29,21 @@ If you intend to develop the package locally, follow these steps to link it with
 4. If needed, restart your development server to apply the changes.
 
 Refer to the official Yarn documentation for additional details: https://classic.yarnpkg.com/en/docs/cli/link/
+
+## FOR LOCAL DEVELOPMENT WITH PNP ENABLED
+
+you can't use `yarn link` command with pnp because of node_modules not present in pnp mode,
+instead of using `yarn link` you can use portal protocol in package.json https://yarnpkg.com/protocol/portal
+
+in `package.json` where you use `front-platform-core` add dependency using portal protocol, example:
+
+
+```json
+{
+   "dependencies": {
+      "front-platform-core": "portal:../../../front-platform-core"
+   }
+}
+```
+
+path must be relative to the `package.json` directory
