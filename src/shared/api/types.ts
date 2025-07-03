@@ -28,3 +28,10 @@ export enum Locale {
   GERMAN = 'de',
   ITALIAN = 'it',
 }
+
+export enum RegistrationType {
+  PHONE = 'phone',
+  EMAIL = 'email',
+}
+
+export type Localisation = Record<string, unknown>;
