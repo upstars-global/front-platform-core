@@ -34,4 +34,6 @@ export enum RegistrationType {
   EMAIL = 'email',
 }
 
-export type Localisation = Record<string, unknown>;
+export type Localisation = Record<string, unknown> & {
+  variables?: Record<string, unknown>;
+};
