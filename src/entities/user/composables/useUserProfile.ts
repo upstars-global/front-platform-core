@@ -3,6 +3,7 @@ import { useUserProfileStore } from '../store';
 import { userEvents } from '../emitter';
 import { type IUpdateUserProfileDTO, userAPI } from '../api';
 import { promiseMemo } from '../../../shared/helpers/promise';
+import { isServer } from '../../../shared/helpers/ssr';
 
 export interface ILoadUserProfileParams {
   reload?: boolean;
@@ -14,6 +15,10 @@ export function useUserProfile(pinia?: Pinia) {
 
   const loadUserProfile = promiseMemo(
     async (params?: ILoadUserProfileParams) => {
+      if (isServer) {
+        return userProfileStore.userInfo;
+      }
+
       const { reload = false } = params || {};
 
       if (userProfileStore.userInfo.id && !reload) {
@@ -63,6 +68,10 @@ export function useUserProfile(pinia?: Pinia) {
   }
 
   async function isLoggedAsync() {
+    if (isServer) {
+      return false;
+    }
+
     if (!userProfileStore.userInfoLoaded) {
       await loadUserProfile();
     }
