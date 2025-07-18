@@ -1,6 +1,6 @@
 import { useContextStore } from '../store/contextStore';
 import { promiseMemo } from '../../../shared/helpers/promise';
-import { contextAPI } from '../api';
+import { contextAPI, type IClientContextResource } from '../api';
 
 export function useLoadContext() {
   const contextStore = useContextStore();
@@ -12,7 +12,7 @@ export function useLoadContext() {
         contextStore.setContext(data);
       }
 
-      return contextStore.context;
+      return contextStore.context as IClientContextResource;
     },
     {
       key: 'loadContext',
