@@ -1,3 +1,79 @@
+## [1.3.0](https://github.com/upstars-global/front-platform-core/compare/v1.2.0...v1.3.0) (2025-07-23)
+
+### 🐛 Bug Fixes
+
+* **FP-3157:** check is server and not load profile on the server side
+ ([103c2bd](https://github.com/upstars-global/front-platform-core/commit/103c2bd301274fd551f7388d2fc06d3138cd4526))
+
+
+
+### 🚀 Features
+
+* **FP-3157:** add auth entity
+ ([54958eb](https://github.com/upstars-global/front-platform-core/commit/54958eb869f6b55535a8eadd90ebd9689185a6d7))
+
+
+* **FP-3157:** add auth feature - login, logout, register, changePassword, fetch all user data, captcha, add configs
+ ([9574c97](https://github.com/upstars-global/front-platform-core/commit/9574c976503a1c1b2855aa92727966a68e61e8d1))
+
+
+* **FP-3157:** add createPromiseHook for config hooks creation
+ ([94ac494](https://github.com/upstars-global/front-platform-core/commit/94ac4943df6cd2ad54210fd3821b229d0f42c91a))
+
+
+* **FP-3157:** add global default locale config
+ ([f94313f](https://github.com/upstars-global/front-platform-core/commit/f94313f4cbcd9000f7a55441250322831c0259b2))
+
+
+* **FP-3157:** add global types
+ ([f54c446](https://github.com/upstars-global/front-platform-core/commit/f54c4469a4be8704f3538f5637e5f2228eb089f4))
+
+
+* **FP-3157:** add isServer helper
+ ([f2b10a1](https://github.com/upstars-global/front-platform-core/commit/f2b10a1184f4db2b3adc01b1b3e29452a85ac4a3))
+
+
+* **FP-3157:** add logger helper
+ ([d535618](https://github.com/upstars-global/front-platform-core/commit/d5356185d260598f0164b490ff1d386406e98645))
+
+
+* **FP-3157:** add new shared types
+ ([2e7ffb8](https://github.com/upstars-global/front-platform-core/commit/2e7ffb87950e65f2751be942c710a16b013f799e))
+
+
+* **FP-3157:** add promise helpers, promiseMemo and safePromise/safePromiseAll
+ ([d4857e2](https://github.com/upstars-global/front-platform-core/commit/d4857e2da94edee52dd58b7881fb7c1b1b058972))
+
+
+* **FP-3157:** add user entity - api, events, store, composables
+ ([be7d664](https://github.com/upstars-global/front-platform-core/commit/be7d664b758fd713c6c4e2132cd1cf47ab8d8fa4))
+
+
+* **FP-3157:** add variables to Localisation type, update dev dependencies
+ ([8145218](https://github.com/upstars-global/front-platform-core/commit/8145218875642f339bd508e6000baec2de665565))
+
+
+* **FP-3157:** move pinia and vue as peerDependencies
+ ([68463e3](https://github.com/upstars-global/front-platform-core/commit/68463e3502b5ea16bd98d794c42bfb61cc73dd6a))
+
+
+
+### 🔧 Maintenance
+
+* **FP-3157:** add packageManager to package.json to work with corepack enabled
+ ([f21da12](https://github.com/upstars-global/front-platform-core/commit/f21da129946aa907952d7922c56407049c554a97))
+
+
+
+### 📖 Documentation
+
+* **FP-3157:** add comments for api adapters
+ ([01942e5](https://github.com/upstars-global/front-platform-core/commit/01942e5eca6fb4f087752d4a815a513b13eaea3d))
+
+
+* **FP-3157:** update local-dev.md, add pnp local dev support
+ ([2165f9a](https://github.com/upstars-global/front-platform-core/commit/2165f9afd2c2cf0188109148340f8ac52a3e399b))
+
 ## [1.2.0](https://github.com/upstars-global/front-platform-core/compare/v1.1.0...v1.2.0) (2025-04-15)
 
 ### 🚀 Features
