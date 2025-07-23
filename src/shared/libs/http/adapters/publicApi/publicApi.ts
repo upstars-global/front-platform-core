@@ -1,6 +1,13 @@
 import { jsonHttp } from '../../http';
 import { type PublicApiParams } from './types';
 
+/**
+ * add "/public-api/json/" at the start and trim the url you passed
+ *
+ * POST method - default
+ *
+ * `publicApi("set-password"); // POST /public-api/json/set-password`
+ */
 export function publicApi<R = unknown>(url: string, params: PublicApiParams = {}) {
   const { data } = params;
   const method = params.method || 'POST';
