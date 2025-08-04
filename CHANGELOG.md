@@ -1,3 +1,17 @@
+## [1.4.0](https://github.com/upstars-global/front-platform-core/compare/v1.3.0...v1.4.0) (2025-07-31)
+
+### 🐛 Bug Fixes
+
+* **FP-3162:** fix loadContext return type
+ ([7c0daf3](https://github.com/upstars-global/front-platform-core/commit/7c0daf32b1b900bb6e956a94161bc896196d7de2))
+
+
+
+### 🚀 Features
+
+* **FP-3162:** add context entity
+ ([1c929cf](https://github.com/upstars-global/front-platform-core/commit/1c929cf204e951ff002001914ed33223e25757c1))
+
 ## [1.3.0](https://github.com/upstars-global/front-platform-core/compare/v1.2.0...v1.3.0) (2025-07-23)
 
 ### 🐛 Bug Fixes
