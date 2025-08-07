@@ -1,5 +1,5 @@
 import { jsonHttp } from '../../../shared/libs/http';
-import type { IClientContextResource } from './types';
+import type { IClientContextResource } from '../../../shared/types';
 import { log } from '../../../shared/helpers/log';
 
 export const contextAPI = {
