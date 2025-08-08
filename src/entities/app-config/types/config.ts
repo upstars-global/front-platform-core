@@ -19,6 +19,11 @@ type TrustpilotConfig = {
   scriptSrc: string;
 };
 
+type FooterSpecificCompliance = {
+  show: boolean;
+  companyName: string;
+};
+
 export type AppGlobalConfig = {
   isLockAuthForGuestUser?: boolean;
   mirrorDomain?: string;
@@ -26,6 +31,7 @@ export type AppGlobalConfig = {
   socialLinksDisabled?: boolean;
   bettingDomain: string;
   licenceDomainConfig: LicenceDomainConfig | null;
+  footerSpecificCompliance: FooterSpecificCompliance | null;
   gcbCertificationToken?: string | null;
   freshChatConfig?: FreshChatConfig;
   trustpilotConfig: TrustpilotConfig | null; // null if just logo should exist
