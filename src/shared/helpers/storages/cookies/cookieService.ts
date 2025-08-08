@@ -1,16 +1,22 @@
 import cookie from './controllers/CookieController';
-import { COOKIE_NAME, COOKIES_CONFIG_MAP, type CookieConfig } from './config';
+import { type CookieConfig, type CookieConfigMap } from './config';
 
-export class CookieService {
-  private static getExpire(options?: CookieConfig) {
+export class CookieService<T extends string> {
+  private readonly config: CookieConfigMap<T>;
+
+  constructor(config: CookieConfigMap<T>) {
+    this.config = config;
+  }
+
+  private getExpire(options?: CookieConfig) {
     if (options?.expires) {
       return options.expires();
     }
     return undefined;
   }
 
-  static set(name: COOKIE_NAME, value: string, options?: CookieConfig) {
-    const config = COOKIES_CONFIG_MAP[name];
+  set(name: T, value: string, options?: CookieConfig) {
+    const config = this.config[name];
     if (config.readonly) {
       return;
     }
@@ -22,12 +28,12 @@ export class CookieService {
     });
   }
 
-  static get(name: COOKIE_NAME) {
+  get(name: T) {
     return cookie.get(name);
   }
 
-  static clear(name: COOKIE_NAME) {
-    const config = COOKIES_CONFIG_MAP[name];
+  clear(name: T) {
+    const config = this.config[name];
     if (config.readonly) {
       return;
     }
