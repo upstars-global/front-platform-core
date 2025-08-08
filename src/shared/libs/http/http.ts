@@ -8,6 +8,7 @@ import {
   JsonHttpTimeoutError,
   JsonHttpUnknownError,
 } from './errors';
+import { httpRequestDurationHook } from './httpRequestDurationHook';
 
 export function jsonHttp<R = unknown>(url: string, request?: RequestInit, options: HTTPOptions = {}): Promise<R> {
   const { timeout, retryCount, headersDecorator, baseUrl } = getHttpConfig();
@@ -21,7 +22,7 @@ export function jsonHttp<R = unknown>(url: string, request?: RequestInit, option
     headers.set('Content-Type', 'application/json');
   }
   headersDecorator(headers);
-
+  const measurementRequestDurationStart = performance.now();
   return new Promise((resolve, reject: (error: JsonHttpError) => void) => {
     function requestAttempt(attempt = 1) {
       const { signal } = createHttpAbortController(timeout);
@@ -33,6 +34,11 @@ export function jsonHttp<R = unknown>(url: string, request?: RequestInit, option
       })
         .then((response) => {
           if (response.ok) {
+            httpRequestDurationHook.run({
+              timeDuration: performance.now() - measurementRequestDurationStart,
+              requestUrl: url,
+              requestInit: request || null,
+            });
             response
               .json()
               .then((data: R) => {

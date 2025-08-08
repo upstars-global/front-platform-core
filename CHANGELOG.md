@@ -1,3 +1,10 @@
+## [1.5.0](https://github.com/upstars-global/front-platform-core/compare/v1.4.0...v1.5.0) (2025-08-07)
+
+### 🚀 Features
+
+* **FP-3406:** Create httpRequestDurationHook
+ ([6dff67a](https://github.com/upstars-global/front-platform-core/commit/6dff67aa90a247e057a93c9ccc976f62293f040b))
+
 ## [1.4.0](https://github.com/upstars-global/front-platform-core/compare/v1.3.0...v1.4.0) (2025-07-31)
 
 ### 🐛 Bug Fixes
