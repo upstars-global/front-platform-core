@@ -1,5 +1,5 @@
 import { onMounted } from 'vue';
-import { localStorageService } from '../../../shared/helpers/storages';
+import { LocalStorageService } from '../../../shared/helpers/storages';
 import { useFetchAppGlobalConfig } from './useFetchAppGlobalConfig';
 import { useAppGlobalConfigStore } from '../store';
 
@@ -9,6 +9,8 @@ const SW_FRESHCHAT_CONFIG_LOCAL_STORAGE_KEY = 'sw:freshChatConfig';
 export function useInitAppGlobalConfig() {
   const appGlobalConfigStore = useAppGlobalConfigStore();
   const { loadAppGlobalConfig } = useFetchAppGlobalConfig();
+
+  const localStorageService = new LocalStorageService();
 
   function setSWMirrorDomain(domain: string) {
     const mirrorDomain = localStorageService.getItem(SW_MIRROR_DOMAIN_LOCAL_STORAGE_KEY);

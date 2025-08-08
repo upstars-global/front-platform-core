@@ -1,6 +1,4 @@
-import { localStorageMigrator } from '../migrator';
-
-class LocalStorageService {
+export class LocalStorageService {
   private isInit: boolean;
 
   constructor() {
@@ -9,7 +7,6 @@ class LocalStorageService {
 
   private initService() {
     if (!this.isInit) {
-      localStorageMigrator.migrate();
       this.isInit = true;
     }
   }
@@ -29,4 +26,3 @@ class LocalStorageService {
     localStorage.removeItem(key);
   }
 }
-export const localStorageService = new LocalStorageService();

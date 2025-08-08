@@ -1,14 +1,16 @@
-import { localStorageService } from '../service';
+import { LocalStorageService } from '../service';
 import type { LocalStorageKeyControllerOptions, LocalStorageData } from './types';
 import { log } from '../../../../log';
 
 export class LocalStorageKeyController<T> {
   private readonly key: string;
   private readonly options: LocalStorageKeyControllerOptions<T>;
+  private readonly localStorageService: LocalStorageService;
 
   constructor(key: string, options: LocalStorageKeyControllerOptions<T>) {
     this.key = key;
     this.options = options;
+    this.localStorageService = new LocalStorageService();
   }
 
   getDefaultValue(defaultValue?: T): T {
@@ -19,7 +21,7 @@ export class LocalStorageKeyController<T> {
   }
 
   get(defaultValue?: T) {
-    const value = localStorageService.getItem(this.key);
+    const value = this.localStorageService.getItem(this.key);
     if (value) {
       try {
         const data = JSON.parse(value) as LocalStorageData<T>;
@@ -54,7 +56,7 @@ export class LocalStorageKeyController<T> {
   }
 
   set(value: T, expires?: number) {
-    localStorageService.setItem(
+    this.localStorageService.setItem(
       this.key,
       JSON.stringify({
         value,
@@ -64,6 +66,6 @@ export class LocalStorageKeyController<T> {
   }
 
   clear() {
-    localStorageService.removeItem(this.key);
+    this.localStorageService.removeItem(this.key);
   }
 }
