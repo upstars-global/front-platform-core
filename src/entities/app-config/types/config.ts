@@ -35,6 +35,7 @@ export type AppGlobalConfig = {
   gcbCertificationToken?: string | null;
   freshChatConfig?: FreshChatConfig;
   trustpilotConfig: TrustpilotConfig | null; // null if just logo should exist
+  showRegistrationPromoCode: boolean;
 };
 
 export type ReelsVersion = {
