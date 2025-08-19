@@ -56,9 +56,9 @@ export const configAPI = {
 
     return {} as ILivespinsDataResource;
   },
-  async loadAppGlobalConfig() {
+  async loadAppGlobalConfig(version: string = 'v3') {
     try {
-      return await jsonHttp<AppGlobalConfig>('/fe-api/app-global-config?v2');
+      return await jsonHttp<AppGlobalConfig>(`/fe-api/app-global-config?${version}`);
     } catch (error) {
       log.error('LOAD_APP_GLOBAL_CONFIG', error);
     }

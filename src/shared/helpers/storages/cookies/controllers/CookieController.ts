@@ -10,9 +10,11 @@ type CookieController = {
   set(name: string, val: string, opts?: CookieOptions): void;
 };
 
+const isServer = typeof window === 'undefined';
+
 export default {
   get: (name) => {
-    if (typeof document === 'undefined') {
+    if (isServer) {
       return;
     }
 
@@ -23,7 +25,7 @@ export default {
     return matches ? decodeURIComponent(matches[1]) : undefined;
   },
   set: (name, val, opts) => {
-    if (typeof document === 'undefined') {
+    if (isServer) {
       return;
     }
 
