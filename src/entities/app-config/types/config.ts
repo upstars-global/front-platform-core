@@ -24,19 +24,19 @@ type FooterSpecificCompliance = {
   companyName: string;
 };
 
-export type AppGlobalConfig = {
-  isLockAuthForGuestUser?: boolean;
-  mirrorDomain?: string;
-  supportEmail?: string;
-  socialLinksDisabled?: boolean;
+export type AppGlobalConfig = Partial<{
+  isLockAuthForGuestUser: boolean;
+  mirrorDomain: string;
+  supportEmail: string;
+  socialLinksDisabled: boolean;
   bettingDomain: string;
-  licenceDomainConfig: LicenceDomainConfig | null;
-  footerSpecificCompliance: FooterSpecificCompliance | null;
-  gcbCertificationToken?: string | null;
-  freshChatConfig?: FreshChatConfig;
+  licenceDomainConfig: LicenceDomainConfig;
+  footerSpecificCompliance: FooterSpecificCompliance;
+  gcbCertificationToken: string;
+  freshChatConfig: FreshChatConfig;
   trustpilotConfig: TrustpilotConfig | null; // null if just logo should exist
   showRegistrationPromoCode: boolean;
-};
+}>;
 
 export type ReelsVersion = {
   version: string;
