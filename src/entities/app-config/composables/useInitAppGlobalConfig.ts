@@ -2,9 +2,13 @@ import { onMounted } from 'vue';
 import { LocalStorageService } from '../../../shared/helpers/storages';
 import { useFetchAppGlobalConfig } from './useFetchAppGlobalConfig';
 import { useAppGlobalConfigStore } from '../store';
+import { log } from '../../../shared/helpers';
 
-const SW_MIRROR_DOMAIN_LOCAL_STORAGE_KEY = 'sw:mirrorDomain';
-const SW_FRESHCHAT_CONFIG_LOCAL_STORAGE_KEY = 'sw:freshChatConfig';
+type MirrorDomainKeyGetter = string | null;
+type FreshChatConfigKeyGetter = string | null;
+
+let mirrorDomainKeyGetter: MirrorDomainKeyGetter = null;
+let freshChatConfigKeyGetter: FreshChatConfigKeyGetter = null;
 
 export function useInitAppGlobalConfig() {
   const appGlobalConfigStore = useAppGlobalConfigStore();
@@ -13,15 +17,21 @@ export function useInitAppGlobalConfig() {
   const localStorageService = new LocalStorageService();
 
   function setSWMirrorDomain(domain: string) {
-    const mirrorDomain = localStorageService.getItem(SW_MIRROR_DOMAIN_LOCAL_STORAGE_KEY);
+    if (!mirrorDomainKeyGetter) {
+      log.error('FAILED_TO_SET_MIRROR_DOMAIN_KEY_NOT_FOUND');
+      return;
+    }
+
+    const mirrorDomain = localStorageService.getItem(mirrorDomainKeyGetter);
 
     if (mirrorDomain !== domain) {
-      localStorageService.setItem(SW_MIRROR_DOMAIN_LOCAL_STORAGE_KEY, domain);
+      localStorageService.setItem(mirrorDomainKeyGetter, domain);
     }
   }
 
   async function init() {
     const config = await loadAppGlobalConfig();
+
     if (config) {
       appGlobalConfigStore.setGlobalConfig(config);
 
@@ -30,7 +40,12 @@ export function useInitAppGlobalConfig() {
       }
 
       if (config?.freshChatConfig) {
-        localStorageService.setItem(SW_FRESHCHAT_CONFIG_LOCAL_STORAGE_KEY, JSON.stringify(config.freshChatConfig));
+        if (!freshChatConfigKeyGetter) {
+          log.error('FAILED_TO_SET_FRESHCHAT_CONFIG_KEY_NOT_FOUND');
+          return;
+        }
+
+        localStorageService.setItem(freshChatConfigKeyGetter, JSON.stringify(config.freshChatConfig));
       }
     }
   }
@@ -39,3 +54,12 @@ export function useInitAppGlobalConfig() {
     await init();
   });
 }
+
+export const configAppGlobalConfig = {
+  setMirrorDomainKey: (value: string) => {
+    mirrorDomainKeyGetter = value;
+  },
+  setFreshChatConfigKey: (value: string) => {
+    freshChatConfigKeyGetter = value;
+  },
+};
