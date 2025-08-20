@@ -3,16 +3,12 @@ import { LocalStorageService } from '../../../shared/helpers/storages';
 import { useFetchAppGlobalConfig } from './useFetchAppGlobalConfig';
 import { useAppGlobalConfigStore } from '../store';
 import { log } from '../../../shared/helpers';
-
-type MirrorDomainKeyGetter = string | null;
-type FreshChatConfigKeyGetter = string | null;
-
-let mirrorDomainKeyGetter: MirrorDomainKeyGetter = null;
-let freshChatConfigKeyGetter: FreshChatConfigKeyGetter = null;
+import { getConfig } from '../config';
 
 export function useInitAppGlobalConfig() {
   const appGlobalConfigStore = useAppGlobalConfigStore();
   const { loadAppGlobalConfig } = useFetchAppGlobalConfig();
+  const { mirrorDomainKeyGetter, freshChatConfigKeyGetter } = getConfig();
 
   const localStorageService = new LocalStorageService();
 
@@ -54,12 +50,3 @@ export function useInitAppGlobalConfig() {
     await init();
   });
 }
-
-export const configAppGlobalConfig = {
-  setMirrorDomainKey: (value: string) => {
-    mirrorDomainKeyGetter = value;
-  },
-  setFreshChatConfigKey: (value: string) => {
-    freshChatConfigKeyGetter = value;
-  },
-};
