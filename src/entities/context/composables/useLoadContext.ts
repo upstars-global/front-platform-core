@@ -1,6 +1,7 @@
 import { useContextStore } from '../store/contextStore';
 import { promiseMemo } from '../../../shared/helpers/promise';
-import { contextAPI, type IClientContextResource } from '../api';
+import { contextAPI } from '../api';
+import type { IClientContextResource } from '../../../shared/types';
 
 export function useLoadContext() {
   const contextStore = useContextStore();
