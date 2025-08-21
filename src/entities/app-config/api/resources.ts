@@ -1,17 +1,17 @@
 import type { BrowserList } from '../../../shared/types';
 import type { FirebaseOptions } from 'firebase/app';
 
-export interface IFastTrackConfigResource {
+export type FastTrackConfigResource = {
   scriptSrc: string;
   firebaseConfig: FirebaseOptions;
   firebaseVapidKey?: string;
-}
+};
 
-export interface IDigitainConfigResource {
+export type DigitainConfigResource = {
   sportPartner: string;
-}
+};
 
-export interface IClientContextResource {
+export type ClientContextResource = {
   userAgent?: string;
   isMetaWebview?: boolean;
   isIOS?: boolean;
@@ -20,11 +20,11 @@ export interface IClientContextResource {
   isMacOS?: boolean;
   browser?: BrowserList;
   isBot?: boolean;
-}
+};
 
 export type TopLeadersCategory = 'live' | 'casino' | 'sport';
 
-export interface ITopLeaderDataResource {
+export type TopLeaderDataResource = {
   key?: string;
   id: string;
   login: string;
@@ -35,18 +35,18 @@ export interface ITopLeaderDataResource {
     name: string;
     image: string;
   };
-}
+};
 
-export interface ITopLeaderCategoryResource {
-  day: ITopLeaderDataResource[];
-  month: ITopLeaderDataResource[];
-}
+export type TopLeaderCategoryResource = {
+  day: TopLeaderDataResource[];
+  month: TopLeaderDataResource[];
+};
 
-export interface ITopLeaders {
-  [key: string]: ITopLeaderCategoryResource;
-}
+export type TopLeaders = {
+  [key: string]: TopLeaderCategoryResource;
+};
 
-export interface ILivespinsDataResource {
+export interface LivespinsDataResource {
   tenant: string;
   serverConfig: {
     api: string;

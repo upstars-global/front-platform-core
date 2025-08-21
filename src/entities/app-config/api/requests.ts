@@ -1,32 +1,32 @@
 import { jsonHttp } from '../../../shared/libs/http';
 import { log } from '../../../shared/helpers/log';
 import type {
-  IClientContextResource,
-  IDigitainConfigResource,
-  IFastTrackConfigResource,
-  ILivespinsDataResource,
-  ITopLeaders,
+  ClientContextResource,
+  DigitainConfigResource,
+  FastTrackConfigResource,
+  LivespinsDataResource,
+  TopLeaders,
 } from './resources';
 import type { AppGlobalConfig, ReelsVersion, HreflangListConfig } from '../types';
 
 export const configAPI = {
   async getFastTrack() {
     try {
-      return await jsonHttp<IFastTrackConfigResource>('/fasttrack-config');
+      return await jsonHttp<FastTrackConfigResource>('/fasttrack-config');
     } catch (error) {
       log.error('LOAD_FAST_TRACK_CONFIG', error);
     }
   },
   async getDigitain() {
     try {
-      return await jsonHttp<IDigitainConfigResource>('/digitain-config');
+      return await jsonHttp<DigitainConfigResource>('/digitain-config');
     } catch (error) {
       log.error('LOAD_DIGITAIN_CONFIG', error);
     }
   },
   async getClientContext() {
     try {
-      return await jsonHttp<IClientContextResource>('/client-context', {}, { baseURL: '/' });
+      return await jsonHttp<ClientContextResource>('/client-context', {}, { baseURL: '/' });
     } catch (error) {
       log.error('LOAD_CLIENT_CONTEXT', error);
       throw error;
@@ -34,27 +34,27 @@ export const configAPI = {
   },
   async loadTopLeaders() {
     try {
-      const data = await jsonHttp<ITopLeaders>('/fe-api/top-leaders', {
+      const data = await jsonHttp<TopLeaders>('/fe-api/top-leaders', {
         method: 'POST',
       });
-      return data || ({} as ITopLeaders);
+      return data || ({} as TopLeaders);
     } catch (error) {
       log.error('LOAD_TOP_LEADERS', error);
     }
 
-    return {} as ITopLeaders;
+    return {} as TopLeaders;
   },
   async loadLivespinsData() {
     try {
-      const data = await jsonHttp<ILivespinsDataResource>('/fe-api/livespins-data', {
+      const data = await jsonHttp<LivespinsDataResource>('/fe-api/livespins-data', {
         method: 'GET',
       });
-      return data || ({} as ILivespinsDataResource);
+      return data || ({} as LivespinsDataResource);
     } catch (error) {
       log.error('LOAD_LIVESPINS_DATA', error);
     }
 
-    return {} as ILivespinsDataResource;
+    return {} as LivespinsDataResource;
   },
   async loadAppGlobalConfig(version: string = 'v3') {
     try {
