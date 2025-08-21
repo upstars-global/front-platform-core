@@ -27,7 +27,12 @@ export type ValdemoroConfig = {
   src: string;
 };
 
-export type MetricsConfig = Record<string, Record<string, unknown> | null>;
+export type MetricConfig = {
+  project_id: string;
+  disabled: boolean;
+};
+
+export type MetricsConfig = Record<string, MetricConfig>;
 
 export type CaptchaConfig = {
   site_key: string | null;
