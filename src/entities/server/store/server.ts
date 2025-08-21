@@ -39,10 +39,6 @@ export const useServerStore = defineStore('server', () => {
     };
   };
 
-  const setMetricsConfig = (payload: ServerData['metrics']) => {
-    serverData.value.metrics = payload;
-  };
-
   const loadServerData = async (): Promise<ServerData | undefined> => {
     if (serverData.value.isLoaded) {
       return Promise.resolve(serverData.value);
@@ -71,6 +67,5 @@ export const useServerStore = defineStore('server', () => {
     websocketUrl,
     setApiUrl,
     loadServerData,
-    setMetricsConfig,
   };
 });

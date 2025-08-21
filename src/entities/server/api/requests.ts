@@ -1,12 +1,6 @@
 import { jsonApi } from '../../../shared/libs/http';
 import { log } from '../../../shared/helpers/log';
-import type {
-  IPhoneCodeList,
-  ISeoMetaResource,
-  ServerData,
-  IStaticPageResource,
-  IStaticPagesItemResource,
-} from '../types';
+import type { PhoneCodeList, SeoMetaResource, ServerData, StaticPageResource, StaticPagesItemResource } from '../types';
 
 export const serverAPI = {
   async loadServerData() {
@@ -23,7 +17,7 @@ export const serverAPI = {
   async loadSeoMeta(url: string) {
     try {
       const { data } = await jsonApi<{
-        data: ISeoMetaResource;
+        data: SeoMetaResource;
       }>(`/seo/meta?path=${encodeURIComponent(url)}`, {
         method: 'GET',
       });
@@ -44,7 +38,7 @@ export const serverAPI = {
   async getCurrentStaticPage(slug: string) {
     try {
       const { data } = await jsonApi<{
-        data: IStaticPageResource;
+        data: StaticPageResource;
       }>(`/static-pages/${slug}`, { method: 'GET' });
 
       return data;
@@ -54,7 +48,7 @@ export const serverAPI = {
   },
   async loadStaticPages() {
     try {
-      const { data } = await jsonApi<{ data: IStaticPagesItemResource[] }>('/static-pages', {
+      const { data } = await jsonApi<{ data: StaticPagesItemResource[] }>('/static-pages', {
         method: 'GET',
       });
 
@@ -66,7 +60,7 @@ export const serverAPI = {
   async loadCountriesData() {
     try {
       const { data } = await jsonApi<{
-        data: IPhoneCodeList;
+        data: PhoneCodeList;
       }>('/treasury/phone-codes', { method: 'GET' });
       return data;
     } catch (error) {

@@ -1,51 +1,62 @@
 import type { Currency, Localisation, RegistrationType } from '../../../shared/api';
 
-export type ServerData = {
-  registrationConfig?: {
-    first_gift_id: string;
-    second_gift_id: string;
-  };
-  grouper?: Record<string, unknown>;
-  webim?: Record<string, unknown>;
-  callCenterConfig?: {
-    webim: {
-      key: string;
-      enabled: boolean;
-    };
-    freshchat: {
-      token: string;
-      enabled: boolean;
-    };
-    livechat: {
-      license: string;
-      enabled: boolean;
-    };
-    tmLink: string | null;
-    vbLink: string | null;
-  };
-  valdemoro?: {
+export type RegistrationConfig = {
+  first_gift_id: string;
+  second_gift_id: string;
+};
+
+export type CallCenterConfig = {
+  webim: {
+    key: string;
     enabled: boolean;
-    src: string;
   };
-  webPushKey?: string;
-  metrics: Record<string, Record<string, unknown> | null>;
+  freshchat: {
+    token: string;
+    enabled: boolean;
+  };
+  livechat: {
+    license: string;
+    enabled: boolean;
+  };
+  tmLink: string | null;
+  vbLink: string | null;
+};
+
+export type ValdemoroConfig = {
+  enabled: boolean;
+  src: string;
+};
+
+export type MetricsConfig = Record<string, Record<string, unknown> | null>;
+
+export type CaptchaConfig = {
+  site_key: string | null;
+  enabled: boolean;
+  enabled_register: boolean;
+  enabled_login: boolean;
+};
+
+export type ServerData = Partial<{
+  registrationConfig: RegistrationConfig;
+  grouper: Record<string, unknown>;
+  webim: Record<string, unknown>;
+  callCenterConfig: CallCenterConfig;
+  valdemoro: ValdemoroConfig;
+  webPushKey: string;
+  metrics: MetricsConfig;
   // @deprecated, now only the email registration type available. It doesn't impact anything in the app
-  registrationTypes?: RegistrationType;
-  captcha?: {
-    site_key: string | null;
-    enabled: boolean;
-    enabled_register: boolean;
-    enabled_login: boolean;
-  };
-  promoTelegramChannelUrl?: string;
-  abTests?: unknown[];
-  isLoaded?: boolean;
+  registrationTypes: RegistrationType;
+  captcha: CaptchaConfig;
+  promoTelegramChannelUrl: string;
+  abTests: unknown[];
+  isLoaded: boolean;
   currencies: Currency[];
   defaultCurrency: Currency;
-  myCountries?: Currency[];
-  payoutInitLimit?: number | null; // nullable just in case when we do NOT set any limits for payouts.
-};
-export type ISeoMetaResource = {
+  myCountries: Currency[];
+  payoutInitLimit: number | null; // nullable just in case when we do NOT set any limits for payouts.
+}>;
+
+export type SeoMetaResource = {
   description?: string;
   isNoindexPath?: boolean;
   keywords?: string;
@@ -56,7 +67,7 @@ export type ISeoMetaResource = {
   title?: string;
 };
 
-export type IStaticPageListItem = {
+export type StaticPageListItem = {
   hidden: boolean;
   id: string;
   slug: string;
@@ -64,28 +75,22 @@ export type IStaticPageListItem = {
   url: string;
 };
 
-export type IStaticPageResource = {
-  title: string;
-  slug: string;
+export type StaticPageResource = Pick<StaticPageListItem, 'title' | 'slug' | 'id'> & {
   button_text_for_game_list: string | null;
   content: string;
   game_list_title: string | null;
   games: Array<{ id: string }>;
-  id: string;
   localisation: Localisation;
-  meta: ISeoMetaResource;
+  meta: SeoMetaResource;
 };
 
-export type IStaticPagesItemResource = {
-  hidden?: boolean;
-  id?: string;
-  pageType?: string;
-  slug?: string;
-  title?: string;
-  url?: string;
-};
+export type StaticPagesItemResource = Partial<
+  StaticPageListItem & {
+    pageType: string;
+  }
+>;
 
-export type IPhoneCode = {
+export type PhoneCode = {
   code: string;
   dialCode: number;
   name: string;
@@ -93,6 +98,6 @@ export type IPhoneCode = {
   phone_mask?: null | string;
 };
 
-export type IPhoneCodeList = {
-  [countryCode: string]: IPhoneCode;
+export type PhoneCodeList = {
+  [countryCode: string]: PhoneCode;
 };
