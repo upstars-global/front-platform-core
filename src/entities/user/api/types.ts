@@ -46,6 +46,18 @@ export type VipManagerResource = {
   };
 };
 
+export type StatusProgressions = {
+  static: {
+    xp: number;
+    levelOrder: number;
+  };
+  dynamic: {
+    sp: number;
+    isConfirmed: boolean;
+    vipStatusCode: number | null;
+  };
+};
+
 export enum SelfExclusionStatus {
   COOLING_OFF_INIT = 'cooling_off_init',
   COOLING_OFF_ACTIVE = 'cooling_off_active',
@@ -107,6 +119,8 @@ export type UserProfileResource = {
   vipManager: VipManagerResource | null;
   selfExclusionStatus: SelfExclusionStatus | null;
   isSuspended?: boolean | null;
+  registration_date?: string;
+  progressions?: StatusProgressions;
 };
 
 export type ICreateContactResource = {
