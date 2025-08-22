@@ -9,7 +9,7 @@ import type {
 import { statusApi } from '../api';
 import { log } from '../../../shared/helpers/log';
 
-export const useStatusStore = defineStore('status', () => {
+export const useStatusStore = defineStore('statusData', () => {
   const statusData = ref<StatusDataResources | null>(null);
   const isPending = ref<boolean>(false);
   const isLoaded = ref<boolean>(false);
@@ -58,7 +58,6 @@ export const useStatusStore = defineStore('status', () => {
     dynamicStatuses,
     staticLevels,
 
-    setStatusData,
     reset,
     loadStatusData,
   };
