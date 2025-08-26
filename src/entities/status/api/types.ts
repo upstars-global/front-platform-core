@@ -1,40 +1,32 @@
+type Rewards = {
+  type: string;
+  value: {
+    title: string;
+    cashbackPercent: number;
+    wager: number;
+  };
+};
 export type StaticLevelDataResources = {
   id: string;
   name: string;
   order: number;
+  icon: string;
   xpRequiredToLevelUp: number;
-  rewards: [
-    {
-      type: string;
-      value: {
-        title: string;
-        cashbackPercent: number;
-        wager: number;
-      };
-    },
-  ];
-  staticRewards: Record<string, unknown>;
+  rewards: Rewards[];
+  staticRewards: Record<string, boolean | number>;
   metadata: Record<string, unknown>;
 };
 export type DynamicStatusDataResources = {
   id: string;
   name: string;
+  title: string;
   code: number;
   order: number;
+  icon: string;
   spRequiredToConfirm: number;
   spRequiredToLevelUp: number;
-  rewards: [
-    {
-      type: string;
-      value: {
-        title: string;
-        cashbackPercent: number;
-        wager: number;
-      };
-    },
-  ];
-  staticRewards: Record<string, unknown>;
-  metadata: Record<string, unknown>;
+  rewards: Rewards[];
+  staticRewards: Record<string, boolean | number>;
 };
 export type DynamicsSeasonInfoResources = {
   gradient: string;
