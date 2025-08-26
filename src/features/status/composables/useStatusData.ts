@@ -35,28 +35,28 @@ export function useStatusData() {
 
   // current dynamic status: match by vipStatusCode against ALL statuses (not the filtered list)
   const currentDynamicStatus = computed<DynamicStatusDataResources | undefined>(() => {
-    const code = progressions.value?.dynamic?.vipStatusCode;
+    const code = progressions.value?.dynamic?.code;
     if (code == null) return undefined;
     return allDynamicStatuses.value.find((s) => s.code === code);
   });
 
   // current static level: match by order == levelOrder against ALL levels (not the filtered list)
   const currentStaticLevel = computed<StaticLevelDataResources | undefined>(() => {
-    const levelOrder = progressions.value?.static?.levelOrder;
-    if (levelOrder == null) return undefined;
-    return allStaticLevels.value.find((l) => l.order === levelOrder);
+    const order = progressions.value?.static?.order;
+    if (order == null) return undefined;
+    return allStaticLevels.value.find((l) => l.order === order);
   });
 
-  // user level for display: levelOrder + 1
+  // user level for display: order + 1
   const currentUserLevelNumber = computed<number>(() => {
-    const levelOrder = progressions.value?.static?.levelOrder;
+    const order = progressions.value?.static?.order;
     // If undefined, return 0 as a safe default display value
-    return levelOrder != null ? levelOrder + 1 : 0;
+    return order != null ? order + 1 : 1;
   });
 
   // dynamic status presence: if vipStatusCode is not null, user has a dynamic status (quarterly-confirmed)
   const isDynamicStatus = computed<boolean>(() => {
-    return progressions.value?.dynamic?.vipStatusCode != null;
+    return progressions.value?.dynamic?.code != null;
   });
 
   // dynamic status confirmation flag: whether current dynamic status is confirmed

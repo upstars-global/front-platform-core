@@ -49,12 +49,12 @@ export type VipManagerResource = {
 export type StatusProgressions = {
   static: {
     xp: number;
-    levelOrder: number;
+    order: number;
   };
   dynamic: {
     sp: number;
     isConfirmed: boolean;
-    vipStatusCode: number | null;
+    code: number | null;
   };
 };
 
