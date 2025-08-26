@@ -12,14 +12,11 @@ export function useStatusData() {
   const statusStore = useStatusStore();
   const userProfileStore = useUserProfileStore();
 
-  // season info passthrough
   const seasonInfo = computed<DynamicsSeasonInfoResources | undefined>(() => statusStore.seasonInfo);
 
-  // full arrays from store
   const allDynamicStatuses = computed<DynamicStatusDataResources[]>(() => statusStore.dynamicStatuses || []);
   const allStaticLevels = computed<StaticLevelDataResources[]>(() => statusStore.staticLevels || []);
 
-  // filtered arrays: remove the last element if any
   const dynamicStatuses = computed<DynamicStatusDataResources[]>(() => {
     const list = allDynamicStatuses.value || [];
     return list.length > 0 ? list.slice(0, -1) : list;
@@ -30,7 +27,6 @@ export function useStatusData() {
     return list.length > 0 ? list.slice(0, -1) : list;
   });
 
-  // counts for filtered lists
   const dynamicStatusesCount = computed<number>(() => dynamicStatuses.value.length);
   const staticLevelsCount = computed<number>(() => staticLevels.value.length);
 
@@ -63,6 +59,11 @@ export function useStatusData() {
     return progressions.value?.dynamic?.vipStatusCode != null;
   });
 
+  // dynamic status confirmation flag: whether current dynamic status is confirmed
+  const isConfirmed = computed<boolean>(() => {
+    return progressions.value?.dynamic?.isConfirmed === true;
+  });
+
   return {
     // filtered collections
     dynamicStatuses,
@@ -79,6 +80,7 @@ export function useStatusData() {
 
     // presence flags
     isDynamicStatus,
+    isConfirmed,
 
     // user progressions passthrough
     progressions,
