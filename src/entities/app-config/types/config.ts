@@ -24,6 +24,11 @@ type FooterSpecificCompliance = {
   companyName: string;
 };
 
+export type SocialLink = {
+  name: string;
+  url?: string;
+};
+
 export type AppGlobalConfig = Partial<{
   isLockAuthForGuestUser: boolean;
   mirrorDomain: string;
@@ -36,6 +41,7 @@ export type AppGlobalConfig = Partial<{
   freshChatConfig: FreshChatConfig;
   trustpilotConfig: TrustpilotConfig | null; // null if just logo should exist
   showRegistrationPromoCode: boolean;
+  socialLinks?: SocialLink[];
 }>;
 
 export type ReelsVersion = {
