@@ -6,8 +6,6 @@ import type {
   DynamicStatusDataResources,
   StaticLevelDataResources,
 } from '../api';
-import { statusApi } from '../api';
-import { log } from '../../../shared/helpers/log';
 
 export const useStatusStore = defineStore('statusData', () => {
   const statusData = ref<StatusDataResources | null>(null);
@@ -22,19 +20,6 @@ export const useStatusStore = defineStore('statusData', () => {
   function reset() {
     setStatusData(null);
     isPending.value = false;
-  }
-
-  async function loadStatusData() {
-    isPending.value = true;
-    try {
-      const data = await statusApi.loadStatusData();
-      setStatusData(data);
-      return data;
-    } catch (error: unknown) {
-      log.error('LOAD_STATUS_DATA', error);
-    } finally {
-      isPending.value = false;
-    }
   }
 
   const seasonInfo = computed<DynamicsSeasonInfoResources | undefined>(() => {
@@ -59,6 +44,6 @@ export const useStatusStore = defineStore('statusData', () => {
     staticLevels,
 
     reset,
-    loadStatusData,
+    setStatusData,
   };
 });

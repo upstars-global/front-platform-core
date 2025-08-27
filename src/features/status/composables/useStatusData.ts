@@ -47,20 +47,13 @@ export function useStatusData() {
     return allStaticLevels.value.find((l) => l.order === order);
   });
 
-  // user level for display: order + 1
-  const currentUserLevelNumber = computed<number>(() => {
-    const order = progressions.value?.static?.order;
-    // If undefined, return 0 as a safe default display value
-    return order != null ? order + 1 : 1;
-  });
-
   // dynamic status presence: if vipStatusCode is not null, user has a dynamic status (quarterly-confirmed)
   const isDynamicStatus = computed<boolean>(() => {
     return progressions.value?.dynamic?.code != null;
   });
 
   // dynamic status confirmation flag: whether current dynamic status is confirmed
-  const isConfirmed = computed<boolean>(() => {
+  const isDynamicStatusConfirmed = computed<boolean>(() => {
     return progressions.value?.dynamic?.isConfirmed === true;
   });
 
@@ -76,11 +69,10 @@ export function useStatusData() {
     // current status info
     currentDynamicStatus,
     currentStaticLevel,
-    currentUserLevelNumber,
 
     // presence flags
     isDynamicStatus,
-    isConfirmed,
+    isDynamicStatusConfirmed,
 
     // user progressions passthrough
     progressions,
