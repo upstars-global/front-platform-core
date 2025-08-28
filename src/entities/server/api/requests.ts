@@ -26,6 +26,7 @@ export const serverAPI = {
       log.error('LOAD_SEO_META', error);
     }
   },
+
   async sendPromoCode(code: string) {
     try {
       return await jsonApi<{ success: boolean }>('/promo-codes/activate', {
@@ -35,6 +36,7 @@ export const serverAPI = {
       log.error('SEND_PROMO_CODE', error);
     }
   },
+
   async getCurrentStaticPage(slug: string) {
     try {
       const { data } = await jsonApi<{
@@ -46,6 +48,7 @@ export const serverAPI = {
       log.error('GET_CURRENT_STATIC_PAGE', error);
     }
   },
+
   async loadStaticPages() {
     try {
       const { data } = await jsonApi<{ data: StaticPagesItemResource[] }>('/static-pages', {
@@ -57,6 +60,7 @@ export const serverAPI = {
       log.error('LOAD_STATIC_PAGES', error);
     }
   },
+
   async loadCountriesData() {
     try {
       const { data } = await jsonApi<{
