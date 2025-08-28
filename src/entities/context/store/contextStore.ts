@@ -1,6 +1,6 @@
 import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
-import type { IClientContextResource } from '../api';
+import type { IClientContextResource } from '../../../shared/types';
 
 export const useContextStore = defineStore('context', () => {
   const context = ref<IClientContextResource>();
