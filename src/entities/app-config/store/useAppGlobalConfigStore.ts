@@ -18,9 +18,11 @@ export const useAppGlobalConfigStore = defineStore('appGlobalConfig', () => {
   const licenceDomainConfig = computed(() => {
     return globalConfig.value?.licenceDomainConfig;
   });
+
   const isLicenceDomain = computed(() => {
     return Boolean(licenceDomainConfig.value?.licenceId);
   });
+
   const freshChatConfig = computed(() => {
     return globalConfig.value?.freshChatConfig;
   });
