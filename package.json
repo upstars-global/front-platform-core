@@ -21,12 +21,14 @@
   "dependencies": {
     "mitt": "^3.0.1",
     "uuid": "^10.0.0",
+    "vue-i18n": "9.14.4",
     "zod": "^3.24.2"
   },
   "peerDependencies": {
-    "firebase": "^11.6.0",
+    "firebase": "11.6.0",
     "pinia": "^2.3.1",
-    "vue": "^3.5.13"
+    "vue": "^3.5.13",
+    "vue-i18n": "9.14.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.23.0",
