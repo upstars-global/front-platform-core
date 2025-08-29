@@ -6,7 +6,7 @@ export const statusApi = {
   async loadStatusData() {
     try {
       const response = await publicApiV1<StatusDataResources>({
-        url: '/vip/settings',
+        url: '/vip/settings/read',
         secured: true,
         type: () => `Vip.V1.PublicSecured.Settings.Read`,
       });
