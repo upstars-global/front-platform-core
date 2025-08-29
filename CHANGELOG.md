@@ -1,3 +1,17 @@
+## [1.7.0](https://github.com/upstars-global/front-platform-core/compare/v1.6.0...v1.7.0) (2025-08-28)
+
+### 🚀 Features
+
+* **FP-3165:** added new entity server
+ ([45d09f7](https://github.com/upstars-global/front-platform-core/commit/45d09f7c664e73c170528cc2152b24e8e92939fd))
+
+## [1.6.0](https://github.com/upstars-global/front-platform-core/compare/v1.5.0...v1.6.0) (2025-08-28)
+
+### 🚀 Features
+
+* **FP-3164:** added app-config
+ ([ba527fe](https://github.com/upstars-global/front-platform-core/commit/ba527fe83bc277f1135d7b05ec0f403969fc355e))
+
 ## [1.5.0](https://github.com/upstars-global/front-platform-core/compare/v1.4.0...v1.5.0) (2025-08-07)
 
 ### 🚀 Features
