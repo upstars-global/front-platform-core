@@ -18,8 +18,7 @@ export function useStatusData() {
   const allStaticLevels = computed<StaticLevelDataResources[]>(() => statusStore.staticLevels || []);
 
   const dynamicStatuses = computed<DynamicStatusDataResources[]>(() => {
-    const list = allDynamicStatuses.value || [];
-    return list.length > 0 ? list.slice(0, -1) : list;
+    return allDynamicStatuses.value || [];
   });
 
   const staticLevels = computed<StaticLevelDataResources[]>(() => {
