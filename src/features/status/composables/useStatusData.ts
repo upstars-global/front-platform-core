@@ -36,14 +36,14 @@ export function useStatusData() {
   const currentDynamicStatus = computed<DynamicStatusDataResources | undefined>(() => {
     const code = progressions.value?.dynamic?.code;
     if (code == null) return undefined;
-    return allDynamicStatuses.value.find((s) => s.code === code);
+    return allDynamicStatuses.value.find((status) => status.code === code);
   });
 
   // current static level: match by order == levelOrder against ALL levels (not the filtered list)
   const currentStaticLevel = computed<StaticLevelDataResources | undefined>(() => {
     const order = progressions.value?.static?.order;
     if (order == null) return undefined;
-    return allStaticLevels.value.find((l) => l.order === order);
+    return allStaticLevels.value.find((level) => level.order === order);
   });
 
   // dynamic status presence: if vipStatusCode is not null, user has a dynamic status (quarterly-confirmed)
