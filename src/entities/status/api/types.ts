@@ -3,9 +3,12 @@ export enum RewardType {
   Gift = 'gift',
 }
 
-type Rewards = {
+export type Rewards = {
   type: RewardType;
-  value: Record<string, unknown>;
+  value: {
+    title: string;
+    description?: string;
+  };
 };
 export type StaticLevelDataResources = {
   id: string;
