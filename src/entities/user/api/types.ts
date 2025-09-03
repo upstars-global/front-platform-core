@@ -328,6 +328,7 @@ export enum UserStatusResource {
   ACE3 = 40,
   EXVIP = 50,
   STAR = 60,
+  BASE_VIP = 65,
   BRONZE = 70,
   SILVER = 80,
   GOLD = 90,
@@ -336,6 +337,7 @@ export enum UserStatusResource {
 }
 
 export enum UserVipStatus {
+  BASE_VIP = 'BASE_VIP',
   BRONZE = 'BRONZE',
   SILVER = 'SILVER',
   GOLD = 'GOLD',
