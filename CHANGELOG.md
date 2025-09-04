@@ -1,3 +1,17 @@
+## [1.8.0](https://github.com/upstars-global/front-platform-core/compare/v1.7.0...v1.8.0) (2025-09-04)
+
+### 🐛 Bug Fixes
+
+* **FP-3172:** fix peer dependency
+ ([11d2a37](https://github.com/upstars-global/front-platform-core/commit/11d2a3711e0cbd125a90532b84a4fb2cf1a5e326))
+
+
+
+### 🚀 Features
+
+* **FP-3172:** fix incorrect export
+ ([f919681](https://github.com/upstars-global/front-platform-core/commit/f9196815bc557dda3bbfdde847e980a48205efb6))
+
 ## [1.7.0](https://github.com/upstars-global/front-platform-core/compare/v1.6.0...v1.7.0) (2025-08-28)
 
 ### 🚀 Features
