@@ -42,6 +42,7 @@ export type AppGlobalConfig = Partial<{
   trustpilotConfig: TrustpilotConfig | null; // null if just logo should exist
   showRegistrationPromoCode: boolean;
   socialLinks?: SocialLink[];
+  digitainRestricted: boolean;
 }>;
 
 export type ReelsVersion = {
