@@ -1,6 +1,6 @@
 import { computed } from 'vue';
 import { useStatusStore } from '../../../entities/status';
-import { useUserProfileStore } from '../../../entities/user';
+import { UserStatusResource, useUserProfileStore } from '../../../entities/user';
 import type {
   DynamicStatusDataResources,
   StaticLevelDataResources,
@@ -43,9 +43,10 @@ export function useStatusData() {
     return staticLevels.value.find((level) => level.order === order);
   });
 
-  // dynamic status presence: if vipStatusCode is not null, user has a dynamic status (quarterly-confirmed)
+  // dynamic status presence: true when code exists and is >= BASE_VIP (quarterly-confirmed)
   const isDynamicStatus = computed<boolean>(() => {
-    return progressions.value?.dynamic?.code === 0;
+    const code = progressions.value?.dynamic?.code;
+    return code != null && code >= UserStatusResource.BASE_VIP;
   });
 
   // dynamic status confirmation flag: whether current dynamic status is confirmed

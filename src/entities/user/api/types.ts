@@ -54,7 +54,7 @@ export type StatusProgressions = {
   dynamic: {
     sp: number;
     isConfirmed: boolean;
-    code: number | null;
+    code: number;
   };
 };
 
