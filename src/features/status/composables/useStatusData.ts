@@ -14,8 +14,14 @@ export function useStatusData() {
 
   const seasonInfo = computed<DynamicsSeasonInfoResources | undefined>(() => statusStore.seasonInfo);
 
+  const allStaticLevels = computed<StaticLevelDataResources[]>(() => statusStore.staticLevels || []);
+
   const dynamicStatuses = computed<DynamicStatusDataResources[]>(() => statusStore.dynamicStatuses || []);
-  const staticLevels = computed<StaticLevelDataResources[]>(() => statusStore.staticLevels || []);
+
+  const staticLevels = computed<StaticLevelDataResources[]>(() => {
+    const list = allStaticLevels.value || [];
+    return list.length > 0 ? list.slice(0, -1) : list;
+  });
 
   const dynamicStatusesCount = computed<number>(() => dynamicStatuses.value.length);
   const staticLevelsCount = computed<number>(() => staticLevels.value.length);
@@ -39,7 +45,7 @@ export function useStatusData() {
 
   // dynamic status presence: if vipStatusCode is not null, user has a dynamic status (quarterly-confirmed)
   const isDynamicStatus = computed<boolean>(() => {
-    return progressions.value?.dynamic?.code != null;
+    return progressions.value?.dynamic?.code === 0;
   });
 
   // dynamic status confirmation flag: whether current dynamic status is confirmed
