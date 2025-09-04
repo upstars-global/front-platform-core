@@ -1,5 +1,5 @@
 import { type UserProfileResource, VerificationsStatus, VerificationsStatusOld } from '../api';
-import { configI18nConfig } from '../../../shared/multilang/config/config';
+import { DEFAULT_LOCALE } from '../../../shared/config/locales';
 
 // @REFACTOR we must rewrite it to not use mock data for non-authorized user (use null or undefined instead)
 export function generateInitialProfileData(): UserProfileResource {
@@ -24,7 +24,7 @@ export function generateInitialProfileData(): UserProfileResource {
     nick_name: null,
     multi_account: false,
     support_manager_id: null,
-    localization: configI18nConfig.getDefaultLocale(),
+    localization: DEFAULT_LOCALE,
     hash: 'b1927c79f364c5bcaebecb38aeabaae155ffa215',
     phones: [
       {

@@ -1,2 +1,2 @@
 export * from './currencies';
-export * from './cookie';
+export * from './locales';

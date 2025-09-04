@@ -4,6 +4,4 @@ export type CookieConfig = {
   readonly?: boolean;
 };
 
-export type CookieName = string;
-
-export type CookieConfigMap<T extends CookieName> = Record<T, CookieConfig>;
+export type CookieConfigMap<T extends string> = Record<T, CookieConfig>;
