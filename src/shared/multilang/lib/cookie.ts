@@ -10,14 +10,14 @@ export function getLocaleCookie() {
   if (!cookieNames.LOCALE) {
     log.error('FAILED_TO_GET_LOCALE_COOKIE_COOKIE_NAME_NOT_FOUND');
 
-    return 'en';
+    return undefined;
   }
 
   if (!isServer) {
     return cookieService.get(cookieNames.LOCALE);
   }
 
-  return 'en';
+  return undefined;
 }
 
 export function setLocaleCookie(lang: string) {
