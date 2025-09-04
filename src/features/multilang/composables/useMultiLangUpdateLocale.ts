@@ -20,6 +20,7 @@ export function useMultiLangUpdateLocale(pinia?: Pinia) {
 
     const originalUrl = window.location.pathname + window.location.search;
     const urlLang = originalUrl.split('/')[1];
+
     if (locale === urlLang) {
       return;
     }
