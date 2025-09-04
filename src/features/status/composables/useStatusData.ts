@@ -14,17 +14,8 @@ export function useStatusData() {
 
   const seasonInfo = computed<DynamicsSeasonInfoResources | undefined>(() => statusStore.seasonInfo);
 
-  const allDynamicStatuses = computed<DynamicStatusDataResources[]>(() => statusStore.dynamicStatuses || []);
-  const allStaticLevels = computed<StaticLevelDataResources[]>(() => statusStore.staticLevels || []);
-
-  const dynamicStatuses = computed<DynamicStatusDataResources[]>(() => {
-    return allDynamicStatuses.value || [];
-  });
-
-  const staticLevels = computed<StaticLevelDataResources[]>(() => {
-    const list = allStaticLevels.value || [];
-    return list.length > 0 ? list.slice(0, -1) : list;
-  });
+  const dynamicStatuses = computed<DynamicStatusDataResources[]>(() => statusStore.dynamicStatuses || []);
+  const staticLevels = computed<StaticLevelDataResources[]>(() => statusStore.staticLevels || []);
 
   const dynamicStatusesCount = computed<number>(() => dynamicStatuses.value.length);
   const staticLevelsCount = computed<number>(() => staticLevels.value.length);
@@ -36,14 +27,14 @@ export function useStatusData() {
   const currentDynamicStatus = computed<DynamicStatusDataResources | undefined>(() => {
     const code = progressions.value?.dynamic?.code;
     if (code == null) return undefined;
-    return allDynamicStatuses.value.find((status) => status.code === code);
+    return dynamicStatuses.value.find((status) => status.code === code);
   });
 
   // current static level: match by order == levelOrder against ALL levels (not the filtered list)
   const currentStaticLevel = computed<StaticLevelDataResources | undefined>(() => {
     const order = progressions.value?.static?.order;
     if (order == null) return undefined;
-    return allStaticLevels.value.find((level) => level.order === order);
+    return staticLevels.value.find((level) => level.order === order);
   });
 
   // dynamic status presence: if vipStatusCode is not null, user has a dynamic status (quarterly-confirmed)
