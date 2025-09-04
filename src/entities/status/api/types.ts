@@ -13,12 +13,12 @@ export type Rewards = {
 export type StaticLevelDataResources = {
   id: string;
   name: string;
+  title: string;
   order: number;
   icon: string;
   xpRequiredToLevelUp: number;
   rewards: Rewards[];
-  staticRewards: Record<string, boolean | number>;
-  metadata: Record<string, unknown>;
+  staticRewards: Record<string, boolean>;
 };
 export type DynamicStatusDataResources = {
   id: string;
@@ -27,10 +27,11 @@ export type DynamicStatusDataResources = {
   code: number;
   order: number;
   icon: string;
+  promo_text: string;
   spRequiredToConfirm: number;
   spRequiredToLevelUp: number;
   rewards: Rewards[];
-  staticRewards: Record<string, boolean | number>;
+  staticRewards: Record<string, boolean>;
 };
 export type DynamicsSeasonInfoResources = {
   gradient: string;
