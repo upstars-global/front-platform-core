@@ -1,12 +1,14 @@
 import { computed } from 'vue';
-import { useStatusStore } from '../../../entities/status';
-import { UserStatusResource, useUserProfileStore } from '../../../entities/user';
 import type {
+  DynamicsSeasonInfoResources,
   DynamicStatusDataResources,
   StaticLevelDataResources,
-  DynamicsSeasonInfoResources,
 } from '../../../entities/status';
+import { useStatusStore } from '../../../entities/status';
 import type { StatusProgressions } from '../../../entities/user';
+import { UserStatusResource, useUserProfileStore } from '../../../entities/user';
+import { ProgressionType } from '../types';
+import type { MappedDynStatus, MappedStaticLevel } from '../../../entities/status/types';
 
 export function useStatusData() {
   const statusStore = useStatusStore();
@@ -90,6 +92,76 @@ export function useStatusData() {
     return xp;
   });
 
+  type LevelOrStatus =
+    | {
+        type: ProgressionType.STATIC;
+        data: MappedStaticLevel;
+      }
+    | {
+        type: ProgressionType.DYNAMIC;
+        data: MappedDynStatus;
+      };
+  const currentLevelOrStatus = computed<LevelOrStatus | undefined>(() => {
+    if (currentMappedDynamicStatus.value) {
+      return {
+        type: ProgressionType.DYNAMIC,
+        data: currentMappedDynamicStatus.value,
+      };
+    }
+    if (currentMappedStaticLevel.value) {
+      return {
+        type: ProgressionType.STATIC,
+        data: currentMappedStaticLevel.value,
+      };
+    }
+    return undefined;
+  });
+
+  const isLastStatus = computed(() => {
+    const currentLevelOrStatusValue = currentLevelOrStatus.value;
+    if (currentLevelOrStatusValue?.type === ProgressionType.DYNAMIC) {
+      const index = statusStore.statuses.findIndex((status) => {
+        return status.data.code === currentLevelOrStatusValue.data.data.code;
+      });
+      return index === statusStore.statuses.length - 1;
+    }
+    return false;
+  });
+
+  const nextLevelOrStatus = computed<LevelOrStatus | undefined>(() => {
+    if (isLastStatus.value) {
+      return currentLevelOrStatus.value;
+    }
+
+    const code = progressions.value?.dynamic?.code;
+    if (code) {
+      const status = statusStore.statuses.find((status) => status.data.code > code);
+      if (status) {
+        return {
+          type: ProgressionType.DYNAMIC,
+          data: status,
+        };
+      }
+    }
+
+    const order = progressions.value?.static?.order;
+    if (order) {
+      const level = statusStore.levels.find((level) => level.data.order > order);
+      if (level) {
+        return {
+          type: ProgressionType.STATIC,
+          data: level,
+        };
+      }
+    }
+
+    return undefined;
+  });
+
+  const currentProgressionType = computed<ProgressionType>(() => {
+    return currentLevelOrStatus.value?.type || ProgressionType.STATIC;
+  });
+
   return {
     // filtered collections
     dynamicStatuses,
@@ -102,6 +174,11 @@ export function useStatusData() {
     mappedStaticLevels,
     currentMappedStaticLevel,
     mappedProgressionXP,
+
+    currentLevelOrStatus,
+    nextLevelOrStatus,
+    isLastStatus,
+    currentProgressionType,
 
     // counts of filtered collections
     dynamicStatusesCount,
