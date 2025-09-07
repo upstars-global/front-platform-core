@@ -7,8 +7,7 @@ import type {
 import { useStatusStore } from '../../../entities/status';
 import type { StatusProgressions } from '../../../entities/user';
 import { UserStatusResource, useUserProfileStore } from '../../../entities/user';
-import { ProgressionType } from '../types';
-import type { MappedDynStatus, MappedStaticLevel } from '../../../entities/status/types';
+import { type LevelOrStatus, type PointsData, ProgressionType } from '../types';
 
 export function useStatusData() {
   const statusStore = useStatusStore();
@@ -92,15 +91,6 @@ export function useStatusData() {
     return xp;
   });
 
-  type LevelOrStatus =
-    | {
-        type: ProgressionType.STATIC;
-        data: MappedStaticLevel;
-      }
-    | {
-        type: ProgressionType.DYNAMIC;
-        data: MappedDynStatus;
-      };
   const currentLevelOrStatus = computed<LevelOrStatus | undefined>(() => {
     if (currentMappedDynamicStatus.value) {
       return {
@@ -162,6 +152,60 @@ export function useStatusData() {
     return currentLevelOrStatus.value?.type || ProgressionType.STATIC;
   });
 
+  const pointsData = computed<PointsData>(() => {
+    if (currentLevelOrStatus.value) {
+      const { data, type } = currentLevelOrStatus.value;
+      if (type === ProgressionType.STATIC) {
+        return {
+          type,
+          current: mappedProgressionXP.value,
+          fromConfirm: data.xpFrom,
+          from: data.xpFrom,
+          to: data.xpTo,
+          confirm: null,
+        };
+      }
+
+      const { isConfirmed = true, isAutoConfirmed = true } = progressions.value?.dynamic || {};
+
+      let to = data.spTo;
+      let from = data.spFrom;
+      let current = mappedProgressionSP.value;
+      const confirm = isConfirmed ? null : data.confirmTo;
+
+      if (isLastStatus.value) {
+        from = 0;
+
+        if (!isConfirmed) {
+          to = data.confirmTo;
+        } else {
+          if (!isAutoConfirmed) {
+            to = data.confirmTo;
+          }
+          current = to;
+        }
+      }
+
+      return {
+        confirm,
+        to,
+        from,
+        current,
+        fromConfirm: data.spFrom,
+        type,
+      };
+    }
+
+    return {
+      type: ProgressionType.STATIC,
+      current: 0,
+      confirm: null,
+      to: 0,
+      from: 0,
+      fromConfirm: 0,
+    };
+  });
+
   return {
     // filtered collections
     dynamicStatuses,
@@ -179,6 +223,8 @@ export function useStatusData() {
     nextLevelOrStatus,
     isLastStatus,
     currentProgressionType,
+
+    pointsData,
 
     // counts of filtered collections
     dynamicStatusesCount,
