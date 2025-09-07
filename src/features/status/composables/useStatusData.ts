@@ -67,7 +67,7 @@ export function useStatusData() {
         spTo: newSum,
         confirmTo: sum + status.spRequiredToConfirm,
       };
-      sum += newSum;
+      sum = newSum;
 
       mappedStatuses.push(mappedStatus);
     });
@@ -100,7 +100,7 @@ export function useStatusData() {
         xpFrom: sum,
         xpTo: newSum,
       };
-      sum += newSum;
+      sum = newSum;
 
       mappedLevels.push(mappedLevel);
     });
