@@ -7,7 +7,6 @@ import type {
   DynamicsSeasonInfoResources,
 } from '../../../entities/status';
 import type { StatusProgressions } from '../../../entities/user';
-import type { MappedDynStatus, MappedStaticLevel } from '../types';
 
 export function useStatusData() {
   const statusStore = useStatusStore();
@@ -55,24 +54,8 @@ export function useStatusData() {
     return progressions.value?.dynamic?.isConfirmed === true;
   });
 
-  const mappedDynamicStatuses = computed<MappedDynStatus[]>(() => {
-    let sum = 0;
-    const mappedStatuses: MappedDynStatus[] = [];
-
-    dynamicStatuses.value.forEach((status) => {
-      const newSum = sum + status.spRequiredToLevelUp;
-      const mappedStatus: MappedDynStatus = {
-        data: status,
-        spFrom: sum,
-        spTo: newSum,
-        confirmTo: sum + status.spRequiredToConfirm,
-      };
-      sum = newSum;
-
-      mappedStatuses.push(mappedStatus);
-    });
-
-    return mappedStatuses;
+  const mappedDynamicStatuses = computed(() => {
+    return statusStore.statuses;
   });
 
   const currentMappedDynamicStatus = computed(() => {
@@ -89,23 +72,8 @@ export function useStatusData() {
     return sp;
   });
 
-  const mappedStaticLevels = computed<MappedStaticLevel[]>(() => {
-    let sum = 0;
-    const mappedLevels: MappedStaticLevel[] = [];
-
-    staticLevels.value.forEach((level) => {
-      const newSum = sum + level.xpRequiredToLevelUp;
-      const mappedLevel: MappedStaticLevel = {
-        data: level,
-        xpFrom: sum,
-        xpTo: newSum,
-      };
-      sum = newSum;
-
-      mappedLevels.push(mappedLevel);
-    });
-
-    return mappedLevels;
+  const mappedStaticLevels = computed(() => {
+    return statusStore.levels;
   });
 
   const currentMappedStaticLevel = computed(() => {
