@@ -7,6 +7,7 @@ import type {
   DynamicsSeasonInfoResources,
 } from '../../../entities/status';
 import type { StatusProgressions } from '../../../entities/user';
+import type { MappedDynStatus, MappedStaticLevel } from '../types';
 
 export function useStatusData() {
   const statusStore = useStatusStore();
@@ -54,10 +55,85 @@ export function useStatusData() {
     return progressions.value?.dynamic?.isConfirmed === true;
   });
 
+  const mappedDynamicStatuses = computed<MappedDynStatus[]>(() => {
+    let sum = 0;
+    const mappedStatuses: MappedDynStatus[] = [];
+
+    dynamicStatuses.value.forEach((status) => {
+      const newSum = sum + status.spRequiredToLevelUp;
+      const mappedStatus: MappedDynStatus = {
+        data: status,
+        spFrom: sum,
+        spTo: newSum,
+        confirmTo: sum + status.spRequiredToConfirm,
+      };
+      sum += newSum;
+
+      mappedStatuses.push(mappedStatus);
+    });
+
+    return mappedStatuses;
+  });
+
+  const currentMappedDynamicStatus = computed(() => {
+    const code = progressions.value?.dynamic?.code;
+    if (!code) return undefined;
+    return mappedDynamicStatuses.value.find((status) => status.data.code === code);
+  });
+
+  const mappedProgressionSP = computed(() => {
+    const { sp = 0 } = progressions.value?.dynamic || {};
+    if (currentMappedDynamicStatus.value) {
+      return currentMappedDynamicStatus.value.spFrom + sp;
+    }
+    return sp;
+  });
+
+  const mappedStaticLevels = computed<MappedStaticLevel[]>(() => {
+    let sum = 0;
+    const mappedLevels: MappedStaticLevel[] = [];
+
+    staticLevels.value.forEach((level) => {
+      const newSum = sum + level.xpRequiredToLevelUp;
+      const mappedLevel: MappedStaticLevel = {
+        data: level,
+        xpFrom: sum,
+        xpTo: newSum,
+      };
+      sum += newSum;
+
+      mappedLevels.push(mappedLevel);
+    });
+
+    return mappedLevels;
+  });
+
+  const currentMappedStaticLevel = computed(() => {
+    const order = progressions.value?.static?.order;
+    if (typeof order !== 'number') return undefined;
+    return mappedStaticLevels.value.find((level) => level.data.order === order);
+  });
+
+  const mappedProgressionXP = computed(() => {
+    const { xp = 0 } = progressions.value?.static || {};
+    if (currentMappedStaticLevel.value) {
+      return currentMappedStaticLevel.value.xpFrom + xp;
+    }
+    return xp;
+  });
+
   return {
     // filtered collections
     dynamicStatuses,
     staticLevels,
+
+    mappedDynamicStatuses,
+    currentMappedDynamicStatus,
+    mappedProgressionSP,
+
+    mappedStaticLevels,
+    currentMappedStaticLevel,
+    mappedProgressionXP,
 
     // counts of filtered collections
     dynamicStatusesCount,
