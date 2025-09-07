@@ -7,7 +7,7 @@ export const statusApi = {
     try {
       const response = await publicApiV1<StatusDataResources>({
         url: '/vip/settings/read',
-        secured: false,
+        secured: true,
         type: (securedType) => `Vip.V1.${securedType}.Settings.Read`,
       });
       return response.data;
