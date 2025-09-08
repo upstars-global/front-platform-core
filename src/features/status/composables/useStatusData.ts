@@ -118,9 +118,27 @@ export function useStatusData() {
     return false;
   });
 
+  const isLastLevel = computed(() => {
+    const currentLevelOrStatusValue = currentLevelOrStatus.value;
+    if (currentLevelOrStatusValue?.type === ProgressionType.STATIC) {
+      const index = statusStore.levels.findIndex((level) => {
+        return level.data.order === currentLevelOrStatusValue.data.data.order;
+      });
+      return index === statusStore.levels.length - 1;
+    }
+    return false;
+  });
+
   const nextLevelOrStatus = computed<LevelOrStatus | undefined>(() => {
     if (isLastStatus.value) {
       return currentLevelOrStatus.value;
+    }
+
+    if (isLastLevel.value) {
+      return {
+        type: ProgressionType.DYNAMIC,
+        data: statusStore.statuses[0],
+      };
     }
 
     const code = progressions.value?.dynamic?.code;
@@ -222,6 +240,7 @@ export function useStatusData() {
     currentLevelOrStatus,
     nextLevelOrStatus,
     isLastStatus,
+    isLastLevel,
     currentProgressionType,
 
     pointsData,
