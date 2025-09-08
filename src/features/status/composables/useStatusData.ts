@@ -55,6 +55,10 @@ export function useStatusData() {
     return progressions.value?.dynamic?.isConfirmed === true;
   });
 
+  const isDynamicStatusAutoConfirmed = computed<boolean>(() => {
+    return progressions.value?.dynamic?.isAutoConfirmed === true;
+  });
+
   const mappedDynamicStatuses = computed(() => {
     return statusStore.statuses;
   });
@@ -256,6 +260,7 @@ export function useStatusData() {
     // presence flags
     isDynamicStatus,
     isDynamicStatusConfirmed,
+    isDynamicStatusAutoConfirmed,
 
     // user progressions passthrough
     progressions,
