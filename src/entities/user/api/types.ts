@@ -107,6 +107,7 @@ export type UserProfileResource = {
   vipManager: VipManagerResource | null;
   selfExclusionStatus: SelfExclusionStatus | null;
   isSuspended?: boolean | null;
+  registrationDate?: string;
 };
 
 export type ICreateContactResource = {
