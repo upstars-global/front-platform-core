@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/upstars-global/front-platform-core/compare/v1.8.0...v1.8.1) (2025-09-09)
+
+### 🔨 Refactoring
+
+* **FP-3705:** extend app-config with new required field digitainRestricted
+ ([da3374c](https://github.com/upstars-global/front-platform-core/commit/da3374c5923206fe44e65ebe62468520f9e73839))
+
 ## [1.8.0](https://github.com/upstars-global/front-platform-core/compare/v1.7.0...v1.8.0) (2025-09-08)
 
 ### 🐛 Bug Fixes
