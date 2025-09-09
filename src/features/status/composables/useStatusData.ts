@@ -1,8 +1,11 @@
 import { computed } from 'vue';
-import type {
-  DynamicsSeasonInfoResources,
-  DynamicStatusDataResources,
-  StaticLevelDataResources,
+import {
+  type DynamicsSeasonInfoResources,
+  type DynamicStatusDataResources,
+  type Rewards,
+  type RewardsTypeCashbackValue,
+  RewardType,
+  type StaticLevelDataResources,
 } from '../../../entities/status';
 import { useStatusStore } from '../../../entities/status';
 import type { StatusProgressions } from '../../../entities/user';
@@ -228,6 +231,23 @@ export function useStatusData() {
     };
   });
 
+  function isCashbackReward(reward: Rewards): reward is { type: RewardType.Cashback; value: RewardsTypeCashbackValue } {
+    return reward.type === RewardType.Cashback;
+  }
+
+  function getWeeklyCashbackFields(data?: Array<Rewards>): RewardsTypeCashbackValue | undefined {
+    const cashback = data?.find(isCashbackReward);
+    return cashback?.value;
+  }
+
+  function getRewardGiftTitle(data: Array<Rewards>) {
+    const rewardTypes = [RewardType.Gift, RewardType.Freespin, RewardType.Cash];
+    return data
+      .filter((reward) => rewardTypes.includes(reward.type))
+      .map((reward) => reward.value.title)
+      .join(' + ');
+  }
+
   return {
     // filtered collections
     dynamicStatuses,
@@ -267,5 +287,8 @@ export function useStatusData() {
 
     // season info passthrough
     seasonInfo,
+
+    getWeeklyCashbackFields,
+    getRewardGiftTitle,
   };
 }
