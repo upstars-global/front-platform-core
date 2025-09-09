@@ -16,10 +16,12 @@ export const useEnvironmentStore = defineStore('environment', () => {
   return {
     baseUrl,
     environment,
+    version,
+
     isDev,
     isStage,
     isProduction,
+    
     isMockerMode,
-    version,
   };
 });
