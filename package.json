@@ -30,7 +30,8 @@
     "vue-i18n": "9.14.4"
   },
   "devDependencies": {
-    "vue-i18n": "9.14.4",
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
     "@eslint/js": "^9.23.0",
     "@octokit/auth-app": "^7.1.5",
     "@semantic-release/changelog": "^6.0.3",
@@ -49,13 +50,14 @@
     "firebase": "11.6.0",
     "globals": "^16.0.0",
     "husky": "^9.1.7",
-    "lint-staged": "^15.5.0",
+    "lint-staged": "^16.1.6",
     "pinia": "^2.3.1",
     "prettier": "^3.5.3",
     "semantic-release": "^24.2.3",
     "typescript": "^5.6.3",
     "typescript-eslint": "^8.28.0",
-    "vue": "^3.5.13"
+    "vue": "^3.5.13",
+    "vue-i18n": "9.14.4"
   },
   "packageManager": "yarn@1.22.22"
 }
