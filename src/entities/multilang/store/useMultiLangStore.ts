@@ -9,15 +9,12 @@ export type Locale = {
 };
 
 export const useMultiLangStore = defineStore('multilang', () => {
-  const DEFAULT_LOCALE = configI18nConfig.getDefaultLocale();
-  const DEFAULT_COUNTRY = configI18nConfig.getDefaultCountry();
-
   const localeInCookies = ref<string>();
-  const country = ref(DEV ? DEFAULT_COUNTRY : '');
-  const defaultLocale = ref(DEFAULT_LOCALE);
+  const country = ref(configI18nConfig.getDefaultCountry());
+  const defaultLocale = ref(configI18nConfig.getDefaultLocale());
   const locale = ref('');
   const forcedLocale = ref(''); // used just during ssg
-  const userGeo = ref(DEV ? DEFAULT_COUNTRY : '');
+  const userGeo = ref(configI18nConfig.getDefaultCountry());
   const userGeoRegion = ref('');
   const availableLocales = ref<Record<string, boolean>>({});
 
