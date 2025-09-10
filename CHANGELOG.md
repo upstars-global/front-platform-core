@@ -1,3 +1,31 @@
+## [1.8.1](https://github.com/upstars-global/front-platform-core/compare/v1.8.0...v1.8.1) (2025-09-09)
+
+### 🔨 Refactoring
+
+* **FP-3705:** extend app-config with new required field digitainRestricted
+ ([da3374c](https://github.com/upstars-global/front-platform-core/commit/da3374c5923206fe44e65ebe62468520f9e73839))
+
+## [1.8.0](https://github.com/upstars-global/front-platform-core/compare/v1.7.0...v1.8.0) (2025-09-08)
+
+### 🐛 Bug Fixes
+
+* **FP-3172:** fix peer dependency
+ ([11d2a37](https://github.com/upstars-global/front-platform-core/commit/11d2a3711e0cbd125a90532b84a4fb2cf1a5e326))
+
+
+
+### 🚀 Features
+
+* **FP-3172:** fix incorrect export
+ ([f919681](https://github.com/upstars-global/front-platform-core/commit/f9196815bc557dda3bbfdde847e980a48205efb6))
+
+
+
+### 🔧 Maintenance
+
+* **release:** 1.8.0 [skip ci]
+ ([b801980](https://github.com/upstars-global/front-platform-core/commit/b80198026f03600a6f7b71b0b8bc1ca509a8e415))
+
 ## [1.8.0](https://github.com/upstars-global/front-platform-core/compare/v1.7.0...v1.8.0) (2025-09-04)
 
 ### 🐛 Bug Fixes
