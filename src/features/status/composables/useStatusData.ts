@@ -240,6 +240,11 @@ export function useStatusData() {
     return cashback?.value;
   }
 
+  function getRewardGifts(data: Array<Rewards>) {
+    const rewardTypes = [RewardType.Gift, RewardType.Freespin, RewardType.Cash];
+    return data.filter((reward) => rewardTypes.includes(reward.type));
+  }
+
   function getRewardGiftTitle(data: Array<Rewards>) {
     const rewardTypes = [RewardType.Gift, RewardType.Freespin, RewardType.Cash];
     return data
@@ -289,6 +294,7 @@ export function useStatusData() {
     seasonInfo,
 
     getWeeklyCashbackFields,
+    getRewardGifts,
     getRewardGiftTitle,
   };
 }
