@@ -241,12 +241,12 @@ export function useStatusData() {
   }
 
   function getRewardGifts(data: Array<Rewards>) {
-    const rewardTypes = [RewardType.DepositBonus, RewardType.Freespin, RewardType.Cash];
+    const rewardTypes = [RewardType.DepositBonus, RewardType.Freespin];
     return data.filter((reward) => rewardTypes.includes(reward.type));
   }
 
   function getRewardGiftTitle(data: Array<Rewards>) {
-    const rewardTypes = [RewardType.DepositBonus, RewardType.Freespin, RewardType.Cash];
+    const rewardTypes = [RewardType.DepositBonus, RewardType.Freespin];
     return data
       .filter((reward) => rewardTypes.includes(reward.type))
       .map((reward) => reward.value.title)

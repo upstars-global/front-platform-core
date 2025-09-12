@@ -2,9 +2,8 @@ import { Currency } from '../../../shared/api';
 
 export enum RewardType {
   Cashback = 'cashback',
-  DepositBonus = 'deposit_bonus',
-  Freespin = 'free_spins',
-  Cash = 'cash',
+  DepositBonus = 'depositBonus',
+  Freespin = 'freeSpins',
 }
 
 export type RewardsTypeCashbackValue = {
@@ -15,8 +14,12 @@ export type RewardsTypeCashbackValue = {
 };
 export type RewardsTypeDepositBonusValue = {
   title: string;
-  expired: number;
-  description: string;
+  bonus: number;
+  maxBonus: number;
+  minDeposit: number;
+  winLimit: number;
+  wager: number;
+  currency: Currency
 };
 export type RewardsTypeFreeSpinsValue = {
   title: string;
