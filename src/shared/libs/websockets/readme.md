@@ -3,12 +3,12 @@ __IMPORTANT!__ This package uses WebSockets in the browser environment only!
 
 You only need to set the event bus (kept for backward compatibility) and, if needed, `hostnameAndProtocol` (e.g., to use WebSockets locally).
 
-To configure, use `configWebsocket`:
+To configure, use `configWebsockets`:
 
 ```typescript
 // in app configuration before using websockets
-configWebsocket.bus(eventBus);
-configWebsocket.hostnameAndProtocol(DEV ? `ws://localhost:3000` : null);
+configWebsockets.bus(eventBus);
+configWebsockets.hostnameAndProtocol(DEV ? `ws://localhost:3000` : null);
 ```
 
 ### How to use websockets

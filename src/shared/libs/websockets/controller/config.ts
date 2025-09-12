@@ -3,7 +3,7 @@ import type { EventBus } from '../../../types';
 let bus: EventBus | null = null;
 let hostnameAndProtocol: string | null = null;
 
-export function getWebsocketConfig() {
+export function getWebsocketsConfig() {
   if (!bus) {
     throw new Error('websocket config: bus not defined');
   }
@@ -14,7 +14,7 @@ export function getWebsocketConfig() {
   };
 }
 
-export const configWebsocket = {
+export const configWebsockets = {
   bus: (value: EventBus) => {
     bus = value;
   },

@@ -1,6 +1,6 @@
 import { log } from '../../../helpers';
 import {
-    getWebsocketConfig,
+    getWebsocketsConfig,
     DEFAULT_TIME_RECONNECT,
     MAX_TIME_RECONNECT,
     RECONNECTION_TIME_MULTIPLIER,
@@ -33,7 +33,7 @@ function createController(setConnectionStatus: (value: boolean) => void) {
     }
 
     function start(userHash: string) {
-        const { bus, hostnameAndProtocol } = getWebsocketConfig();
+        const { bus, hostnameAndProtocol } = getWebsocketsConfig();
 
         stop();
         sock = new WebSocket(getWebsocketsPath(hostnameAndProtocol));
