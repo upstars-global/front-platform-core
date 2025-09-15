@@ -46,17 +46,19 @@ export type VipManagerResource = {
   };
 };
 
+export type StatusProgressionsStatic = {
+  xp: number;
+  order: number;
+};
+export type StatusProgressionsDynamic = {
+  sp: number;
+  isConfirmed: boolean;
+  isAutoConfirmed: boolean;
+  code: number;
+};
 export type StatusProgressions = {
-  static: {
-    xp: number;
-    order: number;
-  };
-  dynamic: {
-    sp: number;
-    isConfirmed: boolean;
-    isAutoConfirmed: boolean;
-    code: number;
-  };
+  static: StatusProgressionsStatic;
+  dynamic: StatusProgressionsDynamic;
 };
 
 export enum SelfExclusionStatus {
