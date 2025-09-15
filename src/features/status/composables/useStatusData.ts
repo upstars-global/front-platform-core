@@ -252,6 +252,11 @@ export function useStatusData() {
       .map((reward) => reward.value.title)
       .join(' + ');
   }
+  function getStatusNameByCode(code: number): string | undefined {
+    if (!code) return undefined;
+    const status = dynamicStatuses.value.find((status) => status.code === code);
+    return status?.name;
+  }
 
   return {
     // filtered collections
@@ -296,5 +301,6 @@ export function useStatusData() {
     getWeeklyCashbackFields,
     getRewardGifts,
     getRewardGiftTitle,
+    getStatusNameByCode
   };
 }
