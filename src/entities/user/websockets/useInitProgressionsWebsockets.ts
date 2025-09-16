@@ -57,7 +57,7 @@ function useInitProgressionsWebsocketsHandlers() {
         },
       });
 
-      if (code < data.data.code) {
+      if (data.data.code > code) {
         userEvents.emit('progressions.dynamic.level-up');
       }
       if (!isConfirmed && data.data.isConfirmed) {
