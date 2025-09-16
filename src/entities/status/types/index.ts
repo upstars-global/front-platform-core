@@ -5,10 +5,24 @@ export type MappedDynStatus = {
   spTo: number;
   confirmTo: number;
   spFrom: number;
+  weeklyCashback?: {
+    title: string;
+    bonus: number;
+    wager: number;
+    limit?: number;
+    isIcon: boolean;
+  }
 };
 
 export type MappedStaticLevel = {
   data: StaticLevelDataResources;
   xpTo: number;
   xpFrom: number;
+  weeklyCashback?: {
+    title: string;
+    bonus: number;
+    wager: number;
+    limit?: number;
+    isIcon: boolean;
+  }
 };
