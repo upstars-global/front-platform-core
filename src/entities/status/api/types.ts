@@ -15,9 +15,11 @@ export type RewardsTypeCashbackValue = {
 export type RewardsTypeDepositBonusValue = {
   title: string;
   bonus: number;
+  isBonusAsPercent: boolean;
   maxBonus: number;
   minDeposit: number;
   winLimit: number;
+  isWinLimitAsPercent: boolean;
   wager: number;
   currency: Currency
 };
