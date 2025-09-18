@@ -233,6 +233,18 @@ export function useStatusData() {
     };
   });
 
+    const nextLevelGiftCount = computed<number>(() => {
+        const rewards = nextLevelOrStatus.value?.data.data.rewards;
+
+        if (!isLastStatus.value && Array.isArray(rewards)) {
+            const rewardTypes = [RewardType.DepositBonus, RewardType.Freespin];
+            const list = rewards.filter((reward) => rewardTypes.includes(reward.type));
+
+            return list.length;
+        }
+        return 0;
+    });
+
   function isCashbackReward(reward: Rewards): reward is { type: RewardType.Cashback; value: RewardsTypeCashbackValue } {
     return reward.type === RewardType.Cashback;
   }
@@ -300,6 +312,8 @@ export function useStatusData() {
 
     // season info passthrough
     seasonInfo,
+
+      nextLevelGiftCount,
 
     getWeeklyCashbackFields,
     getRewardGifts,
