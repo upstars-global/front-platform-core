@@ -59,7 +59,7 @@ export type DynamicStatusDataResources = {
   code: number;
   order: number;
   icon: string;
-  promo_text: string;
+  promoText: string;
   spRequiredToConfirm: number;
   spRequiredToLevelUp: number;
   rewards: Rewards[];

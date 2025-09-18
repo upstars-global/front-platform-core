@@ -84,6 +84,8 @@ export function useStatusData() {
     return statusStore.levels;
   });
 
+  const lastMappedStaticLevel = computed(() => mappedStaticLevels.value.at(-1));
+
   const currentMappedStaticLevel = computed(() => {
     const order = progressions.value?.static?.order;
     if (typeof order !== 'number') return undefined;
@@ -269,6 +271,7 @@ export function useStatusData() {
 
     mappedStaticLevels,
     currentMappedStaticLevel,
+    lastMappedStaticLevel,
     mappedProgressionXP,
 
     currentLevelOrStatus,
