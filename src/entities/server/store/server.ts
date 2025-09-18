@@ -6,7 +6,6 @@ import { DEFAULT_CURRENCY } from '../../../shared/config';
 
 export const useServerStore = defineStore('server', () => {
   const apiUrl = ref('/');
-  const websocketUrl = ref('/sock');
   const serverData = ref<ServerData>({
     currencies: [],
     defaultCurrency: DEFAULT_CURRENCY,
@@ -64,7 +63,6 @@ export const useServerStore = defineStore('server', () => {
     valdemoroConfig,
     webPushKey,
     serverData,
-    websocketUrl,
     setApiUrl,
     loadServerData,
   };

@@ -6,3 +6,7 @@
 ## How to use
 - [Installation docs](./docs/installation.md)
 - [Local develop](./docs/local-dev.md)
+
+## Configuration in projects (`*` mandatory for setup)
+
+- [__* Websockets configuration__](./src/shared/libs/websockets/readme.md)
