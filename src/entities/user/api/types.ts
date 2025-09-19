@@ -379,3 +379,7 @@ export type BalanceChangedData = TimestampSocketData & {
     };
 };
 
+export type IUserRefcodeResource = {
+  isLoaded: boolean;
+  types: string[];
+};

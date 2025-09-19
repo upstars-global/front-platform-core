@@ -1,45 +1,47 @@
-import { serverFeaturesMap } from "@theme/configs/serverFeaturesMap";
-import {
-    PREVENT_CASHBOX_SERVICE_WORKS_HASH,
-    PREVENT_CASHBOX_SERVICE_WORKS_KEY,
-} from "@controllers/services/cashbox/serviceWorks/config";
-import { isServer } from "@helpers/ssrHelpers";
-import { useUserInfo } from "@store/userInfo";
+import { configCashbox } from '../../../entities/cashbox/config';
+import { isServer } from '../../../shared/helpers/ssr';
+import { useUserInfoLoad } from '../../../entities/user/composables/useUserInfoLoad';
 
-const PREVENT_VALUE = "1";
+const PREVENT_VALUE = '1';
+
+const HIDE_CASHBOX_FEATURE = 'hide-cashbox';
 
 export function useCashboxServiceWorks() {
-    const userInfoStore = useUserInfo();
+  const { loadUserFeatures } = useUserInfoLoad();
 
-    function isPrevent(): boolean {
-        if (isServer) {
-            return false;
-        }
-        const value = window.localStorage.getItem(PREVENT_CASHBOX_SERVICE_WORKS_KEY);
-        return value === PREVENT_VALUE;
+  const serviceWorksKey = configCashbox.getPreventCashboxServiceWorksKey();
+
+  function isPrevent(): boolean {
+    if (isServer) {
+      return false;
     }
 
-    async function isServiceWorks(): Promise<boolean> {
-        const features = await userInfoStore.loadUserFeatures();
-        const hideCashboxFeature = features.find((item) => {
-            return item.feature === serverFeaturesMap.hideCashbox;
-        });
+    const value = window.localStorage.getItem(serviceWorksKey);
+    return value === PREVENT_VALUE;
+  }
 
-        const indicator = Boolean(hideCashboxFeature?.isAvailable);
-        return indicator && !isPrevent();
+  async function isServiceWorks(): Promise<boolean> {
+    const features = await loadUserFeatures();
+    const hideCashboxFeature = features.find((item) => {
+      return item.feature === HIDE_CASHBOX_FEATURE;
+    });
+
+    const indicator = Boolean(hideCashboxFeature?.isAvailable);
+    return indicator && !isPrevent();
+  }
+
+  function checkLocationHash() {
+    if (isServer) {
+      return;
     }
 
-    function checkLocationHash() {
-        if (isServer) {
-            return;
-        }
-        if (window.location.hash === PREVENT_CASHBOX_SERVICE_WORKS_HASH) {
-            window.localStorage.setItem(PREVENT_CASHBOX_SERVICE_WORKS_KEY, PREVENT_VALUE);
-        }
+    if (window.location.hash === configCashbox.getPreventCashboxServiceWorksHash()) {
+      window.localStorage.setItem(serviceWorksKey, PREVENT_VALUE);
     }
+  }
 
-    return {
-        isServiceWorks,
-        checkLocationHash,
-    };
+  return {
+    isServiceWorks,
+    checkLocationHash,
+  };
 }

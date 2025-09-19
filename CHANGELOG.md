@@ -1,3 +1,46 @@
+## [2.0.0](https://github.com/upstars-global/front-platform-core/compare/v1.8.1...v2.0.0) (2025-09-17)
+
+### ⚠ BREAKING CHANGES
+
+* **FP-3163:** global.d.ts was removed
+
+### 🚀 Features
+
+* **FP-3163:** added new entity environment
+ ([c2b18a7](https://github.com/upstars-global/front-platform-core/commit/c2b18a7c0dbe2da3563a1841824c65bd2c9279f4))
+
+
+* **FP-3163:** export config module
+ ([33e4dfb](https://github.com/upstars-global/front-platform-core/commit/33e4dfb6231206da2694fc7e87e60d800036b273))
+
+
+* **FP-3163:** fixes in multilang store
+ ([6df1583](https://github.com/upstars-global/front-platform-core/commit/6df15838fe35231b95983f7168bbfa9399f64551))
+
+
+* **FP-3163:** global.d.ts was removed
+ ([7967144](https://github.com/upstars-global/front-platform-core/commit/7967144a3339a85ae66c5780f07c69e67d6b1cc6))
+
+
+* **FP-3163:** new environment config
+ ([7802b0d](https://github.com/upstars-global/front-platform-core/commit/7802b0d07643d38a0daed9650f2526bb8b8e9da1))
+
+
+
+    **BREAKING CHANGE**: global.d.ts was removed
+
+### 🔨 Refactoring
+
+* **FP-3163:** integrate configEnvironment for dynamic environment settings
+ ([f28ca39](https://github.com/upstars-global/front-platform-core/commit/f28ca397bbb97c3bcba51bbd885ec55975b97908))
+
+
+
+### 🧪 Testing
+
+* **commit lint:** add commit lint
+ ([c1e8f91](https://github.com/upstars-global/front-platform-core/commit/c1e8f91c6e4684d9f3220d6a1738e0f22111f546))
+
 ## [1.8.1](https://github.com/upstars-global/front-platform-core/compare/v1.8.0...v1.8.1) (2025-09-09)
 
 ### 🔨 Refactoring
