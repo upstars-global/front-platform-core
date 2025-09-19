@@ -1,5 +1,6 @@
 import { useUserProfile, userEvents } from '../../../entities/user';
 import { promiseMemo, safePromiseAll } from '../../../shared/helpers/promise';
+import { useWebsocketsController } from '../../../shared/libs/websockets';
 import { afterProfileDataLoadedHook, fetchUserDataHook } from '../config';
 import { localeUpdateHook } from '../config/locale';
 
@@ -9,6 +10,7 @@ export type FetchAllUserDataOptions = {
 
 export function useFetchAllUserData() {
   const { loadUserProfile, loadUserContactsOnVerification } = useUserProfile();
+  const websocketsController = useWebsocketsController();
 
   async function loadUserProfileHandler() {
     const userProfile = await loadUserProfile();
@@ -18,13 +20,16 @@ export function useFetchAllUserData() {
       });
     }
     userEvents.emit('profile.loaded', userProfile);
-    return afterProfileDataLoadedHook.run();
+    await afterProfileDataLoadedHook.run();
+    return userProfile;
   }
 
   const fetchAllUserData = promiseMemo(
     async (options?: FetchAllUserDataOptions) => {
       await safePromiseAll([
-        loadUserProfileHandler(),
+        loadUserProfileHandler().then((profile) => {
+          websocketsController.start(profile.hash)
+        }),
         loadUserContactsOnVerification(),
 
         // temporary solution until all stores will be transferred to the core package,
