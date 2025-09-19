@@ -23,6 +23,10 @@ export const useAppGlobalConfigStore = defineStore('appGlobalConfig', () => {
     return Boolean(licenceDomainConfig.value?.licenceId);
   });
 
+  const isSelfExclusionEnabled = computed(() => {
+    return Boolean(globalConfig.value?.selfExclusionEnabled);
+  });
+
   const freshChatConfig = computed(() => {
     return globalConfig.value?.freshChatConfig;
   });
@@ -34,6 +38,8 @@ export const useAppGlobalConfigStore = defineStore('appGlobalConfig', () => {
     supportEmail,
     licenceDomainConfig,
     isLicenceDomain,
+
+    isSelfExclusionEnabled,
 
     freshChatConfig,
 

@@ -43,6 +43,7 @@ export type AppGlobalConfig = Partial<{
   showRegistrationPromoCode: boolean;
   socialLinks?: SocialLink[];
   digitainRestricted: boolean;
+  selfExclusionEnabled: boolean;
 }>;
 
 export type ReelsVersion = {
