@@ -1,4 +1,5 @@
 import { useWebsocketsBridge } from "../../../shared/libs/websockets";
+import type { UserBalanceWebsockets } from "./types";
 import { userBalanceWebsocketsEmitter } from "./userBalanceWebsocketsEmitter";
 
 export enum UserBalanceWebsocketTypes {
@@ -10,7 +11,7 @@ export enum UserBalanceWebsocketTypes {
 }
 
 export function useInitUserBalanceWebsockets() {
-  useWebsocketsBridge({
+  useWebsocketsBridge<UserBalanceWebsockets>({
     emitter: userBalanceWebsocketsEmitter,
     websocketConfigMap: {
       [UserBalanceWebsocketTypes.BALANCE_CHANGED]: {
