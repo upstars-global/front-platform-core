@@ -138,6 +138,13 @@ export function useStatusData() {
     return false;
   });
 
+  const isCurrentStatusVipBase = computed(() => {
+    const currentLevelOrStatusValue = currentLevelOrStatus.value;
+    if (currentLevelOrStatusValue?.type === ProgressionType.DYNAMIC) {
+      return currentLevelOrStatusValue.data.data.code === UserStatusResource.BASE_VIP;
+    }
+  });
+
   const nextLevelOrStatus = computed<LevelOrStatus | undefined>(() => {
     if (isLastStatus.value) {
       return currentLevelOrStatus.value;
@@ -290,6 +297,7 @@ export function useStatusData() {
     nextLevelOrStatus,
     isLastStatus,
     isLastLevel,
+    isCurrentStatusVipBase,
     currentProgressionType,
 
     pointsData,
