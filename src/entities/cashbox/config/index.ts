@@ -1,5 +1,4 @@
 type CashboxState = {
-    coins: number;
     withdrawCancelMinBalance: {
         [key: string]: number;
     };
@@ -7,7 +6,7 @@ type CashboxState = {
     preventCashboxServiceWorksKey: string;
 }
 
-const COINS = 100;
+export const COINS = 100;
 
 export const DEFAULT_VALUES = {
     refillAmount: 500 * COINS,
@@ -21,7 +20,6 @@ export enum PAYMENT_METHOD {
 }
 
 const defaultCashboxState: CashboxState = {
-    coins: COINS,
     withdrawCancelMinBalance: {
         RUB: 20000,
         INR: 20000,
@@ -41,12 +39,6 @@ let cashboxState: CashboxState = {
 }
 
 export const configCashbox = {
-    getCoins: () => {
-        return cashboxState.coins;
-    },
-    setCoins: (coins: number) => {
-        cashboxState.coins = coins;
-    },
     getWithdrawCancelMinBalance: () => {
         return cashboxState.withdrawCancelMinBalance;
     },
