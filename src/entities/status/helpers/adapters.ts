@@ -1,4 +1,5 @@
 import { RewardType } from '../api/types';
+import type { RewardsTypeCashbackValue } from '../api/types';
 import type { DynamicStatusDataResources, StaticLevelDataResources } from '../api';
 import type { MappedStaticLevel, MappedDynStatus } from '../types';
 
@@ -19,8 +20,8 @@ export function adaptStaticLevels(levels: StaticLevelDataResources[] | null): Ma
     // find cashback reward
     const cashbackReward = level.rewards?.find((r) => r.type === RewardType.Cashback);
     const weeklyCashback = cashbackReward ? {
-      ...cashbackReward.value,
-      isIcon: prevCashbackBonus ? prevCashbackBonus < cashbackReward.value.bonus : true,
+      ...(cashbackReward.value as RewardsTypeCashbackValue),
+      isIcon: prevCashbackBonus ? prevCashbackBonus < (cashbackReward.value as RewardsTypeCashbackValue).cashbackPercent : true,
     } : undefined;
 
     const mappedLevel: MappedStaticLevel = {
@@ -32,7 +33,7 @@ export function adaptStaticLevels(levels: StaticLevelDataResources[] | null): Ma
 
     // update prev bonus if current has cashback
     if (weeklyCashback) {
-      prevCashbackBonus = weeklyCashback.bonus;
+      prevCashbackBonus = weeklyCashback.cashbackPercent;
     }
 
     sum = newSum;
@@ -58,8 +59,8 @@ export function adaptDynamicStatuses(statuses: DynamicStatusDataResources[] | nu
     // find cashback reward
     const cashbackReward = status.rewards?.find((r) => r.type === RewardType.Cashback);
     const weeklyCashback = cashbackReward ? {
-     ...cashbackReward.value,
-      isIcon: prevCashbackBonus ? prevCashbackBonus < cashbackReward.value.bonus : true,
+     ...(cashbackReward.value as RewardsTypeCashbackValue),
+      isIcon: prevCashbackBonus ? prevCashbackBonus < (cashbackReward.value as RewardsTypeCashbackValue).cashbackPercent : true,
     } : undefined;
 
     const mappedStatus: MappedDynStatus = {
@@ -67,13 +68,12 @@ export function adaptDynamicStatuses(statuses: DynamicStatusDataResources[] | nu
       spFrom: sum,
       spTo: newSum,
       confirmTo: sum + status.spRequiredToConfirm,
-      weeklyCashback,
       ...(weeklyCashback ? { weeklyCashback } : {}),
     };
 
     // update prev bonus if current has cashback
     if (weeklyCashback) {
-      prevCashbackBonus = weeklyCashback.bonus;
+      prevCashbackBonus = weeklyCashback.cashbackPercent;
     }
 
     sum = newSum;

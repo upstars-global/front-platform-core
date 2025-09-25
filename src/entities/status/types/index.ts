@@ -7,7 +7,7 @@ export type MappedDynStatus = {
   spFrom: number;
   weeklyCashback?: {
     title: string;
-    bonus: number;
+    cashbackPercent: number;
     wager: number;
     limit?: number;
     isIcon: boolean;
@@ -20,7 +20,7 @@ export type MappedStaticLevel = {
   xpFrom: number;
   weeklyCashback?: {
     title: string;
-    bonus: number;
+    cashbackPercent: number;
     wager: number;
     limit?: number;
     isIcon: boolean;

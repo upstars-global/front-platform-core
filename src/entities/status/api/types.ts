@@ -8,7 +8,7 @@ export enum RewardType {
 
 export type RewardsTypeCashbackValue = {
   title: string;
-  bonus: number;
+  cashbackPercent: number;
   wager: number;
   limit: number;
 };
