@@ -31,16 +31,10 @@ export type RewardsTypeFreeSpinsValue = {
   winLimit: number;
   currency: Currency
 };
-export type RewardsTypeCashValue = {
-  title: string;
-  bonus: number;
-  winLimit: number;
-  wager: number;
-  currency: Currency
-};
+
 export type Rewards = {
   type: RewardType;
-  value: RewardsTypeCashbackValue | RewardsTypeDepositBonusValue | RewardsTypeFreeSpinsValue | RewardsTypeCashValue;
+  value: RewardsTypeCashbackValue | RewardsTypeDepositBonusValue | RewardsTypeFreeSpinsValue;
 };
 export type StaticLevelDataResources = {
   id: string;

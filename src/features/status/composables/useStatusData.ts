@@ -244,8 +244,7 @@ export function useStatusData() {
         const rewards = nextLevelOrStatus.value?.data.data.rewards;
 
         if (!isLastStatus.value && Array.isArray(rewards)) {
-            const rewardTypes = [RewardType.DepositBonus, RewardType.Freespin];
-            const list = rewards.filter((reward) => rewardTypes.includes(reward.type));
+            const list = getRewardGifts(rewards)
 
             return list.length;
         }
@@ -266,13 +265,6 @@ export function useStatusData() {
     return data.filter((reward) => rewardTypes.includes(reward.type));
   }
 
-  function getRewardGiftTitle(data: Array<Rewards>) {
-    const rewardTypes = [RewardType.DepositBonus, RewardType.Freespin];
-    return data
-      .filter((reward) => rewardTypes.includes(reward.type))
-      .map((reward) => reward.value.title)
-      .join(' + ');
-  }
   function getStatusNameByCode(code: number): string | undefined {
     if (!code) return undefined;
     const status = dynamicStatuses.value.find((status) => status.code === code);
@@ -321,11 +313,10 @@ export function useStatusData() {
     // season info passthrough
     seasonInfo,
 
-      nextLevelGiftCount,
+    nextLevelGiftCount,
 
     getWeeklyCashbackFields,
     getRewardGifts,
-    getRewardGiftTitle,
-    getStatusNameByCode
+    getStatusNameByCode,
   };
 }
