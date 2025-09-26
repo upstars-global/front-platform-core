@@ -1,13 +1,14 @@
-import { useWebsocketsBridge } from '../../../shared/libs/websockets';
-import { userWebsocketsEvents } from './emitter';
-import { useUserProfileStore } from '../store';
-import {
-  type StatusProgressionsDynamicWebsocket,
-  type StatusProgressionsStaticWebsocket,
-  StatusProgressionsWebsocketType,
-} from './types';
 import { onMounted } from 'vue';
-import { userEvents } from '../emitter';
+import { useWebsocketsBridge } from '../../../shared/libs/websockets';
+import {
+  userWebsocketsEvents,
+  useUserProfileStore,
+  StatusProgressionsWebsocketType,
+  userEvents,
+  type StatusProgressionsStaticWebsocket,
+  type StatusProgressionsDynamicWebsocket,
+} from '../../../entities/user';
+import { useLoadStatusData, useStatusStore } from '../../../entities/status';
 
 function useInitProgressionsWebsocketsBridge() {
   useWebsocketsBridge({
@@ -27,8 +28,10 @@ function useInitProgressionsWebsocketsBridge() {
 
 function useInitProgressionsWebsocketsHandlers() {
   const userProfileStore = useUserProfileStore();
+  const { loadStatusData } = useLoadStatusData();
+  const statusStore = useStatusStore();
 
-  function handleStaticUpdate(data: StatusProgressionsStaticWebsocket) {
+  async function handleStaticUpdate(data: StatusProgressionsStaticWebsocket) {
     if (userProfileStore.userInfo && userProfileStore.userInfo.progressions) {
       const { order } = userProfileStore.userInfo.progressions.static;
 
@@ -40,7 +43,9 @@ function useInitProgressionsWebsocketsHandlers() {
         },
       });
 
-      if (data.data.order > order) {
+      await loadStatusData();
+      const lastLevel = statusStore.staticLevels[statusStore.staticLevels.length - 1];
+      if (data.data.order > order && data.data.order <= lastLevel.order) {
         userEvents.emit('progressions.static.level-up');
       }
     }
@@ -72,7 +77,7 @@ function useInitProgressionsWebsocketsHandlers() {
   });
 }
 
-export function useInitProgressionsWebsockets() {
+export function useInitUserProgressionsWebsockets() {
   useInitProgressionsWebsocketsBridge();
   useInitProgressionsWebsocketsHandlers();
 }

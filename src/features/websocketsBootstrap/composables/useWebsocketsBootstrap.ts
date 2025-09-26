@@ -1,5 +1,5 @@
-import { useInitProgressionsWebsockets } from '../../../entities/user';
+import { useInitUserProgressionsWebsockets } from './useInitUserProgressionsWebsockets';
 
 export function useWebsocketsBootstrap() {
-  useInitProgressionsWebsockets();
+  useInitUserProgressionsWebsockets();
 }
