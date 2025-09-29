@@ -44,8 +44,8 @@ function useInitProgressionsWebsocketsHandlers() {
       });
 
       await loadStatusData();
-      const lastLevel = statusStore.staticLevels[statusStore.staticLevels.length - 1];
-      if (data.data.order > order && data.data.order < lastLevel.order) {
+      const lastLevel = statusStore.levels[statusStore.staticLevels.length - 1];
+      if (data.data.order > order && data.data.order <= lastLevel.data.order) {
         userEvents.emit('progressions.static.level-up');
       }
     }
