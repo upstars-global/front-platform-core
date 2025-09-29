@@ -23,10 +23,23 @@ export type RewardsTypeDepositBonusValue = {
   wager: number;
   currency: Currency
 };
+export type BetField = {
+  meta: {
+    showRatesEnabled: boolean;
+    showRates: BetRates[];
+  };
+  rates: BetRates[];
+} | undefined;
+
+export type BetRates = {
+  currency: Currency;
+  bet: number;
+}
+
 export type RewardsTypeFreeSpinsValue = {
   title: string;
   bonus: number;
-  bet: number;
+  bet: BetField;
   wager: number;
   winLimit: number;
   currency: Currency
