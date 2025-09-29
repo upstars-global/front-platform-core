@@ -1,3 +1,10 @@
+## [2.1.0](https://github.com/upstars-global/front-platform-core/compare/v2.0.0...v2.1.0) (2025-09-29)
+
+### 🚀 Features
+
+* **FP-3778:** added selfExclusionEnabled
+ ([794fd2b](https://github.com/upstars-global/front-platform-core/commit/794fd2b5f6a5369fda0e091717d31b95197ac546))
+
 ## [2.0.0](https://github.com/upstars-global/front-platform-core/compare/v1.8.1...v2.0.0) (2025-09-17)
 
 ### ⚠ BREAKING CHANGES
