@@ -9,6 +9,7 @@ import {
   type StatusProgressionsDynamicWebsocket,
 } from '../../../entities/user';
 import { useLoadStatusData, useStatusStore } from '../../../entities/status';
+import { userProgressionsWebsocketEnabledConfig } from '../../../config';
 
 function useInitProgressionsWebsocketsBridge() {
   useWebsocketsBridge({
@@ -78,6 +79,8 @@ function useInitProgressionsWebsocketsHandlers() {
 }
 
 export function useInitUserProgressionsWebsockets() {
-  useInitProgressionsWebsocketsBridge();
-  useInitProgressionsWebsocketsHandlers();
+  if (userProgressionsWebsocketEnabledConfig.get()) {
+    useInitProgressionsWebsocketsBridge();
+    useInitProgressionsWebsocketsHandlers();
+  }
 }
