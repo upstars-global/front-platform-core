@@ -1,6 +1,6 @@
 {
   "name": "front-platform-core",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "type": "module",
   "description": "front platform package for business logic",
   "repository": "https://github.com/upstars-global/front-platform-core.git",

@@ -1,3 +1,10 @@
+## [3.1.1](https://github.com/upstars-global/front-platform-core/compare/v3.1.0...v3.1.1) (2025-10-01)
+
+### 🐛 Bug Fixes
+
+* **FP-3707:** correct `lastLevel` assignment to use dynamic `levels` length
+ ([451b1f4](https://github.com/upstars-global/front-platform-core/commit/451b1f4a0b80bc2da225ffa7520def2bf076eda1))
+
 ## [3.1.0](https://github.com/upstars-global/front-platform-core/compare/v3.0.0...v3.1.0) (2025-10-01)
 
 ### 🚀 Features
