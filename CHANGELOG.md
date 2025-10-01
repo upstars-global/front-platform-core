@@ -1,3 +1,14 @@
+## [3.1.0](https://github.com/upstars-global/front-platform-core/compare/v3.0.0...v3.1.0) (2025-10-01)
+
+### 🚀 Features
+
+* **FP-3922:** add config for toggling user progressions websockets
+ ([5f04181](https://github.com/upstars-global/front-platform-core/commit/5f041814c6898d21b73711a62619bc7ae46b70cc))
+
+
+
+    enabled by default for backward compatibility
+
 ## [3.0.0](https://github.com/upstars-global/front-platform-core/compare/v2.1.0...v3.0.0) (2025-09-30)
 
 ### ⚠ BREAKING CHANGES
