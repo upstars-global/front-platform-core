@@ -1,3 +1,238 @@
+## [3.1.1](https://github.com/upstars-global/front-platform-core/compare/v3.1.0...v3.1.1) (2025-10-01)
+
+### 🐛 Bug Fixes
+
+* **FP-3707:** correct `lastLevel` assignment to use dynamic `levels` length
+ ([451b1f4](https://github.com/upstars-global/front-platform-core/commit/451b1f4a0b80bc2da225ffa7520def2bf076eda1))
+
+## [3.1.0](https://github.com/upstars-global/front-platform-core/compare/v3.0.0...v3.1.0) (2025-10-01)
+
+### 🚀 Features
+
+* **FP-3922:** add config for toggling user progressions websockets
+ ([5f04181](https://github.com/upstars-global/front-platform-core/commit/5f041814c6898d21b73711a62619bc7ae46b70cc))
+
+
+
+    enabled by default for backward compatibility
+
+## [3.0.0](https://github.com/upstars-global/front-platform-core/compare/v2.1.0...v3.0.0) (2025-09-30)
+
+### ⚠ BREAKING CHANGES
+
+* **websockets:** add websockets start and stop in auth feature,
+websockets should be configured in target projects
+
+### 🐛 Bug Fixes
+
+* **FP-3707:** add level validation to prevent emitting `level-confirm` for invalid levels
+ ([6b5e056](https://github.com/upstars-global/front-platform-core/commit/6b5e056d1ea536533555bf5d4a16b4351112d0df))
+
+
+* **FP-3707:** adjust level comparison logic to prevent emitting invalid `level-up` events
+ ([03f729d](https://github.com/upstars-global/front-platform-core/commit/03f729d304aa9e09b2113dd440a96befb43da85a))
+
+
+* **FP-3707:** set `secured` flag to false in VIP settings API request
+ ([b15a922](https://github.com/upstars-global/front-platform-core/commit/b15a9228e3a63a6cd1a191584f0c828bc0ba8ae8))
+
+
+
+### 🚀 Features
+
+* **FP-3500:** Add `isLastLevel` computed property and update `nextLevelOrStatus` logic
+ ([6c4b7a0](https://github.com/upstars-global/front-platform-core/commit/6c4b7a01e97644521d3f01e4bf8dc03f784b31d7))
+
+
+* **FP-3648:** add `getStatusNameByCode` utility and update `RewardType` field definitions
+ ([73cab86](https://github.com/upstars-global/front-platform-core/commit/73cab86026c898943ac3082ab26a38c3b59fc2e8))
+
+
+
+    - Introduce `getStatusNameByCode` to fetch status name by code.
+
+    - Rename `winLimit` to `limit` in `RewardType`.
+* **FP-3707:** Add `getRewardGifts` utility to filter rewards by type
+ ([50060be](https://github.com/upstars-global/front-platform-core/commit/50060bef822b5a3608fdc50391d1ed974288b206))
+
+
+* **FP-3707:** add `isCurrentStatusVipBase` computed property to determine VIP base status
+ ([9608424](https://github.com/upstars-global/front-platform-core/commit/960842443d6aa1a0f48a55119276490a2754fd0c))
+
+
+* **FP-3707:** add `nextLevelGiftCount` computed property to track next level rewards
+ ([ac353ca](https://github.com/upstars-global/front-platform-core/commit/ac353ca7944415817f779aa93054de3433444ce1))
+
+
+* **FP-3707:** add current and next level or status, add current progression type and isLastStatus flag
+ ([96170b1](https://github.com/upstars-global/front-platform-core/commit/96170b15bfd34bce24fa8caa92ef31513776582b))
+
+
+* **FP-3707:** add mapped progressions values
+ ([8528f9b](https://github.com/upstars-global/front-platform-core/commit/8528f9ba570f9f5ba73be6cc9f319bf4e88a1731))
+
+
+* **FP-3707:** add number formatters, add number thousands formatter
+ ([8ea2f14](https://github.com/upstars-global/front-platform-core/commit/8ea2f14164d544edaf85c4dfe8fc45e18d148234))
+
+
+* **FP-3707:** add pointsData calculation
+ ([d8b0700](https://github.com/upstars-global/front-platform-core/commit/d8b07005175b98acb4b80d48c1115632d8e12fd4))
+
+
+* **FP-3707:** Add reward filtering utilities and expand Rewards types
+ ([312f848](https://github.com/upstars-global/front-platform-core/commit/312f8487baf23d18d5f5384d0681b8cf59e0f844))
+
+
+
+    - Introduce `getWeeklyCashbackFields` and `getRewardGiftTitle` utilities.
+
+    - Extend `Rewards` type with structured fields for Cashback, Gift, Freespin, and Cash.
+* **FP-3707:** change request secured to anon
+ ([0c7bb16](https://github.com/upstars-global/front-platform-core/commit/0c7bb16f796e33c01dd161f9239cd532e7ca2901))
+
+
+* **FP-3707:** change request secured to secured
+ ([794ab6f](https://github.com/upstars-global/front-platform-core/commit/794ab6fee482c0290a163b48ff5543fdc8569716))
+
+
+* **FP-3707:** data optimisation, add computed data directly to store to prevent recalculations
+ ([d4fbb5f](https://github.com/upstars-global/front-platform-core/commit/d4fbb5fe100885fd9458503cfd2f83087dc56e73))
+
+
+* **FP-3707:** extend `RewardsTypeDepositBonusValue` with percentage-based fields
+ ([6f94e1e](https://github.com/upstars-global/front-platform-core/commit/6f94e1e625800b8b16233e866a0286a39fa0aab2))
+
+
+
+    - Add `isBonusAsPercent` and `isWinLimitAsPercent` to `RewardsTypeDepositBonusValue`.
+* **FP-3707:** fix sp xp calculation
+ ([20c9e9e](https://github.com/upstars-global/front-platform-core/commit/20c9e9e815ecd0d2a875cdd8dc4e84d476d637b2))
+
+
+* **FP-3707:** remove using deprecated
+ ([b000789](https://github.com/upstars-global/front-platform-core/commit/b000789521db0e31ce6f123853b073d0e306e344))
+
+
+* **FP-3707:** update user progressions behaviour, restructure it
+ ([b889a48](https://github.com/upstars-global/front-platform-core/commit/b889a48640a4fcd51c11254cb266de8673b60598))
+
+
+* **FP-3708:** Add `isAutoConfirmed` to User dynamic and update Status types
+ ([6d0fa39](https://github.com/upstars-global/front-platform-core/commit/6d0fa39146fa14c01690f3d0e8163af36b93a94b))
+
+
+
+    - Add `title` and `promo_text` to Status types.
+
+    - Refine `staticRewards` type definitions in Status API types.
+* **FP-3708:** Add `isDynamicStatusAutoConfirmed` computed property and update exports
+ ([caa7313](https://github.com/upstars-global/front-platform-core/commit/caa7313e80515b359fe54f94611df000910d2d7d))
+
+
+* **FP-3708:** Adjust staticLevels logic and refine isDynamicStatus condition
+ ([895f14d](https://github.com/upstars-global/front-platform-core/commit/895f14d2d884ed8447e06cc99f2348ec93163824))
+
+
+* **FP-3708:** Refine isDynamicStatus logic and update UserStatusResource usage
+ ([2c958f6](https://github.com/upstars-global/front-platform-core/commit/2c958f6e07bc82b531c8d0852a004f572cb70e04))
+
+
+
+    - Modify `isDynamicStatus` to validate `code` against `BASE_VIP`.
+
+    - Adjust `code` type in `StatusProgressions` to ensure non-nullability.
+* **FP-3778:** add `selfExclusionEnabled` support and update version to 2.1.0
+ ([c97ec4e](https://github.com/upstars-global/front-platform-core/commit/c97ec4e94613d705e3fd01622260c21b283fe748))
+
+
+* **FP-3779:** introduce `BetField` type and update `RewardsTypeFreeSpinsValue.bet` definition
+ ([6adf0d3](https://github.com/upstars-global/front-platform-core/commit/6adf0d38d132c2b5cfffeb5900999592a5cac485))
+
+
+* **FP-3825:** add websockets for user entity
+ ([5d20bac](https://github.com/upstars-global/front-platform-core/commit/5d20bacc2c508775b11422e5222de42741dab8fb))
+
+
+
+    - add handling user progressions websockets (update progressions, emit related events)
+
+    - add user event progressions.static.level-up
+
+    - add user event progressions.dynamic.level-up
+
+    - add user event progressions.dynamic.level-confirm
+
+    - add global websockets bootstrap feature
+* **websockets:** add websockets libs
+ ([551db7b](https://github.com/upstars-global/front-platform-core/commit/551db7b3de0566347029c090b640767e936aa400))
+
+
+
+    **BREAKING CHANGE**: add websockets start and stop in auth feature,
+websockets should be configured in target projects
+
+### 🔧 Maintenance
+
+* **FP-3502:** add `weeklyCashback` mapping to levels and statuses
+ ([5dab3a6](https://github.com/upstars-global/front-platform-core/commit/5dab3a697527dfe795ceb0ab3b54b6a5dd4167c2))
+
+
+
+    - Map `weeklyCashback` rewards in `MappedStaticLevel` and `MappedDynStatus`.
+
+    - Introduce `isIcon` bonus comparator to track increasing cashback values.
+
+    - Update type definitions for `weeklyCashback` in `MappedStaticLevel` and `MappedDynStatus`.
+* **FP-3626:** introduce environment entity and remove global.d.ts**
+ ([c0f7705](https://github.com/upstars-global/front-platform-core/commit/c0f770514a01dd37aa01eceaeba6e2a6bfd54a31))
+
+
+* **FP-3626:** update `promo_text` to `promoText` and add `lastMappedStaticLevel`
+ ([4eec259](https://github.com/upstars-global/front-platform-core/commit/4eec2595f9d2a5f274ddde52152b9dc3ead02aa3))
+
+
+* **FP-3707:** remove unused `getRewardGiftTitle` utility and streamline reward handling
+ ([7b0d059](https://github.com/upstars-global/front-platform-core/commit/7b0d05908b1153ca2dc90cfa06555c88165e2ee8))
+
+
+* **FP-3707:** rename `bonus` to `cashbackPercent` in `weeklyCashback` definitions
+ ([e412693](https://github.com/upstars-global/front-platform-core/commit/e4126933143ac66aaccd783e908d4939a3baea78))
+
+
+* **FP-3707:** replace `Gift` with `DepositBonus` reward type and update related utilities
+ ([8915595](https://github.com/upstars-global/front-platform-core/commit/8915595d232b37cba42774c208a5f705e2f6e90d))
+
+
+
+    - Update `Rewards` type definitions to include `DepositBonus` and refine field structures.
+
+    - Adjust `getRewardGifts` and `getRewardGiftTitle` utilities to use the new reward type.
+* **FP-3707:** update `RewardType` and utilities to streamline reward handling
+ ([446b743](https://github.com/upstars-global/front-platform-core/commit/446b743b76f87d854a8d1df8f62df98914e15d8c))
+
+
+
+### 🔨 Refactoring
+
+* **FP-3626:** extend type UserProfileResource with new field registrationDate
+ ([90e4161](https://github.com/upstars-global/front-platform-core/commit/90e41619f9b4cc9844d3633ff92ffbe99693d799))
+
+
+* **FP-3825:** change condition direction
+ ([0b2878e](https://github.com/upstars-global/front-platform-core/commit/0b2878e8bdfff0a79b60f22b404c83251a5c1519))
+
+
+* **websockets:** update rename websocket to websockets in config
+ ([a4c861e](https://github.com/upstars-global/front-platform-core/commit/a4c861e5c34b3159868d61e64622c34e95e9a9b2))
+
+## [2.1.0](https://github.com/upstars-global/front-platform-core/compare/v2.0.0...v2.1.0) (2025-09-29)
+
+### 🚀 Features
+
+* **FP-3778:** added selfExclusionEnabled
+ ([794fd2b](https://github.com/upstars-global/front-platform-core/commit/794fd2b5f6a5369fda0e091717d31b95197ac546))
+
 ## [2.0.0](https://github.com/upstars-global/front-platform-core/compare/v1.8.1...v2.0.0) (2025-09-17)
 
 ### ⚠ BREAKING CHANGES

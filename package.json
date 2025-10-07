@@ -1,6 +1,6 @@
 {
   "name": "front-platform-core",
-  "version": "2.0.0",
+  "version": "3.1.1",
   "type": "module",
   "description": "front platform package for business logic",
   "repository": "https://github.com/upstars-global/front-platform-core.git",
@@ -19,17 +19,18 @@
     ]
   },
   "dependencies": {
-    "mitt": "^3.0.1",
     "uuid": "^10.0.0",
     "zod": "^3.24.2"
   },
   "peerDependencies": {
+    "mitt": "^3.0.1",
     "firebase": "11.6.0",
     "pinia": "^2.3.1",
     "vue": "^3.5.13",
     "vue-i18n": "9.14.4"
   },
   "devDependencies": {
+    "mitt": "^3.0.1",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@eslint/js": "^9.23.0",
