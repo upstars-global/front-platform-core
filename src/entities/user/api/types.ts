@@ -299,7 +299,7 @@ export type IUserKYCData = {
   token: string;
 };
 
-export type IUserStrategiesResource = Record<
+export type UserStrategiesResource = Record<
   string,
   {
     type: string;
