@@ -1,0 +1,63 @@
+import type { ZodIssue } from "zod";
+
+export enum ClientErrorKey {
+  // EMAIL
+  EmailInvalid = 'VALIDATION.EMAIL.INVALID',
+
+  // SMS
+  SmsFatal = 'VALIDATION.SMS.FATAL',
+  SmsChars = 'VALIDATION.SMS.CHARS',
+  SmsEmpty = 'VALIDATION.SMS.EMPTY',
+  SmsInvalid = 'VALIDATION.SMS.INVALID',
+
+  // PASSWORD
+  PasswordWrongChars = 'VALIDATION.PASSWORD.WRONG_CHARTS',
+  PasswordNotMatch = 'VALIDATION.PASSWORD.NOT_MATCH',
+  PasswordLength = 'VALIDATION.PASSWORD.LENGTH',
+  PasswordEmpty = 'VALIDATION.PASSWORD.EMPTY',
+
+  // COUNTRY
+  CountryEmpty = 'VALIDATION.COUNTRY.EMPTY',
+
+  // GENERAL
+  Required = 'VALIDATION.COMMON.REQUIRED',
+}
+
+export enum BackendErrorKey {
+  // LOGIN / EMAIL
+  UserExists = 'VALIDATION_BACK.USER_WITH_THIS_EMAIL_ALREADY_EXIST',
+  RegFromEmailForbidden = 'VALIDATION_BACK.REGISTRATION_FROM_EMAIL_FORBIDDEN',
+
+  // PROMO CODE
+  PromoNotFound = 'VALIDATION_BACK.PROMO_CODE_NOT_FOUND',
+  PromoAttemptsExceed = 'VALIDATION_BACK.PROMO_CODE_ATTEMPTS_EXCEED',
+  PromoDuplicate = 'VALIDATION_BACK.PROMO_CODE_DUPLICATE_ACTIVATION',
+  PromoExpired = 'VALIDATION_BACK.PROMO_CODE_CAMPAIGN_EXPIRED',
+  PromoUnknownError = 'VALIDATION_BACK.PROMO_CODE_UNKNOWN_ERROR',
+
+  // CURRENCY
+  CurrencyNotSupported = 'VALIDATION_BACK.CURRENCY_NOT_SUPPORTED',
+
+  // COUNTRY
+  RegFromCountryForbidden = 'VALIDATION_BACK.ANTI_FRAUD.REGISTRATION_FROM_COUNTRY_FORBIDDEN',
+
+  // ACCEPT TERMS
+  RulesNotAccepted = 'VALIDATION_BACK.RULES_NOT_ACCEPTED',
+
+  AccountIsFraud = 'VALIDATION_BACK.ACCOUNT_IS_FRAUD',
+  RegRejected = 'VALIDATION_BACK.ANTI_FRAUD.REGISTRATION_REJECTED',
+  TooManyAttempts = 'VALIDATION_BACK.TOO_MANY_ATTEMPTS',
+  SelfExclusion = 'VALIDATION_BACK.SELF_EXCLUSION_ACTIVATED',
+}
+
+export const BACKEND_PREFIX = 'VALIDATION_BACK';
+
+export const PASSWORD_REQUIRED_LENGTH = 6;
+
+export type ValidationErrorKey = ClientErrorKey | BackendErrorKey | string;
+
+export type ValidationError = {
+  key: ValidationErrorKey;
+  field: string;
+  zodIssue?: ZodIssue;
+};
