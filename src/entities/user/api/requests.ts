@@ -17,7 +17,7 @@ import {
   type IUserWinbackDataResource,
   VerificationTypes,
   type IUserKYCData,
-  type IUserStrategiesResource,
+  type UserStrategiesResource,
   type IUserCallbackDataDTO,
   type IUserCallbackDataResource,
   type IUserFastTrackSIDResource,
@@ -296,7 +296,7 @@ export const userAPI = {
   async loadUserStrategies() {
     try {
       const response = await publicApiV1<{
-        strategies: IUserStrategiesResource;
+        strategies: UserStrategiesResource;
       }>({
         url: '/users/identifier',
         type: () => 'user.identifier.config',
