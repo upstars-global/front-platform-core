@@ -1,4 +1,5 @@
-import { Currency, Gender, type Localisation, RegistrationType } from '../../../shared/api';
+import { Currency, Gender, type Localisation, RegistrationType, type TimestampSocketData } from '../../../shared/api';
+
 
 export enum VerificationsStatusOld {
   INITIAL = 'initial',
@@ -363,6 +364,38 @@ export type IUserStatusResource = {
   betSumCents: number;
   betSumThresholdCents: number;
   overallProgress: number;
+};
+
+export type BalanceChangedDataChange = {
+    real: number;
+    bonus: number;
+    wagering: number;
+    sportBonus: number;
+    sportWagering: number;
+    freeBetBonus: number;
+}
+export type BalanceChangedDataBonusWagering = {
+    userGiftId: string;
+    sum: number;
+    sumWagering: number;
+}
+export type BalanceChangedData = TimestampSocketData & {
+    type: "balance.changed";
+    balanceType?: "real" | string;
+    balance: number;
+    reason: string;
+    changes?: BalanceChangedDataChange[];
+    bonus?: number;
+    sumWagering?: number;
+    totalWagering?: number;
+    bonusesWagering?: {
+        sport?: BalanceChangedDataBonusWagering | null;
+        casino?: BalanceChangedDataBonusWagering | null;
+    };
+    bonuses: {
+        sport: ISportBonus | null;
+        freeBet: { sum: number; } | null;
+    };
 };
 
 export type IUserRefcodeResource = {

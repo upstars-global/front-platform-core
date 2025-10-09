@@ -37,3 +37,7 @@ export enum RegistrationType {
 export type Localisation = Record<string, unknown> & {
   variables?: Record<string, unknown>;
 };
+
+export type TimestampSocketData = {
+  timestamp: number;
+}
