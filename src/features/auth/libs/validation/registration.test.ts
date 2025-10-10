@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { RegistrationFormSchema } from './registration';
-import { ClientErrorKey, validateData } from 'src/shared';
+import { ClientErrorKey, validateData } from '../../../../shared';
 
 describe('RegistrationFormSchema', () => {
   const validData = {

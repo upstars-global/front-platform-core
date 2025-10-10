@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { createCountrySchema, createCurrencySchema, createEmailSchema, createPasswordSchema } from '../schemas';
-import { mapBackendErrors, validateData } from './mapper';
+import { mapBackendErrors, validateData } from './';
 import { BackendErrorKey, ClientErrorKey } from '../config';
 import { object } from 'zod';
 

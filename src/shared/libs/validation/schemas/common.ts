@@ -17,8 +17,8 @@ export const createEmailSchema = ({
   const requiredMsg = requiredMessage || ClientErrorKey.Required;
   const invalidMsg = invalidMessage || ClientErrorKey.EmailInvalid;
 
-  return string({ required_error: requiredMsg }).min(MIN_LENGTH, { message: requiredMsg }).regex(EMAIL_REGEX, {
-    message: invalidMsg,
+  return string({ error: requiredMsg }).min(MIN_LENGTH, { error: requiredMsg }).regex(EMAIL_REGEX, {
+    error: invalidMsg,
   });
 };
 
@@ -37,13 +37,13 @@ export const createPasswordSchema = ({
   const lengthMsg = lengthMessage || ClientErrorKey.PasswordLength;
   const charsMsg = charsMessage || ClientErrorKey.PasswordWrongChars;
 
-  return string({ required_error: emptyMsg })
-    .min(MIN_LENGTH, { message: emptyMsg })
+  return string({ error: emptyMsg })
+    .min(MIN_LENGTH, { error: emptyMsg })
     .min(PASSWORD_REQUIRED_LENGTH, {
-      message: lengthMsg,
+      error: lengthMsg,
     })
     .regex(PASSWORD_REGEX, {
-      message: charsMsg,
+      error: charsMsg,
     });
 };
 
@@ -59,19 +59,19 @@ export const createSmsSchema = ({
   const emptyMsg = emptyMessage || ClientErrorKey.SmsEmpty;
   const charsMsg = charsMessage || ClientErrorKey.SmsChars;
 
-  return string({ required_error: emptyMsg }).min(1, { message: emptyMsg }).regex(SMS_CHARS_REGEX, {
-    message: charsMsg,
+  return string({ error: emptyMsg }).min(1, { error: emptyMsg }).regex(SMS_CHARS_REGEX, {
+    error: charsMsg,
   });
 };
 
 export const createCountrySchema = (message?: string) => {
   const msg = message || ClientErrorKey.CountryEmpty;
 
-  return string({ required_error: msg }).min(1, { message: msg });
+  return string({ error: msg }).min(1, { error: msg });
 };
 
 export const createCurrencySchema = (message?: string) => {
   const msg = message || ClientErrorKey.Required;
 
-  return string({ required_error: msg }).min(1, { message: msg });
+  return string({ error: msg }).min(1, { error: msg });
 };

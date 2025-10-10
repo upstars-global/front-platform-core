@@ -21,6 +21,8 @@ export enum ClientErrorKey {
 
   // GENERAL
   Required = 'VALIDATION.COMMON.REQUIRED',
+
+  UnknownError = 'VALIDATION.COMMON.UNKNOWN_ERROR',
 }
 
 export enum BackendErrorKey {
