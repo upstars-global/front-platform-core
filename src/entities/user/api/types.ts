@@ -364,3 +364,8 @@ export type IUserStatusResource = {
   betSumThresholdCents: number;
   overallProgress: number;
 };
+
+export type IUserRefcodeResource = {
+  isLoaded: boolean;
+  types: string[];
+};
