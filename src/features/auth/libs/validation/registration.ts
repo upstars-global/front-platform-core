@@ -18,8 +18,4 @@ export const RegistrationFormSchema = object({
 
   promo_code: string().optional(),
   accept_notifications: boolean().optional(),
-  localization: string().optional(),
-  auth_type: string().optional(),
-  captcha_key: string().optional(),
-  client_id: string().optional(),
 });
