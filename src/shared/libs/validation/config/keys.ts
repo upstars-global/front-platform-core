@@ -1,4 +1,6 @@
-import type { ZodIssue } from "zod";
+import type { $ZodIssue } from "zod/v4/core";
+
+export const UNKNOWN_VALIDATION_ERROR_KEY = 'VALIDATION.COMMON.UNKNOWN_ERROR'
 
 export enum ClientErrorKey {
   // EMAIL
@@ -19,10 +21,11 @@ export enum ClientErrorKey {
   // COUNTRY
   CountryEmpty = 'VALIDATION.COUNTRY.EMPTY',
 
+  // ACCEPT TERMS
+  RulesNotAccepted = 'VALIDATION.RULES_NOT_ACCEPTED',
+
   // GENERAL
   Required = 'VALIDATION.COMMON.REQUIRED',
-
-  UnknownError = 'VALIDATION.COMMON.UNKNOWN_ERROR',
 }
 
 export enum BackendErrorKey {
@@ -58,8 +61,14 @@ export const PASSWORD_REQUIRED_LENGTH = 6;
 
 export type ValidationErrorKey = ClientErrorKey | BackendErrorKey | string;
 
-export type ValidationError = {
+export type ValidationError <T extends string> = {
   key: ValidationErrorKey;
-  field: string;
-  zodIssue?: ZodIssue;
+  field: T;
+  zodIssue?: $ZodIssue;
+  originalError?: string
 };
+
+export type LocalizationKey = 
+  | ClientErrorKey 
+  | BackendErrorKey 
+  | `${typeof BACKEND_PREFIX}.${string}`;

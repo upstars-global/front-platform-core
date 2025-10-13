@@ -1,5 +1,5 @@
 /* eslint-disable no-useless-escape */
-import { string } from 'zod';
+import { boolean, string } from 'zod';
 import { ClientErrorKey, PASSWORD_REQUIRED_LENGTH } from '../config/keys';
 
 const MIN_LENGTH = 1;
@@ -74,4 +74,14 @@ export const createCurrencySchema = (message?: string) => {
   const msg = message || ClientErrorKey.Required;
 
   return string({ error: msg }).min(1, { error: msg });
+};
+
+export const createAcceptTermsSchema = (message?: string) => {
+  const msg = message || ClientErrorKey.RulesNotAccepted;
+
+  return boolean({
+    error: msg
+  }).refine((value) => value, {
+    error: msg
+  });
 };

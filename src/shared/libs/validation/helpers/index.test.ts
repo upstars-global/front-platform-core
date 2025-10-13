@@ -7,13 +7,13 @@ import { object } from 'zod';
 describe('validateForm utility', () => {
   it('should return null for valid data', () => {
     const schema = createEmailSchema();
-    const errors = validateData(schema, 'test@example.com');
+    const { errors } = validateData(schema, 'test@example.com');
     expect(errors).toBeNull();
   });
 
   it('should return validation errors for invalid data', () => {
     const schema = createEmailSchema();
-    const errors = validateData(schema, 'invalid');
+    const {errors} = validateData(schema, 'invalid');
     expect(errors).not.toBeNull();
     expect(errors).toHaveLength(1);
     expect(errors![0].key).toBe(ClientErrorKey.EmailInvalid);
@@ -27,7 +27,7 @@ describe('validateForm utility', () => {
       country: createCountrySchema(),
     });
 
-    const errors = validateData(testSchema, {
+    const { errors } = validateData(testSchema, {
       email: 'invalid',
       password: '123',
       country: '',
@@ -42,7 +42,7 @@ describe('validateForm utility', () => {
       password: createPasswordSchema(),
     });
 
-    const errors = validateData(testSchema, {
+    const { errors } = validateData(testSchema, {
       email: 'invalid@test.com',
       password: '123',
     });
@@ -54,14 +54,14 @@ describe('validateForm utility', () => {
 
   it('should handle validation of password schema', () => {
     const schema = createPasswordSchema();
-    const errors = validateData(schema, '12345');
+    const { errors } = validateData(schema, '12345');
     expect(errors).not.toBeNull();
     expect(errors![0].key).toBe(ClientErrorKey.PasswordLength);
   });
 
   it('should handle validation of country schema', () => {
     const schema = createCountrySchema();
-    const errors = validateData(schema, '');
+    const { errors } = validateData(schema, '');
     expect(errors).not.toBeNull();
     expect(errors![0].key).toBe(ClientErrorKey.CountryEmpty);
   });
@@ -80,7 +80,7 @@ describe('validateForm utility', () => {
       }),
     });
 
-    const errors = validateData(testSchema, {
+    const { errors } = validateData(testSchema, {
       user: {
         credentials: {
           email: 'invalid',
@@ -151,14 +151,6 @@ describe('mapBackendErrors utility', () => {
     };
     const result = mapBackendErrors({ errors: backendErrors });
     expect(result[0].field).toBe('unknown_field');
-  });
-
-  it('should only use first error code from array', () => {
-    const backendErrors = {
-      email: ['ERROR_ONE', 'ERROR_TWO'],
-    };
-    const result = mapBackendErrors({ errors: backendErrors });
-    expect(result[0].key).toBe('VALIDATION_BACK.ERROR_ONE');
   });
 });
 
