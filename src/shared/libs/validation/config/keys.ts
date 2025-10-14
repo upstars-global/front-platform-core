@@ -21,9 +21,6 @@ export enum ClientErrorKey {
   // COUNTRY
   CountryEmpty = 'VALIDATION.COUNTRY.EMPTY',
 
-  // ACCEPT TERMS
-  RulesNotAccepted = 'VALIDATION.RULES_NOT_ACCEPTED',
-
   // GENERAL
   Required = 'VALIDATION.COMMON.REQUIRED',
 }

@@ -77,7 +77,7 @@ export const createCurrencySchema = (message?: string) => {
 };
 
 export const createAcceptTermsSchema = (message?: string) => {
-  const msg = message || ClientErrorKey.RulesNotAccepted;
+  const msg = message || ClientErrorKey.Required;
 
   return boolean({
     error: msg
