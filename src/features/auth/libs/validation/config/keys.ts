@@ -1,4 +1,4 @@
-export const BACKEND_ERROR_KEY = {
+export const AUTH_BACKEND_ERROR_KEY = {
   // LOGIN / EMAIL
   UserExists: 'VALIDATION_BACK.USER_WITH_THIS_EMAIL_ALREADY_EXIST',
   RegFromEmailForbidden: 'VALIDATION_BACK.REGISTRATION_FROM_EMAIL_FORBIDDEN',
@@ -25,4 +25,4 @@ export const BACKEND_ERROR_KEY = {
   SelfExclusion: 'VALIDATION_BACK.SELF_EXCLUSION_ACTIVATED',
 } as const
 
-export type BackendErrorKey = typeof BACKEND_ERROR_KEY[keyof typeof BACKEND_ERROR_KEY];
+export type BackendErrorKey = typeof AUTH_BACKEND_ERROR_KEY[keyof typeof AUTH_BACKEND_ERROR_KEY];
