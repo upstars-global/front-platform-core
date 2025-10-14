@@ -33,7 +33,7 @@ describe('RegistrationFormSchema', () => {
     expect(errors!.length).toBeGreaterThan(0);
     const termsError = errors!.find(e => e.field === 'acceptTerms');
     expect(termsError).toBeDefined();
-    expect(termsError!.key).toBe('VALIDATION_BACK.RULES_NOT_ACCEPTED');
+    expect(termsError!.key).toBe(ClientErrorKey.RulesNotAccepted);
   });
 
   it('should reject form with invalid email', () => {
@@ -133,7 +133,7 @@ describe('RegistrationFormSchema', () => {
     
     const termsError = errors!.find(e => e.field === 'acceptTerms');
     expect(termsError).toBeDefined();
-    expect(termsError!.key).toBe('VALIDATION_BACK.RULES_NOT_ACCEPTED');
+    expect(termsError!.key).toBe(ClientErrorKey.RulesNotAccepted);
   });
 
   it('should accept email with special characters', () => {

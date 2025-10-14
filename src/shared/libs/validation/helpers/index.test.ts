@@ -1,8 +1,13 @@
 import { describe, it, expect } from 'vitest';
 import { createCountrySchema, createCurrencySchema, createEmailSchema, createPasswordSchema } from '../schemas';
 import { mapBackendErrors, validateData } from './';
-import { BackendErrorKey, ClientErrorKey } from '../config';
+import { ClientErrorKey } from '../config';
 import { object } from 'zod';
+
+enum BackendKey {
+  UserExists = 'VALIDATION_BACK.USER_WITH_THIS_EMAIL_ALREADY_EXIST',
+  PromoNotFound = 'VALIDATION_BACK.PROMO_CODE_NOT_FOUND',
+}
 
 describe('validateForm utility', () => {
   it('should return null for valid data', () => {
@@ -119,7 +124,7 @@ describe('mapBackendErrors utility', () => {
     const backendErrors = {
       email: ['USER_WITH_THIS_EMAIL_ALREADY_EXIST'],
     };
-    const result = mapBackendErrors({ errors: backendErrors });
+    const result = mapBackendErrors({ errors: backendErrors, backendKeys: BackendKey });
     expect(result).toHaveLength(1);
     expect(result[0].key).toBe('VALIDATION_BACK.USER_WITH_THIS_EMAIL_ALREADY_EXIST');
     expect(result[0].field).toBe('email');
@@ -130,7 +135,7 @@ describe('mapBackendErrors utility', () => {
       email: ['USER_WITH_THIS_EMAIL_ALREADY_EXIST'],
       promo_code: ['PROMO_CODE_NOT_FOUND'],
     };
-    const result = mapBackendErrors({ errors: backendErrors });
+    const result = mapBackendErrors({ errors: backendErrors, backendKeys: BackendKey });
     expect(result).toHaveLength(2);
   });
 
@@ -141,7 +146,7 @@ describe('mapBackendErrors utility', () => {
     const fieldMap = {
       email: 'login',
     };
-    const result = mapBackendErrors({ errors: backendErrors, fieldMap });
+    const result = mapBackendErrors({ errors: backendErrors, backendKeys: BackendKey, fieldMap });
     expect(result[0].field).toBe('login');
   });
 
@@ -149,7 +154,7 @@ describe('mapBackendErrors utility', () => {
     const backendErrors = {
       unknown_field: ['SOME_ERROR'],
     };
-    const result = mapBackendErrors({ errors: backendErrors });
+    const result = mapBackendErrors({ errors: backendErrors, backendKeys: BackendKey });
     expect(result[0].field).toBe('unknown_field');
   });
 });
@@ -162,13 +167,13 @@ describe('Error Keys', () => {
   });
 
   it('should have unique backend error keys', () => {
-    const keys = Object.values(BackendErrorKey);
+    const keys = Object.values(BackendKey);
     const uniqueKeys = new Set(keys);
     expect(keys.length).toBe(uniqueKeys.size);
   });
 
   it('should have all backend keys with correct prefix', () => {
-    const keys = Object.values(BackendErrorKey);
+    const keys = Object.values(BackendKey);
     keys.forEach((key) => {
       expect(key).toContain('VALIDATION_BACK');
     });
