@@ -18,7 +18,7 @@ export function validateData<T>(schema: ZodType<T>, data: unknown) {
 
 export function mapBackendErrors<
   T extends string,
-  U extends Record<string, string>
+  U extends Record<string, string> = Record<string, string>
 >({
   errors,
   backendKeys,
