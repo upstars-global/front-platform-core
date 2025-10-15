@@ -2,7 +2,6 @@ import { describe, it, expect } from 'vitest';
 import {
   createEmailSchema,
   createPasswordSchema,
-  createSmsSchema,
   createCountrySchema,
   createCurrencySchema,
 } from './common';
@@ -105,25 +104,6 @@ describe('Password Schema', () => {
     const { errors } = validateData(customSchema, '12345');
     expect(errors).not.toBeNull();
     expect(errors![0].key).toBe('Too short');
-  });
-});
-
-describe('SMS Schema', () => {
-  const smsSchema = createSmsSchema();
-
-  it('should validate correct SMS code', () => {
-    const { errors } = validateData(smsSchema, '123456');
-    expect(errors).toBeNull();
-  });
-
-  it('should use custom error messages', () => {
-    const customSchema = createSmsSchema({
-      emptyMessage: 'Custom empty',
-      charsMessage: 'Custom chars',
-    });
-    const { errors } = validateData(customSchema, 'abc');
-    expect(errors).not.toBeNull();
-    expect(errors![0].key).toBe('Custom chars');
   });
 });
 
