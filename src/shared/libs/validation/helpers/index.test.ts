@@ -18,7 +18,7 @@ describe('validateForm utility', () => {
 
   it('should return validation errors for invalid data', () => {
     const schema = createEmailSchema();
-    const {errors} = validateData(schema, 'invalid');
+    const { errors } = validateData(schema, 'invalid');
     expect(errors).not.toBeNull();
     expect(errors).toHaveLength(1);
     expect(errors![0].key).toBe(ClientErrorKey.EmailInvalid);
@@ -52,7 +52,7 @@ describe('validateForm utility', () => {
       password: '123',
     });
     expect(errors).not.toBeNull();
-    const passwordError = errors!.find(e => e.field === 'password');
+    const passwordError = errors!.find((e) => e.field === 'password');
     expect(passwordError).toBeDefined();
     expect(passwordError!.key).toBe(ClientErrorKey.PasswordLength);
   });
@@ -100,20 +100,20 @@ describe('validateForm utility', () => {
 
     expect(errors).not.toBeNull();
     expect(errors!.length).toBeGreaterThan(0);
-    
-    const emailError = errors!.find(e => e.field === 'user.credentials.email');
+
+    const emailError = errors!.find((e) => e.field === 'user.credentials.email');
     expect(emailError).toBeDefined();
     expect(emailError!.key).toBe(ClientErrorKey.EmailInvalid);
-    
-    const passwordError = errors!.find(e => e.field === 'user.credentials.password');
+
+    const passwordError = errors!.find((e) => e.field === 'user.credentials.password');
     expect(passwordError).toBeDefined();
     expect(passwordError!.key).toBe(ClientErrorKey.PasswordLength);
-    
-    const countryError = errors!.find(e => e.field === 'user.profile.country');
+
+    const countryError = errors!.find((e) => e.field === 'user.profile.country');
     expect(countryError).toBeDefined();
     expect(countryError!.key).toBe(ClientErrorKey.CountryEmpty);
-    
-    const currencyError = errors!.find(e => e.field === 'user.profile.currency');
+
+    const currencyError = errors!.find((e) => e.field === 'user.profile.currency');
     expect(currencyError).toBeDefined();
     expect(currencyError!.key).toBe(ClientErrorKey.Required);
   });

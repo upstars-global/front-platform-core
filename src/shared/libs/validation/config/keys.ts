@@ -6,12 +6,6 @@ export enum ClientErrorKey {
   // EMAIL
   EmailInvalid = 'VALIDATION.EMAIL.INVALID',
 
-  // SMS
-  SmsFatal = 'VALIDATION.SMS.FATAL',
-  SmsChars = 'VALIDATION.SMS.CHARS',
-  SmsEmpty = 'VALIDATION.SMS.EMPTY',
-  SmsInvalid = 'VALIDATION.SMS.INVALID',
-
   // PASSWORD
   PasswordWrongChars = 'VALIDATION.PASSWORD.WRONG_CHARTS',
   PasswordNotMatch = 'VALIDATION.PASSWORD.NOT_MATCH',

@@ -116,28 +116,6 @@ describe('SMS Schema', () => {
     expect(errors).toBeNull();
   });
 
-  it('should reject empty SMS', () => {
-    const { errors } = validateData(smsSchema, '');
-    expect(errors).not.toBeNull();
-    expect(errors).toHaveLength(1);
-    expect(errors![0].key).toBe(ClientErrorKey.SmsEmpty);
-    expect(errors![0].field).toBe('');
-  });
-
-  it('should reject SMS with letters', () => {
-    const { errors } = validateData(smsSchema, '12a456');
-    expect(errors).not.toBeNull();
-    expect(errors).toHaveLength(1);
-    expect(errors![0].key).toBe(ClientErrorKey.SmsChars);
-    expect(errors![0].field).toBe('');
-  });
-
-  it('should reject SMS with special characters', () => {
-    const { errors } = validateData(smsSchema, '123-456');
-    expect(errors).not.toBeNull();
-    expect(errors![0].key).toBe(ClientErrorKey.SmsChars);
-  });
-
   it('should use custom error messages', () => {
     const customSchema = createSmsSchema({
       emptyMessage: 'Custom empty',

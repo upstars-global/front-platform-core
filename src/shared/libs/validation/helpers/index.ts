@@ -23,16 +23,18 @@ export function mapBackendErrors<
   errors,
   backendKeys,
   fieldMap,
+  addPrefix = true,
 }: {
   errors: Record<string, string[]>;
   backendKeys: U;
   fieldMap?: Record<string, T>;
+  addPrefix?: boolean
 }) {
   const mappedErrors: ValidationError<T, U[keyof U]>[] = [];
 
   for (const fieldKey in errors) {
     const [errorCode] = errors[fieldKey];
-    const keyWithPrefix = `${BACKEND_PREFIX}.${errorCode}` as U[keyof U];
+    const keyWithPrefix = addPrefix ? `${BACKEND_PREFIX}.${errorCode}`: errorCode as U[keyof U];
 
     const isKnownError = Object.values(backendKeys).includes(keyWithPrefix);
 
