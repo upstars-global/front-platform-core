@@ -1,3 +1,14 @@
+## [3.2.0](https://github.com/upstars-global/front-platform-core/compare/v3.1.1...v3.2.0) (2025-10-09)
+
+### 🚀 Features
+
+* **FP-3173:** added cashbox to core
+ ([3607c13](https://github.com/upstars-global/front-platform-core/commit/3607c13fb199b23dcbadb672226a439cc02af023))
+
+
+* **FP-3173:** export COINS
+ ([99c9e32](https://github.com/upstars-global/front-platform-core/commit/99c9e3271de4587d8f2d8d5955ebf1b8c4b251fe))
+
 ## [3.1.1](https://github.com/upstars-global/front-platform-core/compare/v3.1.0...v3.1.1) (2025-10-01)
 
 ### 🐛 Bug Fixes
