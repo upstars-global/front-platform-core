@@ -47,23 +47,6 @@ export const createPasswordSchema = ({
     });
 };
 
-const SMS_CHARS_REGEX = /^[0-9]*$/;
-
-export const createSmsSchema = ({
-  emptyMessage,
-  charsMessage,
-}: {
-  emptyMessage?: string;
-  charsMessage?: string;
-} = {}) => {
-  const emptyMsg = emptyMessage || ClientErrorKey.SmsEmpty;
-  const charsMsg = charsMessage || ClientErrorKey.SmsChars;
-
-  return string({ error: emptyMsg }).min(1, { error: emptyMsg }).regex(SMS_CHARS_REGEX, {
-    error: charsMsg,
-  });
-};
-
 export const createCountrySchema = (message?: string) => {
   const msg = message || ClientErrorKey.CountryEmpty;
 
