@@ -51,6 +51,30 @@ export interface IRegisterResource {
   isAlreadyRegistered?: boolean;
 }
 
+export const IBIZA_ERROR_KEYS = {
+  // INVALID
+  InvalidBlacklisted: 'IBIZA.INVALID.BLACKLISTED',
+  InvalidDomain: 'IBIZA.INVALID.INVALID_DOMAIN',
+  InvalidEmail: 'IBIZA.INVALID.INVALID_EMAIL',
+  InvalidRejectedEmail: 'IBIZA.INVALID.REJECTED_EMAIL',
+
+  // RISKY
+  RiskyInboxFull: 'IBIZA.RISKY.INBOX_FULL',
+  RiskyNonPersonal: 'IBIZA.RISKY.NON_PERSONAL',
+  RiskyRisky: 'IBIZA.RISKY.RISKY',
+  RiskyTemporary: 'IBIZA.RISKY.TEMPORARY',
+  RiskyTimeout: 'IBIZA.RISKY.TIMEOUT',
+
+  // UNKNOWN
+  UnknownUnknown: 'IBIZA.UNKNOWN.UNKNOWN',
+
+  // VALID
+  ValidAcceptedEmail: 'IBIZA.VALID.ACCEPTED_EMAIL',
+  ValidWhitelisted: 'IBIZA.VALID.WHITELISTED',
+} as const;
+
+export type IbizaErrorKey = typeof IBIZA_ERROR_KEYS[keyof typeof IBIZA_ERROR_KEYS];
+
 export interface IVerifyEmailResource {
-  result: string;
+  result: IbizaErrorKey;
 }
