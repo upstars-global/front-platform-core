@@ -5,10 +5,13 @@ import {
   createCurrencySchema,
   createEmailSchema,
   createPasswordSchema,
+  PASSWORD_REQUIRED_LENGTH,
 } from '../../../../shared';
 
 const emailSchema = createEmailSchema();
-const passwordSchema = createPasswordSchema();
+const passwordSchema = createPasswordSchema({
+  passwordMinLength: PASSWORD_REQUIRED_LENGTH
+});
 const countrySchema = createCountrySchema();
 const currencySchema = createCurrencySchema();
 const acceptTerms = createAcceptTermsSchema();

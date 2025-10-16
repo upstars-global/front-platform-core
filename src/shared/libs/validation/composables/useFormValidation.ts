@@ -172,11 +172,7 @@ export function useFormValidation<T extends Record<string, FieldValue>>(options:
     const isValid = validateForm();
 
     if (isValid && options.onSubmit) {
-      try {
         await options.onSubmit(values.value);
-      } catch (err) {
-        console.error('Submit error:', err);
-      }
     }
 
     submitting.value = false;

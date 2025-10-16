@@ -24,22 +24,26 @@ export const createEmailSchema = ({
 
 const PASSWORD_REGEX = /^[0-9a-zA-Z|@#$\^&="!№\';%:?()_+\-\/\,\.]*$/;
 
-export const createPasswordSchema = ({
-  emptyMessage,
-  lengthMessage,
-  charsMessage,
-}: {
-  emptyMessage?: string;
-  lengthMessage?: string;
-  charsMessage?: string;
-} = {}) => {
+export const createPasswordSchema = (
+  {
+    emptyMessage,
+    lengthMessage,
+    charsMessage,
+    passwordMinLength,
+  }: {
+    emptyMessage?: string;
+    lengthMessage?: string;
+    charsMessage?: string;
+    passwordMinLength: number;
+  } = { passwordMinLength: PASSWORD_REQUIRED_LENGTH },
+) => {
   const emptyMsg = emptyMessage || ClientErrorKey.PasswordEmpty;
   const lengthMsg = lengthMessage || ClientErrorKey.PasswordLength;
   const charsMsg = charsMessage || ClientErrorKey.PasswordWrongChars;
 
   return string({ error: emptyMsg })
     .min(MIN_LENGTH, { error: emptyMsg })
-    .min(PASSWORD_REQUIRED_LENGTH, {
+    .min(passwordMinLength, {
       error: lengthMsg,
     })
     .regex(PASSWORD_REGEX, {
@@ -63,8 +67,8 @@ export const createAcceptTermsSchema = (message?: string) => {
   const msg = message || ClientErrorKey.Required;
 
   return boolean({
-    error: msg
+    error: msg,
   }).refine((value) => value, {
-    error: msg
+    error: msg,
   });
 };

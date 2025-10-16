@@ -5,7 +5,7 @@ import {
   createCountrySchema,
   createCurrencySchema,
 } from './common';
-import { ClientErrorKey } from '../config/keys';
+import { ClientErrorKey, PASSWORD_REQUIRED_LENGTH } from '../config/keys';
 import { validateData } from '../helpers';
 
 describe('Email Schema', () => {
@@ -100,6 +100,7 @@ describe('Password Schema', () => {
       emptyMessage: 'Empty',
       lengthMessage: 'Too short',
       charsMessage: 'Bad chars',
+      passwordMinLength: PASSWORD_REQUIRED_LENGTH
     });
     const { errors } = validateData(customSchema, '12345');
     expect(errors).not.toBeNull();
