@@ -10,7 +10,7 @@ export type LoginDTO = Record<string, unknown> &
     captcha_key?: string;
   };
 
-export interface IRegisterDTO extends UserDeviceInfo {
+export type RegisterDTO = UserDeviceInfo & {
   accept_notifications: boolean;
   accept_terms: boolean;
   auth_type: string;
