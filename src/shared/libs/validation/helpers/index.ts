@@ -1,7 +1,7 @@
 import { BACKEND_PREFIX, UNKNOWN_VALIDATION_ERROR_KEY, type ValidationError } from '../config/keys';
-import type { ZodType } from 'zod';
+import * as z from "zod";
 
-export function validateData<T>(schema: ZodType<T>, data: unknown) {
+export function validateData<T>(schema: z.ZodType<T>, data: unknown) {
   const result = schema.safeParse(data);
 
   if (result.success) return { success: true, errors: null, data: result.data } as const;

@@ -1,6 +1,7 @@
 import { authAPI } from '../../../entities/auth';
 import { ref } from 'vue';
 import { handleVerifyEmailResponse, VerifyEmailStatus } from '../libs';
+import { log } from '../../../shared/helpers';
 
 export function useEmailVerify() {
   const isVerified = ref(false);
@@ -48,7 +49,7 @@ export function useEmailVerify() {
 
       return handledEmailResponse;
     } catch (error) {
-      console.error('Email verification failed:', error);
+      log.error('EMAIL_VERIFICATION_FAILED', error)
 
       setVerified(false);
     } finally {

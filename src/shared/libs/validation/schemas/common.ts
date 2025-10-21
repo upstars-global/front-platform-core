@@ -1,5 +1,5 @@
 /* eslint-disable no-useless-escape */
-import { boolean, string } from 'zod';
+import * as z from "zod";
 import { ClientErrorKey, PASSWORD_REQUIRED_LENGTH } from '../config/keys';
 
 const MIN_LENGTH = 1;
@@ -17,7 +17,7 @@ export const createEmailSchema = ({
   const requiredMsg = requiredMessage || ClientErrorKey.Required;
   const invalidMsg = invalidMessage || ClientErrorKey.EmailInvalid;
 
-  return string({ error: requiredMsg }).min(MIN_LENGTH, { error: requiredMsg }).regex(EMAIL_REGEX, {
+  return z.string({ error: requiredMsg }).min(MIN_LENGTH, { error: requiredMsg }).regex(EMAIL_REGEX, {
     error: invalidMsg,
   });
 };
@@ -41,7 +41,7 @@ export const createPasswordSchema = (
   const lengthMsg = lengthMessage || ClientErrorKey.PasswordLength;
   const charsMsg = charsMessage || ClientErrorKey.PasswordWrongChars;
 
-  return string({ error: emptyMsg })
+  return z.string({ error: emptyMsg })
     .min(MIN_LENGTH, { error: emptyMsg })
     .min(passwordMinLength, {
       error: lengthMsg,
@@ -54,19 +54,19 @@ export const createPasswordSchema = (
 export const createCountrySchema = (message?: string) => {
   const msg = message || ClientErrorKey.CountryEmpty;
 
-  return string({ error: msg }).min(1, { error: msg });
+  return z.string({ error: msg }).min(1, { error: msg });
 };
 
 export const createCurrencySchema = (message?: string) => {
   const msg = message || ClientErrorKey.Required;
 
-  return string({ error: msg }).min(1, { error: msg });
+  return z.string({ error: msg }).min(1, { error: msg });
 };
 
 export const createAcceptTermsSchema = (message?: string) => {
   const msg = message || ClientErrorKey.Required;
 
-  return boolean({
+  return z.boolean({
     error: msg,
   }).refine((value) => value, {
     error: msg,

@@ -1,4 +1,4 @@
-import type { $ZodIssue } from "zod/v4/core";
+import zod from "zod";
 
 export const UNKNOWN_VALIDATION_ERROR_KEY = 'VALIDATION.COMMON.UNKNOWN_ERROR'
 
@@ -25,9 +25,11 @@ export const PASSWORD_REQUIRED_LENGTH = 6;
 
 export type ValidationErrorKey<T extends string> = T | typeof UNKNOWN_VALIDATION_ERROR_KEY;
 
+type Issue = zod.core.$ZodIssue
+
 export type ValidationError<T extends string, U extends string> = {
   key: ValidationErrorKey<U>;
   field: T;
-  zodIssue?: $ZodIssue;
+  zodIssue?: Issue;
   originalError?: string;
 };

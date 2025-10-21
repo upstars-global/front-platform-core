@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { createCountrySchema, createCurrencySchema, createEmailSchema, createPasswordSchema } from '../schemas';
 import { mapBackendErrors, validateData } from './';
 import { ClientErrorKey } from '../config';
-import { object } from 'zod';
+import * as z from "zod";
 
 enum BackendKey {
   UserExists = 'VALIDATION_BACK.USER_WITH_THIS_EMAIL_ALREADY_EXIST',
@@ -26,7 +26,7 @@ describe('validateForm utility', () => {
   });
 
   it('should handle multiple validation errors with object schema', () => {
-    const testSchema = object({
+    const testSchema = z.object({
       email: createEmailSchema(),
       password: createPasswordSchema(),
       country: createCountrySchema(),
@@ -42,7 +42,7 @@ describe('validateForm utility', () => {
   });
 
   it('should correctly map field paths in nested objects', () => {
-    const testSchema = object({
+    const testSchema = z.object({
       email: createEmailSchema(),
       password: createPasswordSchema(),
     });
@@ -72,13 +72,13 @@ describe('validateForm utility', () => {
   });
 
   it('should correctly map field paths in nested objects (two levels)', () => {
-    const testSchema = object({
-      user: object({
-        credentials: object({
+    const testSchema = z.object({
+      user: z.object({
+        credentials: z.object({
           email: createEmailSchema(),
           password: createPasswordSchema(),
         }),
-        profile: object({
+        profile: z.object({
           country: createCountrySchema(),
           currency: createCurrencySchema(),
         }),

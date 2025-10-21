@@ -1,5 +1,6 @@
+import { log } from '../../../../shared/helpers';
 import { ref, computed, toRaw } from 'vue';
-import { ZodError, ZodObject, ZodType } from 'zod';
+import * as z from "zod";
 
 type FieldValue = string | number | boolean | undefined;
 type FormErrors<T> = Partial<Record<keyof T, string>>;
@@ -30,7 +31,7 @@ interface FormState<T extends Record<string, unknown>> {
 type ValidationMode = 'eager' | 'lazy' | 'passive';
 
 interface FormOptions<T extends Record<string, unknown>> {
-  validationSchema?: ZodType<T>;
+  validationSchema?: z.ZodType<T>;
   initialValues?: Partial<T>;
   validateOnMount?: boolean;
   validationMode?: ValidationMode;
@@ -38,9 +39,9 @@ interface FormOptions<T extends Record<string, unknown>> {
 }
 
 export function useFormValidation<T extends Record<string, FieldValue>>(options: FormOptions<T> = {}) {
-  const schema = ref<ZodType<T> | undefined>(options.validationSchema);
+  const schema = ref<z.ZodType<T> | undefined>(options.validationSchema);
   
-  const values = ref<T>((options.initialValues || {}) as T);
+  const values = ref<Partial<T>>((options.initialValues || {}) as T);
   const errors = ref<FormErrors<T>>({});
   const touched = ref<Partial<Record<keyof T, boolean>>>({});
   const dirty = ref<Partial<Record<keyof T, boolean>>>({});
@@ -49,14 +50,14 @@ export function useFormValidation<T extends Record<string, FieldValue>>(options:
 
   const validationMode = options.validationMode || 'eager'
 
-  const getFieldSchema = (name: keyof T): ZodType | null => {
+  const getFieldSchema = (name: keyof T): z.ZodType | null => {
     if (!schema.value) {
       return null;
     }
 
     const rawSchema = toRaw(schema.value)
 
-    if (rawSchema instanceof ZodObject) {
+    if (rawSchema instanceof z.ZodObject) {
       return rawSchema.shape[name as string] || null;
     }
 
@@ -89,13 +90,18 @@ export function useFormValidation<T extends Record<string, FieldValue>>(options:
         return true;
       }
     } catch (err) {
-      if (err instanceof ZodError) {
+      if (err instanceof z.ZodError) {
         const [error] = err.issues;
 
         setFieldError(name, error.message);
 
         return false;
       }
+
+      log.error(`FAILED_TO_VALIDATE_FIELD_${String(name)}`, err)
+      valid.value = false;
+
+      return false;
     }
 
     return true;
@@ -112,7 +118,7 @@ export function useFormValidation<T extends Record<string, FieldValue>>(options:
 
       return true;
     } catch (err) {
-      if (err instanceof ZodError) {
+      if (err instanceof z.ZodError) {
         const formErrors: FormErrors<T> = {};
 
         err.issues.forEach((error) => {
@@ -125,8 +131,12 @@ export function useFormValidation<T extends Record<string, FieldValue>>(options:
         valid.value = false;
         return false;
       }
+
+      log.error('FAILED_TO_VALIDATE_FORM', err)
+      valid.value = false;
+
+      return false;
     }
-    return false;
   };
 
   const setValue = (name: keyof T, value: unknown) => {
@@ -139,7 +149,7 @@ export function useFormValidation<T extends Record<string, FieldValue>>(options:
       return
     }
 
-     if (validationMode === 'lazy' && touched.value[name]) {
+     if (validationMode === 'lazy' && Boolean(touched.value[name])) {
       validateField(name);
     }
   };
@@ -157,8 +167,8 @@ export function useFormValidation<T extends Record<string, FieldValue>>(options:
       value: values.value[name],
       errors: errors.value[name],
       meta: {
-        touched: touched.value[name] || false,
-        dirty: dirty.value[name] || false,
+        touched: Boolean(touched.value[name]),
+        dirty: Boolean(dirty.value[name]),
         valid: !errors.value[name]?.length,
       },
     };
@@ -180,7 +190,7 @@ export function useFormValidation<T extends Record<string, FieldValue>>(options:
     return isValid;
   };
 
-  const resetForm = (resetOptions?: Partial<FormState<T>>) => {
+  const resetForm = (resetOptions?: Partial<FormState<Partial<T>>>) => {
     values.value = (resetOptions?.values || options.initialValues || {}) as T;
     errors.value = resetOptions?.errors || {};
     touched.value = resetOptions?.meta?.touched || {};

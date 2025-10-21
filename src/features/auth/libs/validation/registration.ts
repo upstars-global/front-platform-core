@@ -1,4 +1,5 @@
-import { boolean, object, string, z } from 'zod';
+import * as z from "zod";
+
 import {
   createAcceptTermsSchema,
   createCountrySchema,
@@ -16,7 +17,7 @@ const countrySchema = createCountrySchema();
 const currencySchema = createCurrencySchema();
 const acceptTerms = createAcceptTermsSchema();
 
-export const RegistrationFormSchema = object({
+export const RegistrationFormSchema = z.object({
   login: emailSchema,
   password: passwordSchema,
   country: countrySchema,
@@ -24,8 +25,8 @@ export const RegistrationFormSchema = object({
 
   acceptTerms: acceptTerms,
 
-  promoCode: string().optional(),
-  acceptNotifications: boolean().optional(),
+  promoCode: z.string().optional(),
+  acceptNotifications: z.boolean().optional(),
 });
 
 export type RegistrationFormSchemaType = z.infer<typeof RegistrationFormSchema>
