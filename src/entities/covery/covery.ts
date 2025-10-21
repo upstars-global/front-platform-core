@@ -1,4 +1,4 @@
-import { isServer } from "src/shared/helpers";
+import { isServer } from "../../shared/helpers";
 
 declare global {
     interface Window {
@@ -10,7 +10,7 @@ declare global {
 }
 
 export function addCoveryScript() {
-    if (typeof window !== "object" || typeof document !== "object") {
+    if (isServer) {
         return;
     }
 
