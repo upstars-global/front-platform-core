@@ -1,3 +1,25 @@
+## [4.0.0](https://github.com/upstars-global/front-platform-core/compare/v3.2.0...v4.0.0) (2025-10-22)
+
+### ⚠ BREAKING CHANGES
+
+* **FP-3958:** IUserStrategiesResource was renamed to UserStrategiesResource
+
+### 🐛 Bug Fixes
+
+* **FP-3958:** fixed wrong import
+ ([b3fac36](https://github.com/upstars-global/front-platform-core/commit/b3fac367d84203bb88d2b9ed60b0e18b8b1d4480))
+
+
+
+### 🚀 Features
+
+* **FP-3958:** added useAuthUserStrategiesStore
+ ([c85a889](https://github.com/upstars-global/front-platform-core/commit/c85a8897b7ef6b215d0a63a7f0745c4f940a52b4))
+
+
+
+    **BREAKING CHANGE**: IUserStrategiesResource was renamed to UserStrategiesResource
+
 ## [3.2.0](https://github.com/upstars-global/front-platform-core/compare/v3.1.1...v3.2.0) (2025-10-09)
 
 ### 🚀 Features
