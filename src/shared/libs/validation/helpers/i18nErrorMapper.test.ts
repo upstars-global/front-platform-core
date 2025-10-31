@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { createI18nErrorMapper } from './i18nErrorMapper';
+import { createI18nErrorMapper } from './';
 
 enum TestErrorKeys {
   UserNotFound = 'USER_NOT_FOUND',

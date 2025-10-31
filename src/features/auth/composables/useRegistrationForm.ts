@@ -1,11 +1,12 @@
 import { useMultiLangStore } from "../../../entities/multilang";
-import { useFormValidation, RegistrationType, mapErrorFields, type BaseClientErrorKey, type I18nErrorMapper} from "../../../shared";
+import { useFormValidation, mapErrorFields, type BaseClientErrorKey, type I18nErrorMapper} from "../../../shared/libs/validation";
 import { ref } from "vue";
 import { RegistrationFormSchema, type AuthBackendErrorKey, VerifyEmailStatus, type RegistrationFormSchemaType } from "../libs";
 import { useEmailVerify } from "./useEmailVerify";
 import { useRegister, RegistrationFailureError } from "./useRegister";
 import { fingerprintHelper } from "../../../entities/covery";
 import type { IbizaErrorKey } from "../../../entities/auth";
+import { RegistrationType } from "../../../shared/api";
 
 export type RegistrationErrorKey = BaseClientErrorKey | AuthBackendErrorKey | IbizaErrorKey
 
