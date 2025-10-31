@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { RegistrationFormSchema } from './registration';
-import { ClientErrorKey, validateData } from '../../../../shared';
+import { BASE_CLIENT_ERROR_KEY } from '../../../../shared';
+import { validateData } from '../../../../shared/libs/validation/helpers/validateData';
 
 describe('RegistrationFormSchema', () => {
   const validData = {
@@ -33,7 +34,7 @@ describe('RegistrationFormSchema', () => {
     expect(errors!.length).toBeGreaterThan(0);
     const termsError = errors!.find(e => e.field === 'acceptTerms');
     expect(termsError).toBeDefined();
-    expect(termsError!.key).toBe(ClientErrorKey.Required);
+    expect(termsError!.key).toBe(BASE_CLIENT_ERROR_KEY.REQUIRED);
   });
 
   it('should reject form with invalid email', () => {
@@ -42,7 +43,7 @@ describe('RegistrationFormSchema', () => {
     expect(errors).not.toBeNull();
     const emailError = errors!.find(e => e.field === 'login');
     expect(emailError).toBeDefined();
-    expect(emailError!.key).toBe(ClientErrorKey.EmailInvalid);
+    expect(emailError!.key).toBe(BASE_CLIENT_ERROR_KEY.EMAIL_INVALID);
   });
 
   it('should reject form with short password', () => {
@@ -51,7 +52,7 @@ describe('RegistrationFormSchema', () => {
     expect(errors).not.toBeNull();
     const passwordError = errors!.find(e => e.field === 'password');
     expect(passwordError).toBeDefined();
-    expect(passwordError!.key).toBe(ClientErrorKey.PasswordLength);
+    expect(passwordError!.key).toBe(BASE_CLIENT_ERROR_KEY.PASSWORD_LENGTH);
   });
 
   it('should reject form without country', () => {
@@ -60,7 +61,7 @@ describe('RegistrationFormSchema', () => {
     expect(errors).not.toBeNull();
     const countryError = errors!.find(e => e.field === 'country');
     expect(countryError).toBeDefined();
-    expect(countryError!.key).toBe(ClientErrorKey.CountryEmpty);
+    expect(countryError!.key).toBe(BASE_CLIENT_ERROR_KEY.COUNTRY_EMPTY);
   });
 
   it('should reject form without currency', () => {
@@ -69,7 +70,7 @@ describe('RegistrationFormSchema', () => {
     expect(errors).not.toBeNull();
     const currencyError = errors!.find(e => e.field === 'currency');
     expect(currencyError).toBeDefined();
-    expect(currencyError!.key).toBe(ClientErrorKey.Required);
+    expect(currencyError!.key).toBe(BASE_CLIENT_ERROR_KEY.REQUIRED);
   });
 
   it('should reject form with empty password', () => {
@@ -78,7 +79,7 @@ describe('RegistrationFormSchema', () => {
     expect(errors).not.toBeNull();
     const passwordError = errors!.find(e => e.field === 'password');
     expect(passwordError).toBeDefined();
-    expect(passwordError!.key).toBe(ClientErrorKey.PasswordEmpty);
+    expect(passwordError!.key).toBe(BASE_CLIENT_ERROR_KEY.PASSWORD_EMPTY);
   });
 
   it('should reject form with password containing invalid characters', () => {
@@ -87,7 +88,7 @@ describe('RegistrationFormSchema', () => {
     expect(errors).not.toBeNull();
     const passwordError = errors!.find(e => e.field === 'password');
     expect(passwordError).toBeDefined();
-    expect(passwordError!.key).toBe(ClientErrorKey.PasswordWrongChars);
+    expect(passwordError!.key).toBe(BASE_CLIENT_ERROR_KEY.PASSWORD_WRONG_CHARS);
   });
 
   it('should accept password with exactly minimum length', () => {
@@ -117,23 +118,23 @@ describe('RegistrationFormSchema', () => {
     
     const emailError = errors!.find(e => e.field === 'login');
     expect(emailError).toBeDefined();
-    expect(emailError!.key).toBe(ClientErrorKey.EmailInvalid);
+    expect(emailError!.key).toBe(BASE_CLIENT_ERROR_KEY.EMAIL_INVALID);
     
     const passwordError = errors!.find(e => e.field === 'password');
     expect(passwordError).toBeDefined();
-    expect(passwordError!.key).toBe(ClientErrorKey.PasswordLength);
+    expect(passwordError!.key).toBe(BASE_CLIENT_ERROR_KEY.PASSWORD_LENGTH);
     
     const countryError = errors!.find(e => e.field === 'country');
     expect(countryError).toBeDefined();
-    expect(countryError!.key).toBe(ClientErrorKey.CountryEmpty);
+    expect(countryError!.key).toBe(BASE_CLIENT_ERROR_KEY.COUNTRY_EMPTY);
     
     const currencyError = errors!.find(e => e.field === 'currency');
     expect(currencyError).toBeDefined();
-    expect(currencyError!.key).toBe(ClientErrorKey.Required);
+    expect(currencyError!.key).toBe(BASE_CLIENT_ERROR_KEY.REQUIRED);
     
     const termsError = errors!.find(e => e.field === 'acceptTerms');
     expect(termsError).toBeDefined();
-    expect(termsError!.key).toBe(ClientErrorKey.Required);
+    expect(termsError!.key).toBe(BASE_CLIENT_ERROR_KEY.REQUIRED);
   });
 
   it('should accept email with special characters', () => {
@@ -154,7 +155,7 @@ describe('RegistrationFormSchema', () => {
     expect(errors).not.toBeNull();
     const emailError = errors!.find(e => e.field === 'login');
     expect(emailError).toBeDefined();
-    expect(emailError!.key).toBe(ClientErrorKey.EmailInvalid);
+    expect(emailError!.key).toBe(BASE_CLIENT_ERROR_KEY.EMAIL_INVALID);
   });
 
   it('should reject email without @ symbol', () => {
@@ -163,7 +164,7 @@ describe('RegistrationFormSchema', () => {
     expect(errors).not.toBeNull();
     const emailError = errors!.find(e => e.field === 'login');
     expect(emailError).toBeDefined();
-    expect(emailError!.key).toBe(ClientErrorKey.EmailInvalid);
+    expect(emailError!.key).toBe(BASE_CLIENT_ERROR_KEY.EMAIL_INVALID);
   });
 
   it('should validate form with all optional fields', () => {
