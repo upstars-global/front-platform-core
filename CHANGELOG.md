@@ -1,3 +1,26 @@
+## [5.0.0](https://github.com/upstars-global/front-platform-core/compare/v4.0.0...v5.0.0) (2025-11-03)
+
+### ⚠ BREAKING CHANGES
+
+* **FP-3180:** websocketUrl was deleted; fixed types
+
+### 🚀 Features
+
+* **FP-3180:** add user balance
+ ([8cc2849](https://github.com/upstars-global/front-platform-core/commit/8cc284966017bacf0eb1f5562ee78c1455d021ab))
+
+
+* **FP-3180:** move user-balance websocket to core
+ ([dd17cef](https://github.com/upstars-global/front-platform-core/commit/dd17cefb001fe3fe0cc6aeb674269ef99871cea7))
+
+
+* **FP-3180:** websocketUrl was deleted; fixed types
+ ([44ebdc1](https://github.com/upstars-global/front-platform-core/commit/44ebdc1ec2421c8bc9bf61d4d97b3f697d92396f))
+
+
+
+    **BREAKING CHANGE**: websocketUrl was deleted; fixed types
+
 ## [4.0.0](https://github.com/upstars-global/front-platform-core/compare/v3.2.0...v4.0.0) (2025-10-22)
 
 ### ⚠ BREAKING CHANGES
