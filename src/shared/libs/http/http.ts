@@ -18,7 +18,8 @@ export function jsonHttp<R = unknown>(url: string, request?: RequestInit, option
   const headers = new Headers(request?.headers);
   headers.set('X-Requested-With', 'XMLHttpRequest');
   headers.set('Accept', 'application/json');
-  if (request?.body) {
+  // Don't set Content-Type for FormData - browser will set it automatically with boundary
+  if (request?.body && !(request.body instanceof FormData)) {
     headers.set('Content-Type', 'application/json');
   }
   headersDecorator(headers);
