@@ -18,9 +18,9 @@ export function jsonHttp<R = unknown>(url: string, request?: RequestInit, option
   const headers = new Headers(request?.headers);
   headers.set('X-Requested-With', 'XMLHttpRequest');
   headers.set('Accept', 'application/json');
-  // Don't set Content-Type for FormData - browser will set it automatically with boundary
-  if (request?.body && !(request.body instanceof FormData)) {
-    headers.set('Content-Type', 'application/json');
+  if (request?.body) {
+    const contentType  = request.body instanceof FormData ? 'multipart/form-data' : 'application/json';
+    headers.set('Content-Type', contentType);
   }
   headersDecorator(headers);
   const measurementRequestDurationStart = performance.now();
