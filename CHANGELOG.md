@@ -1,3 +1,18 @@
+## [5.1.0](https://github.com/upstars-global/front-platform-core/compare/v5.0.0...v5.1.0) (2025-11-07)
+
+### 🚀 Features
+
+* **FP-4137:** do not set Content-Type in jsonHttp in case if it is FormData
+ ([44980e7](https://github.com/upstars-global/front-platform-core/commit/44980e7c61af4d11d465fe19d0bb2050dbcd6c53))
+
+
+* **FP-4137:** extend jsonHttp with new Content-Type
+ ([ac59a85](https://github.com/upstars-global/front-platform-core/commit/ac59a8554d6cca690b4a1cb30e64c68c508e6ecf))
+
+
+* **FP-4137:** extend publicApiV1 and jsonHttp to handle FormData
+ ([e199ad1](https://github.com/upstars-global/front-platform-core/commit/e199ad1682d5f0012b22cbc3c87c221b15e9cdbd))
+
 ## [5.0.0](https://github.com/upstars-global/front-platform-core/compare/v4.0.0...v5.0.0) (2025-11-03)
 
 ### ⚠ BREAKING CHANGES
