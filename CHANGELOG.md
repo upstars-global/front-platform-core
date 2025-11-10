@@ -1,3 +1,10 @@
+## [6.0.1](https://github.com/upstars-global/front-platform-core/compare/v6.0.0...v6.0.1) (2025-11-10)
+
+### 🐛 Bug Fixes
+
+* **FP-4062:** fixed cookies set on safari
+ ([6bd6653](https://github.com/upstars-global/front-platform-core/commit/6bd66534746dd929b324d9a15b6f011eac39c312))
+
 ## [6.0.0](https://github.com/upstars-global/front-platform-core/compare/v5.1.0...v6.0.0) (2025-11-10)
 
 ### ⚠ BREAKING CHANGES
