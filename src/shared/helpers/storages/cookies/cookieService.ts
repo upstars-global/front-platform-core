@@ -24,7 +24,7 @@ export class CookieService<T extends string> {
     cookie.set(name, value, {
       ...options,
       expires: this.getExpire(options),
-      path: config.path,
+      path: config.path || '/',
     });
   }
 
