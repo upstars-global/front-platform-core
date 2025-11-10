@@ -1,4 +1,4 @@
-import { authAPI, authEvents, type IRegisterDTO } from '../../../entities/auth';
+import { authAPI, authEvents, type RegisterDTO } from '../../../entities/auth';
 import { useFetchAllUserData } from './useFetchAllUserData';
 
 export class RegistrationFailureError extends Error {
@@ -13,7 +13,7 @@ export class RegistrationFailureError extends Error {
 export function useRegister() {
   const { fetchAllUserData } = useFetchAllUserData();
 
-  async function register(data: IRegisterDTO) {
+  async function register(data: RegisterDTO) {
     const registerResponse = await authAPI.register(data);
     if (!registerResponse.success) {
       throw new RegistrationFailureError('Registration not success', registerResponse);

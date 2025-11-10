@@ -5,6 +5,7 @@ import {
   createCountrySchema,
   createCurrencySchema,
   createEmailSchema,
+  createFormSchema,
   createPasswordSchema,
   PASSWORD_REQUIRED_LENGTH,
 } from '../../../../shared';
@@ -17,7 +18,7 @@ const countrySchema = createCountrySchema();
 const currencySchema = createCurrencySchema();
 const acceptTerms = createAcceptTermsSchema();
 
-export const RegistrationFormSchema = z.object({
+export const RegistrationFormSchema = createFormSchema({
   login: emailSchema,
   password: passwordSchema,
   country: countrySchema,

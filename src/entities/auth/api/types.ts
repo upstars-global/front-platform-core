@@ -10,8 +10,8 @@ export type LoginDTO = Record<string, unknown> &
     captcha_key?: string;
   };
 
-export interface IRegisterDTO extends UserDeviceInfo {
-  accept_notifications: boolean;
+export type RegisterDTO = UserDeviceInfo & {
+  accept_notifications?: boolean;
   accept_terms: boolean;
   auth_type: string;
   chosen_country: string;
@@ -53,24 +53,24 @@ export interface IRegisterResource {
 
 export const IBIZA_ERROR_KEYS = {
   // INVALID
-  InvalidBlacklisted: 'IBIZA.INVALID.BLACKLISTED',
-  InvalidDomain: 'IBIZA.INVALID.INVALID_DOMAIN',
-  InvalidEmail: 'IBIZA.INVALID.INVALID_EMAIL',
-  InvalidRejectedEmail: 'IBIZA.INVALID.REJECTED_EMAIL',
+  BLACKLISTED: 'IBIZA.INVALID.BLACKLISTED',
+  INVALID_DOMAIN: 'IBIZA.INVALID.INVALID_DOMAIN',
+  INVALID_EMAIL: 'IBIZA.INVALID.INVALID_EMAIL',
+  INVALID_REJECTED_EMAIL: 'IBIZA.INVALID.REJECTED_EMAIL',
 
   // RISKY
-  RiskyInboxFull: 'IBIZA.RISKY.INBOX_FULL',
-  RiskyNonPersonal: 'IBIZA.RISKY.NON_PERSONAL',
-  RiskyRisky: 'IBIZA.RISKY.RISKY',
-  RiskyTemporary: 'IBIZA.RISKY.TEMPORARY',
-  RiskyTimeout: 'IBIZA.RISKY.TIMEOUT',
+  RISKY_INBOX_FULL: 'IBIZA.RISKY.INBOX_FULL',
+  RISKY_NON_PERSONAL: 'IBIZA.RISKY.NON_PERSONAL',
+  RISKY_RISKY: 'IBIZA.RISKY.RISKY',
+  RISKY_TEMPORARY: 'IBIZA.RISKY.TEMPORARY',
+  RISKY_TIMEOUT: 'IBIZA.RISKY.TIMEOUT',
 
   // UNKNOWN
-  UnknownUnknown: 'IBIZA.UNKNOWN.UNKNOWN',
+  UNKNOWN_UNKNOWN: 'IBIZA.UNKNOWN.UNKNOWN',
 
   // VALID
-  ValidAcceptedEmail: 'IBIZA.VALID.ACCEPTED_EMAIL',
-  ValidWhitelisted: 'IBIZA.VALID.WHITELISTED',
+  VALID_ACCEPTED_EMAIL: 'IBIZA.VALID.ACCEPTED_EMAIL',
+  VALID_WHITELISTED: 'IBIZA.VALID.WHITELISTED',
 } as const;
 
 export type IbizaErrorKey = typeof IBIZA_ERROR_KEYS[keyof typeof IBIZA_ERROR_KEYS];

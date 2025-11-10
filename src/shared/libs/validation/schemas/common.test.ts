@@ -5,8 +5,8 @@ import {
   createCountrySchema,
   createCurrencySchema,
 } from './common';
-import { ClientErrorKey, PASSWORD_REQUIRED_LENGTH } from '../config/keys';
-import { validateData } from '../helpers';
+import { BASE_CLIENT_ERROR_KEY, PASSWORD_REQUIRED_LENGTH } from '../config/keys';
+import { validateData } from '../helpers/validateData';
 
 describe('Email Schema', () => {
   const emailSchema = createEmailSchema();
@@ -25,7 +25,7 @@ describe('Email Schema', () => {
     const { errors } = validateData(emailSchema, 'invalid-email');
     expect(errors).not.toBeNull();
     expect(errors).toHaveLength(1);
-    expect(errors![0].key).toBe(ClientErrorKey.EmailInvalid);
+    expect(errors![0].key).toBe(BASE_CLIENT_ERROR_KEY.EMAIL_INVALID);
     expect(errors![0].field).toBe('');
   });
 
@@ -33,13 +33,13 @@ describe('Email Schema', () => {
     const { errors } = validateData(emailSchema, 'testexample.com');
     expect(errors).not.toBeNull();
     expect(errors).toHaveLength(1);
-    expect(errors![0].key).toBe(ClientErrorKey.EmailInvalid);
+    expect(errors![0].key).toBe(BASE_CLIENT_ERROR_KEY.EMAIL_INVALID);
   });
 
   it('should reject empty string', () => {
     const { errors } = validateData(emailSchema, '');
     expect(errors).not.toBeNull();
-    expect(errors![0].key).toBe(ClientErrorKey.Required);
+    expect(errors![0].key).toBe(BASE_CLIENT_ERROR_KEY.REQUIRED);
     expect(errors![0].field).toBe('');
   });
 
@@ -71,14 +71,14 @@ describe('Password Schema', () => {
     const { errors } = validateData(passwordSchema, 'Test1');
     expect(errors).not.toBeNull();
     expect(errors).toHaveLength(1);
-    expect(errors![0].key).toBe(ClientErrorKey.PasswordLength);
+    expect(errors![0].key).toBe(BASE_CLIENT_ERROR_KEY.PASSWORD_LENGTH);
     expect(errors![0].field).toBe('');
   });
 
   it('should reject empty password', () => {
     const { errors } = validateData(passwordSchema, '');
     expect(errors).not.toBeNull();
-    expect(errors![0].key).toBe(ClientErrorKey.PasswordEmpty);
+    expect(errors![0].key).toBe(BASE_CLIENT_ERROR_KEY.PASSWORD_EMPTY);
     expect(errors![0].field).toBe('');
   });
 
@@ -86,7 +86,7 @@ describe('Password Schema', () => {
     const { errors } = validateData(passwordSchema, 'Test123<>');
     expect(errors).not.toBeNull();
     expect(errors).toHaveLength(1);
-    expect(errors![0].key).toBe(ClientErrorKey.PasswordWrongChars);
+    expect(errors![0].key).toBe(BASE_CLIENT_ERROR_KEY.PASSWORD_WRONG_CHARS);
     expect(errors![0].field).toBe('');
   });
 
@@ -120,7 +120,7 @@ describe('Country Schema', () => {
     const { errors } = validateData(countrySchema, '');
     expect(errors).not.toBeNull();
     expect(errors).toHaveLength(1);
-    expect(errors![0].key).toBe(ClientErrorKey.CountryEmpty);
+    expect(errors![0].key).toBe(BASE_CLIENT_ERROR_KEY.COUNTRY_EMPTY);
     expect(errors![0].field).toBe('');
   });
 
@@ -144,7 +144,7 @@ describe('Currency Schema', () => {
     const { errors } = validateData(currencySchema, '');
     expect(errors).not.toBeNull();
     expect(errors).toHaveLength(1);
-    expect(errors![0].key).toBe(ClientErrorKey.Required);
+    expect(errors![0].key).toBe(BASE_CLIENT_ERROR_KEY.REQUIRED);
     expect(errors![0].field).toBe('');
   });
 
