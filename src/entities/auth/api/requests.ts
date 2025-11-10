@@ -4,7 +4,7 @@ import type {
   LoginDTO,
   ILoginResource,
   ILogoutResource,
-  IRegisterDTO,
+  RegisterDTO,
   IRegisterResource,
   IChangePasswordDTO,
   IVerifyEmailResource,
@@ -25,9 +25,8 @@ export const authAPI = {
       log.error('LOGOUT_ERROR', error);
     }
   },
-  async register(data: IRegisterDTO) {
+  async register(data: RegisterDTO) {
     return await jsonApi<IRegisterResource>('/users/register', {
-      // @ts-expect-error Type IRegisterDTO is not assignable to type Record<string, unknown>
       data,
     });
   },
