@@ -1,3 +1,27 @@
+## [6.0.0](https://github.com/upstars-global/front-platform-core/compare/v5.1.0...v6.0.0) (2025-11-10)
+
+### ⚠ BREAKING CHANGES
+
+* **FP-3982:** IRegisterDTO renamed to RegisterDTO
+
+### 🐛 Bug Fixes
+
+* **FP-3982:** fixed wrong import; changed condition
+ ([68352ca](https://github.com/upstars-global/front-platform-core/commit/68352cac70dd6b198e4584b29be236cb3ca1b887))
+
+
+
+### 🚀 Features
+
+* **FP-3982:** added fingerprintHelper and client logger
+ ([4c3b1bb](https://github.com/upstars-global/front-platform-core/commit/4c3b1bb05a1175a288ac30ee3823767e9144f8fd))
+
+
+
+    **BREAKING CHANGE**: IRegisterDTO renamed to RegisterDTO
+* **FP-3982:** change path and add isServer
+ ([268dd64](https://github.com/upstars-global/front-platform-core/commit/268dd64da44778d0e8e4b5ba6c508c2a0d393310))
+
 ## [5.1.0](https://github.com/upstars-global/front-platform-core/compare/v5.0.0...v5.1.0) (2025-11-07)
 
 ### 🚀 Features
