@@ -1,3 +1,72 @@
+## [6.0.1](https://github.com/upstars-global/front-platform-core/compare/v6.0.0...v6.0.1) (2025-11-10)
+
+### 🐛 Bug Fixes
+
+* **FP-4062:** fixed cookies set on safari
+ ([6bd6653](https://github.com/upstars-global/front-platform-core/commit/6bd66534746dd929b324d9a15b6f011eac39c312))
+
+## [6.0.0](https://github.com/upstars-global/front-platform-core/compare/v5.1.0...v6.0.0) (2025-11-10)
+
+### ⚠ BREAKING CHANGES
+
+* **FP-3982:** IRegisterDTO renamed to RegisterDTO
+
+### 🐛 Bug Fixes
+
+* **FP-3982:** fixed wrong import; changed condition
+ ([68352ca](https://github.com/upstars-global/front-platform-core/commit/68352cac70dd6b198e4584b29be236cb3ca1b887))
+
+
+
+### 🚀 Features
+
+* **FP-3982:** added fingerprintHelper and client logger
+ ([4c3b1bb](https://github.com/upstars-global/front-platform-core/commit/4c3b1bb05a1175a288ac30ee3823767e9144f8fd))
+
+
+
+    **BREAKING CHANGE**: IRegisterDTO renamed to RegisterDTO
+* **FP-3982:** change path and add isServer
+ ([268dd64](https://github.com/upstars-global/front-platform-core/commit/268dd64da44778d0e8e4b5ba6c508c2a0d393310))
+
+## [5.1.0](https://github.com/upstars-global/front-platform-core/compare/v5.0.0...v5.1.0) (2025-11-07)
+
+### 🚀 Features
+
+* **FP-4137:** do not set Content-Type in jsonHttp in case if it is FormData
+ ([44980e7](https://github.com/upstars-global/front-platform-core/commit/44980e7c61af4d11d465fe19d0bb2050dbcd6c53))
+
+
+* **FP-4137:** extend jsonHttp with new Content-Type
+ ([ac59a85](https://github.com/upstars-global/front-platform-core/commit/ac59a8554d6cca690b4a1cb30e64c68c508e6ecf))
+
+
+* **FP-4137:** extend publicApiV1 and jsonHttp to handle FormData
+ ([e199ad1](https://github.com/upstars-global/front-platform-core/commit/e199ad1682d5f0012b22cbc3c87c221b15e9cdbd))
+
+## [5.0.0](https://github.com/upstars-global/front-platform-core/compare/v4.0.0...v5.0.0) (2025-11-03)
+
+### ⚠ BREAKING CHANGES
+
+* **FP-3180:** websocketUrl was deleted; fixed types
+
+### 🚀 Features
+
+* **FP-3180:** add user balance
+ ([8cc2849](https://github.com/upstars-global/front-platform-core/commit/8cc284966017bacf0eb1f5562ee78c1455d021ab))
+
+
+* **FP-3180:** move user-balance websocket to core
+ ([dd17cef](https://github.com/upstars-global/front-platform-core/commit/dd17cefb001fe3fe0cc6aeb674269ef99871cea7))
+
+
+* **FP-3180:** websocketUrl was deleted; fixed types
+ ([44ebdc1](https://github.com/upstars-global/front-platform-core/commit/44ebdc1ec2421c8bc9bf61d4d97b3f697d92396f))
+
+
+
+    **BREAKING CHANGE**: websocketUrl was deleted; fixed types
+
 ## [4.0.0](https://github.com/upstars-global/front-platform-core/compare/v3.2.0...v4.0.0) (2025-10-22)
 
 ### ⚠ BREAKING CHANGES
