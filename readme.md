@@ -10,3 +10,4 @@
 ## Configuration in projects (`*` mandatory for setup)
 
 - [__* Websockets configuration__](./src/shared/libs/websockets/readme.md)
+- [Form validation hook (`useFormValidation`)](./src/shared/libs/validation/readme.md)

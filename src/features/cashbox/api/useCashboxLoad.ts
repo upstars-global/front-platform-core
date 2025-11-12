@@ -1,7 +1,7 @@
 import { cashboxAPI, TransactionType, type PayoutItemResource } from '../../../entities/cashbox';
 import { filterPayments } from '../helpers';
-import { useCashboxStore } from '../store/useCashboxStore';
-import { promiseMemo } from '../../../shared/helpers/promise';
+import { useCashboxStore } from '../store';
+import { promiseMemo } from '../../../shared';
 import { useTransactions } from '../composables';
 import { storeToRefs, type Pinia } from 'pinia';
 
