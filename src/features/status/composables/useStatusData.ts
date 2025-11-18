@@ -53,6 +53,12 @@ export function useStatusData() {
     return code != null && code >= UserStatusResource.BASE_VIP;
   });
 
+  // dynamic status presence: true when code exists and is > BASE_VIP (quarterly-confirmed)
+  const isDynamicStatusVip = computed<boolean>(() => {
+    const code = progressions.value?.dynamic?.code;
+    return code != null && code > UserStatusResource.BASE_VIP;
+  });
+
   // dynamic status confirmation flag: whether current dynamic status is confirmed
   const isDynamicStatusConfirmed = computed<boolean>(() => {
     return progressions.value?.dynamic?.isConfirmed === true;
@@ -304,6 +310,7 @@ export function useStatusData() {
 
     // presence flags
     isDynamicStatus,
+    isDynamicStatusVip,
     isDynamicStatusConfirmed,
     isDynamicStatusAutoConfirmed,
 
