@@ -13,12 +13,13 @@ export function useMultiLangUpdateLocale(pinia?: Pinia) {
   const multilangStore = useMultiLangStore(pinia);
   const { setLocale } = useSetLocale(pinia);
 
-  function redirectToLocale(locale: string, redirectUrl?: string) {
+  function getLocalizedUrl(locale: string, redirectUrl?: string) {
     if (isServer) {
       return;
     }
 
     const originalUrl = window.location.pathname + window.location.search;
+
     const urlLang = originalUrl.split('/')[1];
 
     if (locale === urlLang) {
@@ -29,46 +30,65 @@ export function useMultiLangUpdateLocale(pinia?: Pinia) {
       return item.code === urlLang;
     });
 
+    let newUrl = ''
+
     if (redirectUrl) {
       if (urlLangInEnableLocale) {
         if (locale === multilangStore.defaultLocale) {
-          window.location.href = redirectUrl;
+          newUrl = redirectUrl;
         } else {
-          window.location.href = `/${locale}${redirectUrl}`;
+          newUrl = `/${locale}${redirectUrl}`;
         }
       } else if (locale !== multilangStore.defaultLocale) {
-        window.location.href = `/${locale}${redirectUrl}`;
+        newUrl = `/${locale}${redirectUrl}`;
       }
 
-      return;
+      return newUrl;
     }
 
     if (urlLangInEnableLocale) {
       if (locale === multilangStore.defaultLocale) {
-        window.location.href = originalUrl.replace(/\/[a-z]{2}-?[A-Z]{0,2}\/?/, '/');
+        newUrl = originalUrl.replace(/\/[a-z]{2}-?[A-Z]{0,2}\/?/, '/');
       } else {
-        window.location.href = originalUrl.replace(urlLang, locale);
+        newUrl = originalUrl.replace(urlLang, locale);
       }
     } else if (locale !== multilangStore.defaultLocale) {
-      window.location.href = `/${locale}${originalUrl}`;
+      newUrl = `/${locale}${originalUrl}`;
+    }
+
+    return newUrl;
+  }
+
+  function redirectToLocale(locale: string, redirectUrl?: string): void {
+    if (isServer) {
+      return;
+    }
+  
+    const url = getLocalizedUrl(locale, redirectUrl);
+
+    if (url) {
+      window.location.href = url;
     }
   }
 
   function updateUserLocale(locale: string) {
     setLocaleCookie(locale);
-    redirectToLocale(locale);
     setLocale(locale);
+    redirectToLocale(locale);
   }
 
   async function updateLocalUserLocale(payload: UpdateLocalUserLocaleParams) {
-    const { locale: localeName, redirectUrl } = payload;
+    return new Promise<string | undefined>((resolve) => {
+      const { locale: localeName, redirectUrl } = payload;
 
-    if (localeName && multilangStore.availableLocales[localeName] && multilangStore.localeInCookies !== localeName) {
-      setLocaleCookie(localeName);
-      redirectToLocale(localeName, redirectUrl);
-    }
+      if (localeName && multilangStore.availableLocales[localeName] && multilangStore.localeInCookies !== localeName) {
+        setLocaleCookie(localeName);
 
-    return Promise.resolve();
+        resolve(getLocalizedUrl(localeName, redirectUrl));
+      }
+
+      resolve(undefined);
+    });
   }
 
   return {
