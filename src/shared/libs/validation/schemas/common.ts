@@ -1,5 +1,5 @@
 /* eslint-disable no-useless-escape */
-import * as z from "zod";
+import * as z from 'zod';
 import { BASE_CLIENT_ERROR_KEY, PASSWORD_REQUIRED_LENGTH } from '../config/keys';
 
 export const createFormSchema = <T extends z.ZodRawShape>(schema: T) => {
@@ -48,13 +48,13 @@ export const createPasswordSchema = (
   const lengthMsg = lengthMessage || BASE_CLIENT_ERROR_KEY.PASSWORD_LENGTH;
   const charsMsg = charsMessage || BASE_CLIENT_ERROR_KEY.PASSWORD_WRONG_CHARS;
 
-  return z.string({ error: emptyMsg })
-    .min(MIN_LENGTH, { error: emptyMsg })
-    .min(passwordMinLength, {
-      error: lengthMsg,
-    })
+  return z
+    .string({ error: emptyMsg })
     .regex(PASSWORD_REGEX, {
       error: charsMsg,
+    })
+    .min(passwordMinLength, {
+      error: lengthMsg,
     });
 };
 
@@ -73,9 +73,11 @@ export const createCurrencySchema = (message?: string) => {
 export const createAcceptTermsSchema = (message?: string) => {
   const msg = message || BASE_CLIENT_ERROR_KEY.REQUIRED;
 
-  return z.boolean({
-    error: msg,
-  }).refine((value) => value, {
-    error: msg,
-  });
+  return z
+    .boolean({
+      error: msg,
+    })
+    .refine((value) => value, {
+      error: msg,
+    });
 };

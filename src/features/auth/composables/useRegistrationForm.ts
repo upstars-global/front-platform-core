@@ -16,6 +16,7 @@ export function useRegistrationForm<T extends string>(i18nErrorMapper: I18nError
     const form = useFormValidation<RegistrationFormSchemaType, RegistrationErrorKey, T>({
         validationSchema: RegistrationFormSchema,
         i18nErrorMapper,
+        validationMode: "lazy"
     });
 
     const {

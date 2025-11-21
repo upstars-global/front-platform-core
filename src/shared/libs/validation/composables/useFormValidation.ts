@@ -137,9 +137,10 @@ export function useFormValidation<
         err.issues.forEach((issue) => {
           const path = issue.path[0] as keyof T;
 
-          const mapped = i18nErrorMapper.getI18nKey(issue.message as TErrorKeys);
-
-          formErrors[path] = mapped;
+          if (!formErrors[path]) {
+            const mapped = i18nErrorMapper.getI18nKey(issue.message as TErrorKeys);
+            formErrors[path] = mapped;
+          }
         });
 
         errors.value = formErrors;
