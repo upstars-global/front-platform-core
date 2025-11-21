@@ -8,7 +8,7 @@ import {
 } from '../api';
 import { generateInitialProfileData } from './generateInitialProfileData';
 import { computed, ref } from 'vue';
-import { RegistrationType } from '../../../shared/api';
+import { RegistrationType } from '../../../shared';
 
 export const useUserProfileStore = defineStore('userProfileStore', () => {
   const userInfo = ref<UserProfileResource>(generateInitialProfileData());

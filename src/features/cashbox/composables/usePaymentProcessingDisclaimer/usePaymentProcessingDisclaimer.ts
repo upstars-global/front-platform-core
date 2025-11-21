@@ -1,7 +1,7 @@
 import { computed } from "vue";
-import { useCashboxStore } from "../store";
-import { PAYMENT_METHOD } from "../../../entities/cashbox/config";
-import { isTargetPaymentProcessor } from "../helpers/isTargetPaymentProcessor";
+import { useCashboxStore } from "../../store";
+import { PAYMENT_METHOD } from '../../../../entities/cashbox';
+import { isTargetPaymentProcessor } from '../../helpers';
 
 export const usePaymentProcessingDisclaimer = () => {
     const cashboxStore = useCashboxStore();

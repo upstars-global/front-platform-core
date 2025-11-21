@@ -1,5 +1,5 @@
-import { cashboxAPI, type LoadTransactionHistoryDTO, TransactionType } from "../../../entities/cashbox";
-import { useTransactionsStore } from "../store";
+import { cashboxAPI, type LoadTransactionHistoryDTO, TransactionType } from "../../../../entities/cashbox";
+import { useTransactionsStore } from "../../store";
 
 const MAX_TRANSACTIONS_PER_PAGE = 6;
 
