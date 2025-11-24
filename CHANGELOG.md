@@ -1,3 +1,25 @@
+## [7.0.0](https://github.com/upstars-global/front-platform-core/compare/v6.1.0...v7.0.0) (2025-11-24)
+
+### ⚠ BREAKING CHANGES
+
+* **FP-3838:** localeUpdateHook was deleted
+
+### 🔨 Refactoring
+
+* **FP-3838:** multiLangUpdateLocale refactored
+ ([79b3631](https://github.com/upstars-global/front-platform-core/commit/79b3631a1268e0867854208bd55b70debce6a89b))
+
+
+
+    **BREAKING CHANGE**: localeUpdateHook was deleted
+
+## [6.1.0](https://github.com/upstars-global/front-platform-core/compare/v6.0.1...v6.1.0) (2025-11-18)
+
+### 🚀 Features
+
+* **FP-4146:** Add `isDynamicStatusVip` computed property to enhance dynamic status handling
+ ([b94569b](https://github.com/upstars-global/front-platform-core/commit/b94569bfc5370ac43e9e459c93c8c5cd82878f90))
+
 ## [6.0.1](https://github.com/upstars-global/front-platform-core/compare/v6.0.0...v6.0.1) (2025-11-10)
 
 ### 🐛 Bug Fixes
