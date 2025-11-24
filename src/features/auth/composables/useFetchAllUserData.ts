@@ -2,7 +2,6 @@ import { useUserProfile, userEvents } from '../../../entities/user';
 import { promiseMemo, safePromiseAll } from '../../../shared/helpers/promise';
 import { useWebsocketsController } from '../../../shared/libs/websockets';
 import { afterProfileDataLoadedHook, fetchUserDataHook } from '../config';
-import { localeUpdateHook } from '../config/locale';
 
 export type FetchAllUserDataOptions = {
   isInit: boolean;
@@ -14,11 +13,6 @@ export function useFetchAllUserData() {
 
   async function loadUserProfileHandler() {
     const userProfile = await loadUserProfile();
-    if (userProfile?.localization) {
-      await localeUpdateHook.run({
-        locale: userProfile.localization,
-      });
-    }
     userEvents.emit('profile.loaded', userProfile);
     await afterProfileDataLoadedHook.run();
     return userProfile;
@@ -28,7 +22,7 @@ export function useFetchAllUserData() {
     async (options?: FetchAllUserDataOptions) => {
       await safePromiseAll([
         loadUserProfileHandler().then((profile) => {
-          websocketsController.start(profile.hash)
+          websocketsController.start(profile.hash);
         }),
         loadUserContactsOnVerification(),
 
