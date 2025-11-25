@@ -1,3 +1,18 @@
+## [7.0.0](https://github.com/upstars-global/front-platform-core/compare/v6.1.0...v7.0.0) (2025-11-24)
+
+### ⚠ BREAKING CHANGES
+
+* **FP-3838:** localeUpdateHook was deleted
+
+### 🔨 Refactoring
+
+* **FP-3838:** multiLangUpdateLocale refactored
+ ([79b3631](https://github.com/upstars-global/front-platform-core/commit/79b3631a1268e0867854208bd55b70debce6a89b))
+
+
+
+    **BREAKING CHANGE**: localeUpdateHook was deleted
+
 ## [6.1.0](https://github.com/upstars-global/front-platform-core/compare/v6.0.1...v6.1.0) (2025-11-18)
 
 ### 🚀 Features
