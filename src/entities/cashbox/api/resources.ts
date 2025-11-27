@@ -91,6 +91,15 @@ export type PayoutItemResource = {
   reserved_amount: number;
 }
 
+export type TransactionTreasuryConfirmedMessage = {
+  base_amount: string;
+  base_currency: string;
+  id: string;
+  timestamp: number;
+  to: string;
+  type: string;
+}
+
 export type SumRangeResource = {
   amount: number;
   currency: string;
