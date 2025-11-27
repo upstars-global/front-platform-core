@@ -1,3 +1,104 @@
+## [7.1.0](https://github.com/upstars-global/front-platform-core/compare/v7.0.1...v7.1.0) (2025-11-27)
+
+### 🐛 Bug Fixes
+
+* **FP-3954:** added test to exclude in tsconfig.json
+ ([ecfbe71](https://github.com/upstars-global/front-platform-core/commit/ecfbe717d3594372482eff64a76b8180d4bafd82))
+
+
+* **FP-3954:** default generic parameter
+ ([c42e941](https://github.com/upstars-global/front-platform-core/commit/c42e9415fe1918aa428020100549c7505ea8c1c3))
+
+
+* **FP-3954:** fixed schemas; changed validationMode
+ ([ea3031f](https://github.com/upstars-global/front-platform-core/commit/ea3031f20892682e3b845cc84be2797237bf31b9))
+
+
+* **FP-3954:** fixed tests
+ ([f0de109](https://github.com/upstars-global/front-platform-core/commit/f0de1091abc174d83a3b3b60c164fccfd0732f22))
+
+
+* **FP-3954:** fixed vue dom compiler problem and added passwordMinLength for createPasswordSchema
+ ([f5820cd](https://github.com/upstars-global/front-platform-core/commit/f5820cd3b0e6f81e9fff31fe520cb57d2aa2b08e))
+
+
+* **FP-3954:** fixed vue version; better error handling; correct zod import
+ ([b881865](https://github.com/upstars-global/front-platform-core/commit/b881865b23b34a2445bda0c409641fa3b7d3ce00))
+
+
+* **FP-3954:** fixed wrong file name
+ ([0870fdf](https://github.com/upstars-global/front-platform-core/commit/0870fdfce469c141fb56883f60f8c7e15a1c5485))
+
+
+* **FP-3954:** import fix
+ ([16a7fd7](https://github.com/upstars-global/front-platform-core/commit/16a7fd7280a7183499aefd4d27691b9ada871b40))
+
+
+* **FP-3954:** remove unused createSmsSchema function and related regex
+ ([dbe26bc](https://github.com/upstars-global/front-platform-core/commit/dbe26bc2af0e72ee8c28f783ed01eeaea2f9aec0))
+
+
+* **FP-3954:** remove unused SMS schema tests and related code
+ ([a417f69](https://github.com/upstars-global/front-platform-core/commit/a417f693f0906bafa724a9184099b058fef5d254))
+
+
+
+### 🚀 Features
+
+* **FP-3954:** add backend error keys and update validation logic
+ ([45171cb](https://github.com/upstars-global/front-platform-core/commit/45171cb446f9d9ddd106a9b06ce0334cff0fed39))
+
+
+* **FP-3954:** add RegistrationFormSchema
+ ([acb225f](https://github.com/upstars-global/front-platform-core/commit/acb225f388322b6221279494a00c0cc6c4cc78b6))
+
+
+* **FP-3954:** added readme.md
+ ([7363a3b](https://github.com/upstars-global/front-platform-core/commit/7363a3bbd81a16b264f5f6aaa25751acd04ba617))
+
+
+* **FP-3954:** remove unused optional fields from registration schema
+ ([7c90075](https://github.com/upstars-global/front-platform-core/commit/7c9007563fe5f59520620eb03f33f2b8be80931c))
+
+
+* **FP-3954:** rename BACKEND_ERROR_KEY to AUTH_BACKEND_ERROR_KEY for clarity
+ ([24f1e18](https://github.com/upstars-global/front-platform-core/commit/24f1e18f50781213454d4ad721f0c9404e5a1b01))
+
+
+* **FP-3954:** replace 'RulesNotAccepted' key with 'Required' for acceptTerms validation
+ ([61f472e](https://github.com/upstars-global/front-platform-core/commit/61f472eb08fc375085bb65654e3dd7a55c454786))
+
+
+* **FP-3954:** tests, new mapper, mapErrorFields
+ ([067d258](https://github.com/upstars-global/front-platform-core/commit/067d258131d1a8216453432d4110fc06e2afd191))
+
+
+* **FP-3954:** update vue version to 3.5.24
+ ([6d234d2](https://github.com/upstars-global/front-platform-core/commit/6d234d26a6767206041e16d8e0d924531d852189))
+
+
+* **FP-3954:** useFormValidation
+ ([1b8d252](https://github.com/upstars-global/front-platform-core/commit/1b8d25263ebcd86ce811bd5026076b78dd980cd4))
+
+
+* **FP-3954:** validation WIP
+ ([78d6733](https://github.com/upstars-global/front-platform-core/commit/78d673377bbe963b877716a3196d068d0e75d521))
+
+
+* **FP-3954:** validation WIP
+ ([6c5e408](https://github.com/upstars-global/front-platform-core/commit/6c5e408b7a121816f07a665fe81b7591a08a0fa8))
+
+
+
+### 🧪 Testing
+
+* **FP-4134:** add test coverage for cashbox features
+ ([e9c9ed6](https://github.com/upstars-global/front-platform-core/commit/e9c9ed6bc5ce162a35a6b827f49c3e879e84bfed))
+
+
+* **FP-4134:** add test coverage for cashbox features
+ ([10e60f9](https://github.com/upstars-global/front-platform-core/commit/10e60f90c9233038ef4c4fbbd4f40aacca1be211))
+
 ## [7.0.1](https://github.com/upstars-global/front-platform-core/compare/v7.0.0...v7.0.1) (2025-11-25)
 
 ### 🐛 Bug Fixes
