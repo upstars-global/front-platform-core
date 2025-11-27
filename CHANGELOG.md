@@ -1,3 +1,10 @@
+## [7.0.1](https://github.com/upstars-global/front-platform-core/compare/v7.0.0...v7.0.1) (2025-11-25)
+
+### 🐛 Bug Fixes
+
+* **FP-3838:** fixed /en-IN/en case
+ ([9b004cd](https://github.com/upstars-global/front-platform-core/commit/9b004cd92dcc02229fac00b1f447da174e5f1f1d))
+
 ## [7.0.0](https://github.com/upstars-global/front-platform-core/compare/v6.1.0...v7.0.0) (2025-11-24)
 
 ### ⚠ BREAKING CHANGES

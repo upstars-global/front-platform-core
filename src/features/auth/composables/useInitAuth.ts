@@ -31,7 +31,6 @@ export function useInitAuth() {
 
         const localizedUrl = await updateLocalUserLocale({
           locale: userProfileStore.userInfo.localization,
-          redirectUrl: window.location.pathname + window.location.search,
         });
     
         if (localizedUrl) {
