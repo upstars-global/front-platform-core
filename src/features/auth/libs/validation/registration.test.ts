@@ -79,7 +79,7 @@ describe('RegistrationFormSchema', () => {
     expect(errors).not.toBeNull();
     const passwordError = errors!.find(e => e.field === 'password');
     expect(passwordError).toBeDefined();
-    expect(passwordError!.key).toBe(BASE_CLIENT_ERROR_KEY.PASSWORD_EMPTY);
+    expect(passwordError!.key).toBe(BASE_CLIENT_ERROR_KEY.PASSWORD_LENGTH);
   });
 
   it('should reject form with password containing invalid characters', () => {

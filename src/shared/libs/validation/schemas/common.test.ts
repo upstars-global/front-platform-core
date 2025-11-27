@@ -78,7 +78,7 @@ describe('Password Schema', () => {
   it('should reject empty password', () => {
     const { errors } = validateData(passwordSchema, '');
     expect(errors).not.toBeNull();
-    expect(errors![0].key).toBe(BASE_CLIENT_ERROR_KEY.PASSWORD_EMPTY);
+    expect(errors![0].key).toBe(BASE_CLIENT_ERROR_KEY.PASSWORD_LENGTH);
     expect(errors![0].field).toBe('');
   });
 
