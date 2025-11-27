@@ -1,4 +1,4 @@
-import { DEFAULT_VALUES } from '../../../entities/cashbox/config';
+import { DEFAULT_VALUES } from '../../../../entities/cashbox';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
@@ -9,8 +9,8 @@ import {
   type PayoutItemResource,
   type SumRangeResource,
   type WithdrawalDefaultAmountResource,
-} from '../../../entities/cashbox';
-import type { Currency } from '../../../shared/api';
+} from '../../../../entities/cashbox';
+import type { Currency } from '../../../../shared';
 
 export const useCashboxStore = defineStore('cashbox', () => {
   const paymentsSystems = ref<PaymentMethodResource[]>([]);
