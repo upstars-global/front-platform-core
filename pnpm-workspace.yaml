@@ -1,0 +1,2 @@
+overrides:
+  front-platform-core: link:../../Library/pnpm/global/5/node_modules/front-platform-core

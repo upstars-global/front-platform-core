@@ -1,5 +1,5 @@
 import { log } from '../../../../shared/helpers';
-import { ref, computed, toRaw } from 'vue';
+import { ref, computed, toRaw, type ComputedRef, type Ref } from 'vue';
 import * as z from 'zod';
 import type { I18nErrorMapper } from '../helpers';
 
@@ -44,18 +44,48 @@ interface FormOptions<
   i18nErrorMapper: I18nErrorMapper<TErrorKeys, TI18nKeys>;
 }
 
+interface UseFormValidationReturn<
+  T extends Record<string, FieldValue>,
+  TErrorKeys extends string = string,
+  TI18nKeys extends string = TErrorKeys
+> {
+  values: Ref<Partial<T>>;
+  errors: Ref<FormErrors<T, TI18nKeys>>;
+  touched: Ref<Partial<Record<keyof T, boolean>>>;
+  dirty: Ref<Partial<Record<keyof T, boolean>>>;
+  valid: Ref<boolean>;
+  submitting: Ref<boolean>;
+  
+  isValid: ComputedRef<boolean>;
+  isSubmitting: ComputedRef<boolean>;
+  isDirty: ComputedRef<boolean>;
+  isTouched: ComputedRef<boolean>;
+  
+  setValue: (name: keyof T, value: unknown) => void;
+  setTouched: (name: keyof T, isTouched?: boolean) => void;
+  setFieldError: (name: keyof T, error: TErrorKeys) => void;
+  clearFieldError: (name: keyof T) => void;
+  validateField: (name: keyof T) => boolean;
+  validateForm: () => boolean;
+  handleSubmit: (submitCallback: (values: T) => void | Promise<void>) => (e?: Event) => Promise<boolean>;
+  resetForm: (resetOptions?: Partial<FormState<Partial<T>, TErrorKeys>>) => void;
+  setValues: (newValues: Partial<T>) => void;
+  getFieldState: (name: keyof T) => FieldState<FieldValue, TI18nKeys>;
+  defineField: <K extends keyof T>(name: K) => readonly [ComputedRef<T[K] | undefined>, ComputedRef<TI18nKeys | ''>, { onBlur: () => void }];
+}
+
 export function useFormValidation<
   T extends Record<string, FieldValue>,
   TErrorKeys extends string = string,
   TI18nKeys extends string = TErrorKeys
->(options: FormOptions<T, TErrorKeys, TI18nKeys>) {
+>(options: FormOptions<T, TErrorKeys, TI18nKeys>): UseFormValidationReturn<T, TErrorKeys, TI18nKeys> {
   const schema = ref<z.ZodType<T> | undefined>(options.validationSchema);
   const i18nErrorMapper = options.i18nErrorMapper;
 
-  const values = ref<Partial<T>>((options.initialValues || {}) as T);
-  const errors = ref<FormErrors<T, TI18nKeys>>({});
-  const touched = ref<Partial<Record<keyof T, boolean>>>({});
-  const dirty = ref<Partial<Record<keyof T, boolean>>>({});
+  const values = ref((options.initialValues || {}) as Partial<T>) as Ref<Partial<T>>;
+  const errors = ref({}) as Ref<FormErrors<T, TI18nKeys>>;
+  const touched = ref({}) as Ref<Partial<Record<keyof T, boolean>>>;
+  const dirty = ref({}) as Ref<Partial<Record<keyof T, boolean>>>;
   const valid = ref(true);
   const submitting = ref(false);
 
@@ -210,7 +240,7 @@ export function useFormValidation<
 
   const resetForm = (resetOptions?: Partial<FormState<Partial<T>, TErrorKeys>>) => {
     values.value = (resetOptions?.values || options.initialValues || {}) as T;
-    errors.value = resetOptions?.errors || {};
+    errors.value = (resetOptions?.errors || {}) as FormErrors<T, TI18nKeys>;
     touched.value = resetOptions?.meta?.touched || {};
     dirty.value = resetOptions?.meta?.dirty || {};
     valid.value = resetOptions?.meta?.valid ?? true;
@@ -222,9 +252,9 @@ export function useFormValidation<
   };
 
   function defineField<K extends keyof T>(name: K) {
-    const value = computed<T[K]>({
+    const value = computed<T[K] | undefined>({
       get: () => values.value[name],
-      set: (value) => {
+      set: (value: T[K] | undefined) => {
         setValue(name, value);
       },
     });
