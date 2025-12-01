@@ -1,3 +1,10 @@
+## [7.2.0](https://github.com/upstars-global/front-platform-core/compare/v7.1.0...v7.2.0) (2025-12-01)
+
+### 🚀 Features
+
+* **FP-4274:** describe type for ws message UserBalanceWebsocketTypes.TRANSACTION_CONFIRMED
+ ([638e8db](https://github.com/upstars-global/front-platform-core/commit/638e8db97b2813d1f9945e2b36c223c900b31ef0))
+
 ## [7.1.0](https://github.com/upstars-global/front-platform-core/compare/v7.0.1...v7.1.0) (2025-11-27)
 
 ### 🐛 Bug Fixes
