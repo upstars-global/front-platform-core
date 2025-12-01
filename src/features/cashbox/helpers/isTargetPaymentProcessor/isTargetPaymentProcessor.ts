@@ -1,4 +1,4 @@
-import type { PAYMENT_METHOD } from "../../../entities/cashbox/config";
+import type { PAYMENT_METHOD } from "../../../../entities/cashbox";
 
 export type IsTargetPaymentProcessorParams = {
   targetId: PAYMENT_METHOD,

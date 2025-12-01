@@ -1,6 +1,6 @@
-import { configCashbox } from '../../../entities/cashbox/config';
-import { isServer } from '../../../shared/helpers/ssr';
-import { useUserInfoLoad } from '../../../entities/user/composables/useUserInfoLoad';
+import { configCashbox } from '../../../../entities/cashbox';
+import { isServer } from '../../../../shared';
+import { useUserInfoLoad } from '../../../../entities/user';
 
 const PREVENT_VALUE = '1';
 

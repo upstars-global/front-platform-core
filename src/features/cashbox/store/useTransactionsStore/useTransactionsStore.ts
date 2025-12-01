@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { type TransactionHistoryItemResource } from "../../../entities/cashbox";
+import { type TransactionHistoryItemResource } from "../../../../entities/cashbox";
 import { ref } from "vue";
 
 type HistoryDataItem = {

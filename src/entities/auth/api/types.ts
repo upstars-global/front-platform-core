@@ -11,7 +11,7 @@ export type LoginDTO = Record<string, unknown> &
   };
 
 export type RegisterDTO = UserDeviceInfo & {
-  accept_notifications: boolean;
+  accept_notifications?: boolean;
   accept_terms: boolean;
   auth_type: string;
   chosen_country: string;
@@ -51,6 +51,30 @@ export interface IRegisterResource {
   isAlreadyRegistered?: boolean;
 }
 
+export const IBIZA_ERROR_KEYS = {
+  // INVALID
+  BLACKLISTED: 'IBIZA.INVALID.BLACKLISTED',
+  INVALID_DOMAIN: 'IBIZA.INVALID.INVALID_DOMAIN',
+  INVALID_EMAIL: 'IBIZA.INVALID.INVALID_EMAIL',
+  INVALID_REJECTED_EMAIL: 'IBIZA.INVALID.REJECTED_EMAIL',
+
+  // RISKY
+  RISKY_INBOX_FULL: 'IBIZA.RISKY.INBOX_FULL',
+  RISKY_NON_PERSONAL: 'IBIZA.RISKY.NON_PERSONAL',
+  RISKY_RISKY: 'IBIZA.RISKY.RISKY',
+  RISKY_TEMPORARY: 'IBIZA.RISKY.TEMPORARY',
+  RISKY_TIMEOUT: 'IBIZA.RISKY.TIMEOUT',
+
+  // UNKNOWN
+  UNKNOWN_UNKNOWN: 'IBIZA.UNKNOWN.UNKNOWN',
+
+  // VALID
+  VALID_ACCEPTED_EMAIL: 'IBIZA.VALID.ACCEPTED_EMAIL',
+  VALID_WHITELISTED: 'IBIZA.VALID.WHITELISTED',
+} as const;
+
+export type IbizaErrorKey = typeof IBIZA_ERROR_KEYS[keyof typeof IBIZA_ERROR_KEYS];
+
 export interface IVerifyEmailResource {
-  result: string;
+  result: IbizaErrorKey;
 }

@@ -1,5 +1,5 @@
-import type { PaymentMethodResource } from "../../../entities/cashbox";
-import { useUserProfileStore } from "../../../entities/user";
+import type { PaymentMethodResource } from "../../../../entities/cashbox";
+import { useUserProfileStore } from "../../../../entities/user";
 
 export function filterPayments(payments: PaymentMethodResource[]): PaymentMethodResource[] {
     const userProfileStore = useUserProfileStore();
