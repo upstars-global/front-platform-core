@@ -28,7 +28,7 @@ type PromiseMemoizerParams = {
   passArgumentsToKey?: boolean;
 };
 
-type PromiseMemoizerCallback<T> = T & {
+export type PromiseMemoizerCallback<T> = T & {
   clearCache(): void;
 };
 
