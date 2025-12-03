@@ -30,7 +30,7 @@ interface FormState<T extends Record<string, unknown>, U extends string> {
   };
 }
 
-type ValidationMode = 'eager' | 'lazy' | 'passive';
+export type FormValidationMode = 'eager' | 'lazy' | 'passive';
 
 interface FormOptions<
   T extends Record<string, unknown>,
@@ -40,7 +40,7 @@ interface FormOptions<
   validationSchema?: z.ZodType<T>;
   initialValues?: Partial<T>;
   validateOnMount?: boolean;
-  validationMode?: ValidationMode;
+  validationMode?: FormValidationMode;
   i18nErrorMapper: I18nErrorMapper<TErrorKeys, TI18nKeys>;
 }
 
