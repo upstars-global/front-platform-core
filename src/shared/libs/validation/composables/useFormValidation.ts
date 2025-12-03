@@ -13,7 +13,7 @@ interface FieldMeta {
   valid: boolean;
 }
 
-interface FieldState<T = FieldValue, U extends string = string> {
+export interface FieldState<T = FieldValue, U extends string = string> {
   value: T;
   errors: U | '';
   meta: FieldMeta;
