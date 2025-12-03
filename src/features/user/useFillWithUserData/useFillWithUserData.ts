@@ -1,16 +1,16 @@
 import { useUserProfileStore } from '../../../entities/user/store/userProfileStore';
 
-export function useUserWithCredentials() {
+export function useFillWithUserData() {
   const userProfileStore = useUserProfileStore();
 
-  function fillUrlWithUserCredentials(url: string): string {
+  function fillUserData(data: string): string {
     const userID = userProfileStore.userId || '';
     const email = userProfileStore.userEmail || '';
 
-    return url.replace('[userID_value]', userID).replace('[email_value]', email);
+    return data.replaceAll('[userID_value]', userID).replaceAll('[email_value]', email);
   }
 
   return {
-    fillUrlWithUserCredentials,
+    fillUserData,
   };
 }
