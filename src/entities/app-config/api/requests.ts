@@ -4,7 +4,6 @@ import type {
   ClientContextResource,
   DigitainConfigResource,
   FastTrackConfigResource,
-  LivespinsDataResource,
   TopLeaders,
 } from './resources';
 import type { AppGlobalConfig, ReelsVersion, HreflangListConfig } from '../types';
@@ -43,18 +42,6 @@ export const configAPI = {
     }
 
     return {} as TopLeaders;
-  },
-  async loadLivespinsData() {
-    try {
-      const data = await jsonHttp<LivespinsDataResource>('/fe-api/livespins-data', {
-        method: 'GET',
-      });
-      return data || ({} as LivespinsDataResource);
-    } catch (error) {
-      log.error('LOAD_LIVESPINS_DATA', error);
-    }
-
-    return {} as LivespinsDataResource;
   },
   async loadAppGlobalConfig(version: string = 'v3') {
     try {
