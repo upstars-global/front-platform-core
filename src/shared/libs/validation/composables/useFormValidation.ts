@@ -65,6 +65,7 @@ interface UseFormValidationReturn<
   setTouched: (name: keyof T, isTouched?: boolean) => void;
   setFieldError: (name: keyof T, error: TErrorKeys) => void;
   clearFieldError: (name: keyof T) => void;
+  clearGlobalError: () => void;
   validateField: (name: keyof T) => boolean;
   validateForm: () => boolean;
   handleSubmit: (submitCallback: (values: T) => void | Promise<void>) => (e?: Event) => Promise<boolean>;
@@ -113,6 +114,13 @@ export function useFormValidation<
     delete errors.value[name];
     updateFormValidity();
   };    
+
+  const clearGlobalError = () => {
+    if ('global' in errors.value) {
+      delete errors.value['global' as keyof T];
+      updateFormValidity();
+    }
+  };
 
   const setFieldError = (name: keyof T, error: TErrorKeys) => {
     errors.value[name] = i18nErrorMapper.getI18nKey(error);
@@ -188,6 +196,8 @@ export function useFormValidation<
   const setValue = (name: keyof T, value: unknown) => {
     values.value[name] = value as T[keyof T];
     dirty.value[name] = true;
+
+    clearGlobalError();
 
     if (validationMode === 'eager') {
       validateField(name);
@@ -296,6 +306,7 @@ export function useFormValidation<
     setTouched,
     setFieldError,
     clearFieldError,
+    clearGlobalError,
     validateField,
     validateForm,
     handleSubmit,
