@@ -1,3 +1,14 @@
+## [7.3.0](https://github.com/upstars-global/front-platform-core/compare/v7.2.0...v7.3.0) (2025-12-08)
+
+### 🚀 Features
+
+* **FP-4046:** add `users.session.invalidate` event type to `UserEvents`
+ ([935eb72](https://github.com/upstars-global/front-platform-core/commit/935eb72d57645e3cb809a5d7093eef021bc11ae0))
+
+
+* **FP-4046:** integrate `users.session.invalidate` websocket handling in `useWebsocketsBootstrap`
+ ([0246116](https://github.com/upstars-global/front-platform-core/commit/02461162a2918b85fdb11abab8b30721d01c6b70))
+
 ## [7.2.0](https://github.com/upstars-global/front-platform-core/compare/v7.1.0...v7.2.0) (2025-12-01)
 
 ### 🚀 Features
