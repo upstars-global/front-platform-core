@@ -5,6 +5,10 @@ export enum StatusProgressionsWebsocketType {
   DYNAMIC_UPDATE = 'progression.dynamic.updated',
 }
 
+export enum AuthWebsocketType {
+  SESSION_INVALIDATED = "users.session.invalidate"
+}
+
 export type StatusProgressionsStaticWebsocket = {
   type: StatusProgressionsWebsocketType.STATIC_UPDATE,
   timestamp: number;
@@ -17,7 +21,13 @@ export type StatusProgressionsDynamicWebsocket = {
   data: StatusProgressionsDynamic;
 };
 
+export type AuthSessionInvalidateWebsocket = {
+  type: AuthWebsocketType.SESSION_INVALIDATED,
+  timestamp: number;
+};
+
 export type UserWebsocketsEvents = {
   [StatusProgressionsWebsocketType.STATIC_UPDATE]: StatusProgressionsStaticWebsocket;
   [StatusProgressionsWebsocketType.DYNAMIC_UPDATE]: StatusProgressionsDynamicWebsocket;
+  [AuthWebsocketType.SESSION_INVALIDATED]: AuthSessionInvalidateWebsocket;
 };
