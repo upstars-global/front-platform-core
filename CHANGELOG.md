@@ -1,3 +1,24 @@
+## [7.5.0](https://github.com/upstars-global/front-platform-core/compare/v7.4.0...v7.5.0) (2025-12-10)
+
+### 🐛 Bug Fixes
+
+* **FP-4200:** simplify `fillUrlWithUserCredentials` logic and remove legacy placeholder support
+ ([3010e1c](https://github.com/upstars-global/front-platform-core/commit/3010e1c4dd11a1392c98c1172ee1bbbd6129c534))
+
+
+
+### 🚀 Features
+
+* **FP-4200:** add `useUserWithCredentials` hook to populate query params with user data
+ ([ab20c15](https://github.com/upstars-global/front-platform-core/commit/ab20c15a6c7acc89aa7671414671fb2377165121))
+
+
+
+### 🔨 Refactoring
+
+* **FP-4200:** rename `useUserWithCredentials` to `useFillWithUserData` and update method logic
+ ([8abece4](https://github.com/upstars-global/front-platform-core/commit/8abece454e07cbaa75a818ea2489a144b64ab7c2))
+
 ## [7.4.0](https://github.com/upstars-global/front-platform-core/compare/v7.3.0...v7.4.0) (2025-12-08)
 
 ### 🚀 Features
