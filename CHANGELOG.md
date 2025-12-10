@@ -1,3 +1,10 @@
+## [7.5.1](https://github.com/upstars-global/front-platform-core/compare/v7.5.0...v7.5.1) (2025-12-10)
+
+### 🔧 Maintenance
+
+* **FP-4294:** remove `LivespinsDataResource` and `loadLivespinsData` API method
+ ([8989f5d](https://github.com/upstars-global/front-platform-core/commit/8989f5d7623f13edd38ff2d6b1905951d321d88e))
+
 ## [7.5.0](https://github.com/upstars-global/front-platform-core/compare/v7.4.0...v7.5.0) (2025-12-10)
 
 ### 🐛 Bug Fixes
