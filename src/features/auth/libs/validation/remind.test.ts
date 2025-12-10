@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { RemindFormSchema } from './remind';
-import { BASE_CLIENT_ERROR_KEY } from '../../../../shared';
 import { validateData } from '../../../../shared/libs/validation/helpers/validateData';
+import { AUTH_BACKEND_ERROR_KEY } from './config/keys';
 
 describe('RemindFormSchema', () => {
   const validData = {
@@ -19,7 +19,7 @@ describe('RemindFormSchema', () => {
     expect(errors).not.toBeNull();
     const emailError = errors!.find(e => e.field === 'login');
     expect(emailError).toBeDefined();
-    expect(emailError!.key).toBe(BASE_CLIENT_ERROR_KEY.EMAIL_INVALID);
+    expect(emailError!.key).toBe(AUTH_BACKEND_ERROR_KEY.EMAIL_INVALID_FORMAT);
   });
 
   it('should accept email with special characters', () => {
@@ -40,7 +40,7 @@ describe('RemindFormSchema', () => {
     expect(errors).not.toBeNull();
     const emailError = errors!.find(e => e.field === 'login');
     expect(emailError).toBeDefined();
-    expect(emailError!.key).toBe(BASE_CLIENT_ERROR_KEY.EMAIL_INVALID);
+    expect(emailError!.key).toBe(AUTH_BACKEND_ERROR_KEY.EMAIL_INVALID_FORMAT);
   });
 
   it('should reject email without @ symbol', () => {
@@ -49,6 +49,6 @@ describe('RemindFormSchema', () => {
     expect(errors).not.toBeNull();
     const emailError = errors!.find(e => e.field === 'login');
     expect(emailError).toBeDefined();
-    expect(emailError!.key).toBe(BASE_CLIENT_ERROR_KEY.EMAIL_INVALID);
+    expect(emailError!.key).toBe(AUTH_BACKEND_ERROR_KEY.EMAIL_INVALID_FORMAT);
   });
 });
