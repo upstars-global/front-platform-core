@@ -45,11 +45,3 @@ export type TopLeaderCategoryResource = {
 export type TopLeaders = {
   [key: string]: TopLeaderCategoryResource;
 };
-
-export interface LivespinsDataResource {
-  tenant: string;
-  serverConfig: {
-    api: string;
-    ui?: string;
-  };
-}
