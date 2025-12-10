@@ -81,3 +81,19 @@ export const createAcceptTermsSchema = (message?: string) => {
       error: msg,
     });
 };
+
+export const createPasswordMatchSchema = <
+  T extends z.ZodObject<{ password: z.ZodTypeAny; confirmPassword: z.ZodTypeAny }>,
+>(
+  schema: T,
+  message?: string,
+) => {
+  const msg = message || BASE_CLIENT_ERROR_KEY.PASSWORD_NOT_MATCH;
+
+  return schema.refine((data) => {
+    return data.password === data.confirmPassword
+  }, {
+    message: msg,
+    path: ['confirmPassword'],
+  });
+};
