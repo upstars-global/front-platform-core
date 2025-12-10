@@ -1,14 +1,12 @@
 import * as z from "zod";
 
 import {
-  createEmailSchema,
   createFormSchema,
 } from '../../../../shared';
-
-const emailSchema = createEmailSchema();  
+import { authEmailSchema } from "./schemas"; 
 
 export const RemindFormSchema = createFormSchema({
-  login: emailSchema,
+  login: authEmailSchema,
 });
 
 export type RemindFormSchemaType = z.infer<typeof RemindFormSchema>
