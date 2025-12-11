@@ -27,7 +27,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Run ESLint
-        run: pnpm lint
+        run: pnpm run lint
 
       - name: Run TypeScript type check
-        run: pnpm lint:tsc
+        run: pnpm run lint:tsc
