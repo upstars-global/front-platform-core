@@ -1,3 +1,63 @@
+## [7.5.2](https://github.com/upstars-global/front-platform-core/compare/v7.5.1...v7.5.2) (2025-12-11)
+
+### 🐛 Bug Fixes
+
+* **FP-4287:** add descriptive messages to JsonHttpError classes for Sentry
+ ([4f08e50](https://github.com/upstars-global/front-platform-core/commit/4f08e504c6b44981885214c531f8ab719d474806))
+
+## [7.5.1](https://github.com/upstars-global/front-platform-core/compare/v7.5.0...v7.5.1) (2025-12-10)
+
+### 🔧 Maintenance
+
+* **FP-4294:** remove `LivespinsDataResource` and `loadLivespinsData` API method
+ ([8989f5d](https://github.com/upstars-global/front-platform-core/commit/8989f5d7623f13edd38ff2d6b1905951d321d88e))
+
+## [7.5.0](https://github.com/upstars-global/front-platform-core/compare/v7.4.0...v7.5.0) (2025-12-10)
+
+### 🐛 Bug Fixes
+
+* **FP-4200:** simplify `fillUrlWithUserCredentials` logic and remove legacy placeholder support
+ ([3010e1c](https://github.com/upstars-global/front-platform-core/commit/3010e1c4dd11a1392c98c1172ee1bbbd6129c534))
+
+
+
+### 🚀 Features
+
+* **FP-4200:** add `useUserWithCredentials` hook to populate query params with user data
+ ([ab20c15](https://github.com/upstars-global/front-platform-core/commit/ab20c15a6c7acc89aa7671414671fb2377165121))
+
+
+
+### 🔨 Refactoring
+
+* **FP-4200:** rename `useUserWithCredentials` to `useFillWithUserData` and update method logic
+ ([8abece4](https://github.com/upstars-global/front-platform-core/commit/8abece454e07cbaa75a818ea2489a144b64ab7c2))
+
+## [7.4.0](https://github.com/upstars-global/front-platform-core/compare/v7.3.0...v7.4.0) (2025-12-08)
+
+### 🚀 Features
+
+* **FP-3983:** useCountriesData
+ ([14894d7](https://github.com/upstars-global/front-platform-core/commit/14894d7fa37e75b3a94639b3defc8035b9c2cc35))
+
+## [7.3.0](https://github.com/upstars-global/front-platform-core/compare/v7.2.0...v7.3.0) (2025-12-08)
+
+### 🚀 Features
+
+* **FP-4046:** add `users.session.invalidate` event type to `UserEvents`
+ ([935eb72](https://github.com/upstars-global/front-platform-core/commit/935eb72d57645e3cb809a5d7093eef021bc11ae0))
+
+
+* **FP-4046:** integrate `users.session.invalidate` websocket handling in `useWebsocketsBootstrap`
+ ([0246116](https://github.com/upstars-global/front-platform-core/commit/02461162a2918b85fdb11abab8b30721d01c6b70))
+
+## [7.2.0](https://github.com/upstars-global/front-platform-core/compare/v7.1.0...v7.2.0) (2025-12-01)
+
+### 🚀 Features
+
+* **FP-4274:** describe type for ws message UserBalanceWebsocketTypes.TRANSACTION_CONFIRMED
+ ([638e8db](https://github.com/upstars-global/front-platform-core/commit/638e8db97b2813d1f9945e2b36c223c900b31ef0))
+
 ## [7.1.0](https://github.com/upstars-global/front-platform-core/compare/v7.0.1...v7.1.0) (2025-11-27)
 
 ### 🐛 Bug Fixes

@@ -33,22 +33,23 @@ export type JsonHttpErrorParams =
   | JsonHttpErrorTimeoutParams
   | JsonHttpErrorUnknownParams;
 
+type TypeLess<T> = Omit<T, 'type'>;
+
 export class JsonHttpError<T extends JsonHttpErrorParams = JsonHttpErrorParams> extends Error {
   public error: T;
 
-  constructor(error: T) {
-    super();
+  constructor(error: T, message: string) {
+    super(message);
     this.error = error;
   }
 }
 
-type TypeLess<T> = Omit<T, 'type'>;
 export class JsonHttpServerError extends JsonHttpError<JsonHttpErrorServerParams> {
   constructor(error: TypeLess<JsonHttpErrorServerParams>) {
     super({
       ...error,
       type: JsonHttpErrorType.SERVER,
-    });
+    }, `[HTTP]: ${JsonHttpErrorType.SERVER} - ${error.status} ${error.method} ${error.url} - ${error.statusText}`);
   }
 }
 
@@ -57,7 +58,7 @@ export class JsonHttpJsonParseError extends JsonHttpError {
     super({
       ...error,
       type: JsonHttpErrorType.JSON_PARSE,
-    });
+    }, `[HTTP]: ${JsonHttpErrorType.JSON_PARSE} - ${error.method} ${error.url}`);
   }
 }
 
@@ -66,7 +67,7 @@ export class JsonHttpTimeoutError extends JsonHttpError {
     super({
       ...error,
       type: JsonHttpErrorType.TIMEOUT,
-    });
+    }, `[HTTP]: ${JsonHttpErrorType.TIMEOUT} - ${error.method} ${error.url}`);
   }
 }
 
@@ -75,6 +76,6 @@ export class JsonHttpUnknownError extends JsonHttpError {
     super({
       ...error,
       type: JsonHttpErrorType.UNKNOWN,
-    });
+    }, `[HTTP]: ${JsonHttpErrorType.UNKNOWN} - ${error.method} ${error.url}`);
   }
 }
