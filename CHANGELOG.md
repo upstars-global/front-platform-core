@@ -1,3 +1,10 @@
+## [7.5.2](https://github.com/upstars-global/front-platform-core/compare/v7.5.1...v7.5.2) (2025-12-11)
+
+### 🐛 Bug Fixes
+
+* **FP-4287:** add descriptive messages to JsonHttpError classes for Sentry
+ ([4f08e50](https://github.com/upstars-global/front-platform-core/commit/4f08e504c6b44981885214c531f8ab719d474806))
+
 ## [7.5.1](https://github.com/upstars-global/front-platform-core/compare/v7.5.0...v7.5.1) (2025-12-10)
 
 ### 🔧 Maintenance
