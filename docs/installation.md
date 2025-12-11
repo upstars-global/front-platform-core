@@ -7,5 +7,5 @@
 Add the package to your dependencies (via Git):
 
 ```bash
-  yarn add upstars-global/front-platform-core#v1.0.0
+  pnpm add upstars-global/front-platform-core#v1.0.0
 ```
