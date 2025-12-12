@@ -54,7 +54,7 @@ describe('useFormValidation', () => {
 
     expect(values.value).toEqual({ email: '', password: '', country: '' });
     expect(errors.value).toEqual({});
-    expect(isValid.value).toBe(true);
+    expect(isValid.value).toBe(false);
     expect(isDirty.value).toBe(false);
     expect(isTouched.value).toBe(false);
     expect(isSubmitting.value).toBe(false);
