@@ -12,7 +12,7 @@ export const createFormSchema = <T extends z.ZodRawShape>(schema: T) => {
 const MIN_LENGTH = 1;
 
 const EMAIL_REGEX =
-  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  /^[\w.!#$%&'*+\/=?^`{|}~-]+@[a-z\d](?:[a-z\d-]{0,61}[a-z\d])?(?:\.[a-z\d](?:[a-z\d-]{0,61}[a-z\d])?)*$/i;
 
 export const createEmailSchema = ({
   requiredMessage,
@@ -80,4 +80,29 @@ export const createAcceptTermsSchema = (message?: string) => {
     .refine((value) => value, {
       error: msg,
     });
+};
+
+export const createPasswordMatchSchema = <
+  T extends z.ZodObject<{ password: z.ZodTypeAny; confirmPassword: z.ZodTypeAny }>,
+>(
+  schema: T,
+  message?: string,
+) => {
+  const msg = message || BASE_CLIENT_ERROR_KEY.PASSWORD_NOT_MATCH;
+
+  return schema.superRefine((data, ctx) => {
+    if (data.password !== data.confirmPassword) {
+      ctx.addIssue({
+        code: 'custom',
+        message: msg,
+        path: ['confirmPassword'],
+      });
+    }
+
+    ctx.issues.sort((a, b) => {
+      if (a.code === 'custom') return -1;
+      if (b.code === 'custom') return 1;
+      return 0;
+    });
+  });
 };
