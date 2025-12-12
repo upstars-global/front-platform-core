@@ -90,10 +90,19 @@ export const createPasswordMatchSchema = <
 ) => {
   const msg = message || BASE_CLIENT_ERROR_KEY.PASSWORD_NOT_MATCH;
 
-  return schema.refine((data) => {
-    return data.password === data.confirmPassword
-  }, {
-    message: msg,
-    path: ['confirmPassword'],
+  return schema.superRefine((data, ctx) => {
+    if (data.password !== data.confirmPassword) {
+      ctx.addIssue({
+        code: 'custom',
+        message: msg,
+        path: ['confirmPassword'],
+      });
+    }
+
+    ctx.issues.sort((a, b) => {
+      if (a.code === 'custom') return -1;
+      if (b.code === 'custom') return 1;
+      return 0;
+    });
   });
 };
