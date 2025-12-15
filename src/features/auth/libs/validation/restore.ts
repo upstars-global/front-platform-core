@@ -8,8 +8,8 @@ import {
 } from '../../../../shared';
 
 export const RestorePasswordFormSchema = createFormSchema({
-  password: z.string().default(''),
-  confirmPassword: z.string().default(''),
+  password: z.string().optional().default(''),
+  confirmPassword: z.string().optional().default(''),
 }).superRefine((data, ctx) => {
   const password = data.password || '';
   const confirmPassword = data.confirmPassword || '';
@@ -19,9 +19,7 @@ export const RestorePasswordFormSchema = createFormSchema({
       code: 'custom',
       message: BASE_CLIENT_ERROR_KEY.PASSWORD_NOT_MATCH,
       path: ['confirmPassword'],
-    });
-    
-    return z.NEVER;
+    });    
   }
   
   const passwordSchema = createPasswordSchema({
