@@ -81,28 +81,3 @@ export const createAcceptTermsSchema = (message?: string) => {
       error: msg,
     });
 };
-
-export const createPasswordMatchSchema = <
-  T extends z.ZodObject<{ password: z.ZodTypeAny; confirmPassword: z.ZodTypeAny }>,
->(
-  schema: T,
-  message?: string,
-) => {
-  const msg = message || BASE_CLIENT_ERROR_KEY.PASSWORD_NOT_MATCH;
-
-  return schema.superRefine((data, ctx) => {
-    if (data.password !== data.confirmPassword) {
-      ctx.addIssue({
-        code: 'custom',
-        message: msg,
-        path: ['confirmPassword'],
-      });
-    }
-
-    ctx.issues.sort((a, b) => {
-      if (a.code === 'custom') return -1;
-      if (b.code === 'custom') return 1;
-      return 0;
-    });
-  });
-};
