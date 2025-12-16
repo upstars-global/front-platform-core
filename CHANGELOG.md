@@ -1,3 +1,26 @@
+## [7.5.3](https://github.com/upstars-global/front-platform-core/compare/v7.5.2...v7.5.3) (2025-12-16)
+
+### 🔧 Maintenance
+
+* fix pnpm-lock.yaml
+ ([21e177e](https://github.com/upstars-global/front-platform-core/commit/21e177e3db84dd70cc79dbc026eda2e99293fcaa))
+
+
+* migrate from yarn to pnpm. fix linter errors
+ ([a9f1140](https://github.com/upstars-global/front-platform-core/commit/a9f1140e30074d5d1db8b1b7acdf82e25e30d582))
+
+
+* readme.md update
+ ([d659099](https://github.com/upstars-global/front-platform-core/commit/d659099fa429d6fe60ee19cbf3c5cfb41a336a13))
+
+
+* remove pnpm-workspace.yaml
+ ([90317f2](https://github.com/upstars-global/front-platform-core/commit/90317f2ea70a8a4650f616e77be34b63ad2d3c3d))
+
+
+* removed dependency
+ ([8a07f95](https://github.com/upstars-global/front-platform-core/commit/8a07f95edbbd85e32e476fc341a99da8cc3753de))
+
 ## [7.5.2](https://github.com/upstars-global/front-platform-core/compare/v7.5.1...v7.5.2) (2025-12-11)
 
 ### 🐛 Bug Fixes
