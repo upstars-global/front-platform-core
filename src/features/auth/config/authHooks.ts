@@ -1,9 +1,14 @@
 import { createPromiseHook } from '../../../shared/helpers/config/createPromiseHook';
 
+const AUTH_HOOK_ERRORS = {
+  BEFORE_LOGIN: 'BEFORE_LOGIN_HOOK_ERROR',
+  BEFORE_LOGOUT: 'BEFORE_LOGOUT_HOOK_ERROR',
+} as const;
+
 export const beforeLoginHook = createPromiseHook({
-  hookError: 'BEFORE_LOGIN_HOOK_ERROR',
+  hookError: AUTH_HOOK_ERRORS.BEFORE_LOGIN,
 });
 
 export const beforeLogoutHook = createPromiseHook({
-  hookError: 'BEFORE_LOGOUT_HOOK_ERROR',
+  hookError: AUTH_HOOK_ERRORS.BEFORE_LOGOUT,
 });
