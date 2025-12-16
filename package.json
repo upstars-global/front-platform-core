@@ -65,5 +65,5 @@
     "vue-i18n": "9.14.4",
     "zod": "^4.1.8"
   },
-  "packageManager": "yarn@1.22.22"
+  "packageManager": "pnpm@10.13.1"
 }

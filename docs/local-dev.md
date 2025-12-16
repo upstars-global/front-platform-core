@@ -6,44 +6,46 @@ To begin working with this package, you need to install and configure it within 
 
 **Installation and Configuration:** [Link to installation and setup documentation](./installation.md)
 
-## Local Development Using `yarn link`
+## Local Development
 
-If you intend to develop the package locally, follow these steps to link it with your project using `yarn link`:
+For local development, you can use the `link:` protocol in package.json to link your local version of the package. This provides real-time updates without needing to rebuild the package.
 
-1. Navigate to the root of this package in terminal
-   
-   ```bash
-   cd /directory-with-package/front-platform-core
-   yarn link
-   ```
-
-2. Go to the project where you want to use the linked package:
-
-   ```bash
-   cd /path/to/your/consuming-project
-   yarn link "front-platform-core"
-   ```
-
-3. After linking, your project will use the local version of the package.
-
-4. If needed, restart your development server to apply the changes.
-
-Refer to the official Yarn documentation for additional details: https://classic.yarnpkg.com/en/docs/cli/link/
-
-## FOR LOCAL DEVELOPMENT WITH PNP ENABLED
-
-you can't use `yarn link` command with pnp because of node_modules not present in pnp mode,
-instead of using `yarn link` you can use portal protocol in package.json https://yarnpkg.com/protocol/portal
-
-in `package.json` where you use `front-platform-core` add dependency using portal protocol, example:
-
-
+In `package.json` where you use `front-platform-core`, add dependency using the `link:` protocol:
 ```json
 {
    "dependencies": {
-      "front-platform-core": "portal:../../../front-platform-core"
+      "front-platform-core": "link:../../../front-platform-core"
    }
 }
 ```
 
-path must be relative to the `package.json` directory
+Path must be relative to the `package.json` directory.
+
+After modifying the dependency, run:
+```bash
+pnpm install
+```
+
+### Benefits of `link:` Protocol
+
+- **Instant updates:** Changes in the linked package are immediately available
+- **No rebuild required:** Points directly to source code
+- **Faster development:** Perfect for active development on both packages
+
+### Removing Local Link
+
+To switch back to the published version:
+
+1. Update `package.json`:
+```json
+   {
+      "dependencies": {
+         "front-platform-core": "^1.0.0"
+      }
+   }
+```
+
+2. Reinstall dependencies:
+```bash
+   pnpm install
+```
