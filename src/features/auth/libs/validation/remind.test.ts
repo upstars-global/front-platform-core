@@ -4,17 +4,17 @@ import { validateData } from '../../../../shared/libs/validation/helpers/validat
 import { AUTH_BACKEND_ERROR_KEY } from './config/keys';
 
 describe('RemindFormSchema', () => {
-  const validData = {
-    login: 'test@example.com',
-  };
-
   it('should validate complete valid registration form', () => {
+    const validData = {
+      login: 'test@example.com',
+    };
+
     const { errors } = validateData(RemindFormSchema, validData);
     expect(errors).toBeNull();
   });
 
   it('should reject form with invalid email', () => {
-    const invalidData = { ...validData, login: 'invalid-email' };
+    const invalidData = { login: 'invalid-email' };
     const { errors } = validateData(RemindFormSchema, invalidData);
     expect(errors).not.toBeNull();
     const emailError = errors!.find(e => e.field === 'login');
@@ -23,19 +23,19 @@ describe('RemindFormSchema', () => {
   });
 
   it('should accept email with special characters', () => {
-    const validDataSpecialEmail = { ...validData, login: 'test+tag@example.com' };
+    const validDataSpecialEmail = { login: 'test+tag@example.com' };
     const { errors } = validateData(RemindFormSchema, validDataSpecialEmail);
     expect(errors).toBeNull();
   });
 
   it('should accept email with subdomain', () => {
-    const validDataSubdomainEmail = { ...validData, login: 'user@mail.company.com' };
+    const validDataSubdomainEmail = { login: 'user@mail.company.com' };
     const { errors } = validateData(RemindFormSchema, validDataSubdomainEmail);
     expect(errors).toBeNull();
   });
 
   it('should reject email without domain', () => {
-    const invalidData = { ...validData, login: 'test@' };
+    const invalidData = { login: 'test@' };
     const { errors } = validateData(RemindFormSchema, invalidData);
     expect(errors).not.toBeNull();
     const emailError = errors!.find(e => e.field === 'login');
@@ -44,7 +44,7 @@ describe('RemindFormSchema', () => {
   });
 
   it('should reject email without @ symbol', () => {
-    const invalidData = { ...validData, login: 'testexample.com' };
+    const invalidData = { login: 'testexample.com' };
     const { errors } = validateData(RemindFormSchema, invalidData);
     expect(errors).not.toBeNull();
     const emailError = errors!.find(e => e.field === 'login');
