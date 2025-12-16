@@ -11,7 +11,7 @@ export const createFormSchema = <T extends z.ZodRawShape>(schema: T) => {
 
 const MIN_LENGTH = 1;
 
-const EMAIL_REGEX =
+export const EMAIL_REGEX =
   /^[\w.!#$%&'*+\/=?^`{|}~-]+@[a-z\d](?:[a-z\d-]{0,61}[a-z\d])?(?:\.[a-z\d](?:[a-z\d-]{0,61}[a-z\d])?)*$/i;
 
 export const createEmailSchema = ({
