@@ -6,7 +6,7 @@ export type HttpRequestDurationHookParams = {
   requestInit: RequestInit | null;
 };
 
-const HTTP_REQUEST_DURATION_HOOK_ERRORS = {
+export const HTTP_REQUEST_DURATION_HOOK_ERRORS = {
   HTTP_REQUEST_DURATION: 'HTTP_REQUEST_DURATION_HOOK_ERROR',
   HTTP_REQUEST_DURATION_NOT_EXIST: 'HTTP_REQUEST_DURATION_HOOK_NOT_EXIST',
 } as const;
