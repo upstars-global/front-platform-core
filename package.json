@@ -21,7 +21,6 @@
     ]
   },
   "dependencies": {
-    "front-platform-core": "link:../../Library/pnpm/global/5/node_modules/front-platform-core",
     "uuid": "^10.0.0"
   },
   "peerDependencies": {

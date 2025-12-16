@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      front-platform-core:
-        specifier: link:../../Library/pnpm/global/5/node_modules/front-platform-core
-        version: link:../../Library/pnpm/global/5/node_modules/front-platform-core
       uuid:
         specifier: ^10.0.0
         version: 10.0.0
