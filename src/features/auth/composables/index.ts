@@ -7,3 +7,7 @@ export * from './useChangePassword';
 export * from './useEmailVerify';
 export * from './useRegistrationForm'
 export * from './useLoadAuthUserStrategies';
+export * from './useRemindForm';
+export * from './useRestorePasswordRequest';
+export * from './useRestorePasswordForm';
+export * from './useRestorePassword';

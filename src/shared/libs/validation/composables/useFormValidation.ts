@@ -3,6 +3,8 @@ import { ref, computed, toRaw, type ComputedRef, type Ref } from 'vue';
 import * as z from 'zod';
 import type { I18nErrorMapper } from '../helpers';
 
+const GLOBAL_ERROR_KEY = 'global';
+
 type FieldValue = string | number | boolean | undefined;
 type FormErrors<T extends Record<string, unknown>, U extends string> =
   Partial<Record<keyof T, U>>;
@@ -13,7 +15,7 @@ interface FieldMeta {
   valid: boolean;
 }
 
-interface FieldState<T = FieldValue, U extends string = string> {
+export interface FieldState<T = FieldValue, U extends string = string> {
   value: T;
   errors: U | '';
   meta: FieldMeta;
@@ -30,7 +32,7 @@ interface FormState<T extends Record<string, unknown>, U extends string> {
   };
 }
 
-type ValidationMode = 'eager' | 'lazy' | 'passive';
+export type FormValidationMode = 'eager' | 'lazy' | 'passive';
 
 interface FormOptions<
   T extends Record<string, unknown>,
@@ -40,7 +42,7 @@ interface FormOptions<
   validationSchema?: z.ZodType<T>;
   initialValues?: Partial<T>;
   validateOnMount?: boolean;
-  validationMode?: ValidationMode;
+  validationMode?: FormValidationMode;
   i18nErrorMapper: I18nErrorMapper<TErrorKeys, TI18nKeys>;
 }
 
@@ -65,6 +67,8 @@ interface UseFormValidationReturn<
   setTouched: (name: keyof T, isTouched?: boolean) => void;
   setFieldError: (name: keyof T, error: TErrorKeys) => void;
   clearFieldError: (name: keyof T) => void;
+  clearGlobalError: () => void;
+  getFieldSchema: (name: keyof T) => z.ZodType | null;
   validateField: (name: keyof T) => boolean;
   validateForm: () => boolean;
   handleSubmit: (submitCallback: (values: T) => void | Promise<void>) => (e?: Event) => Promise<boolean>;
@@ -86,7 +90,7 @@ export function useFormValidation<
   const errors = ref({}) as Ref<FormErrors<T, TI18nKeys>>;
   const touched = ref({}) as Ref<Partial<Record<keyof T, boolean>>>;
   const dirty = ref({}) as Ref<Partial<Record<keyof T, boolean>>>;
-  const valid = ref(true);
+  const valid = ref(false);
   const submitting = ref(false);
 
   const validationMode = options.validationMode || 'eager';
@@ -106,13 +110,22 @@ export function useFormValidation<
   };
 
   const updateFormValidity = () => {
-    valid.value = Object.keys(errors.value).length === 0;
+    const fieldErrors = Object.keys(errors.value).filter(key => key !== GLOBAL_ERROR_KEY);
+
+    valid.value = fieldErrors.length === 0;
   };
 
   const clearFieldError = (name: keyof T) => {
     delete errors.value[name];
     updateFormValidity();
   };    
+
+  const clearGlobalError = () => {
+    if (GLOBAL_ERROR_KEY in errors.value) {
+      delete errors.value[GLOBAL_ERROR_KEY as keyof T];
+      updateFormValidity();
+    }
+  };
 
   const setFieldError = (name: keyof T, error: TErrorKeys) => {
     errors.value[name] = i18nErrorMapper.getI18nKey(error);
@@ -123,32 +136,33 @@ export function useFormValidation<
     if (!schema.value) return true;
 
     try {
-      const fieldSchema = getFieldSchema(name);
-
-      if (fieldSchema) {
-        fieldSchema.parse(values.value[name]);
-        clearFieldError(name);
-        return true;
-      }
+      schema.value.parse(values.value);
+      
+      clearFieldError(name);
+      return true;
     } catch (err) {
       if (err instanceof z.ZodError) {
-        const [error] = err.issues;
-
-        setFieldError(name, error.message as TErrorKeys);
-
-        return false;
+        const fieldError = err.issues.find(
+          (issue) => issue.path[0] === name
+        );
+        
+        if (fieldError) {
+          setFieldError(name, fieldError.message as TErrorKeys);
+          return false;
+        }
+        
+        clearFieldError(name);
+        
+        return true;
       }
-
-      log.error(`FAILED_TO_VALIDATE_FIELD`, {
-        field: name
-      });
+  
+      log.error(`FAILED_TO_VALIDATE_FIELD`, { field: name });
       valid.value = false;
 
       return false;
     }
-
-    return true;
   };
+  
 
   const validateForm = (): boolean => {
     if (!schema.value) return true;
@@ -188,6 +202,8 @@ export function useFormValidation<
   const setValue = (name: keyof T, value: unknown) => {
     values.value[name] = value as T[keyof T];
     dirty.value[name] = true;
+
+    clearGlobalError();
 
     if (validationMode === 'eager') {
       validateField(name);
@@ -296,6 +312,8 @@ export function useFormValidation<
     setTouched,
     setFieldError,
     clearFieldError,
+    clearGlobalError,
+    getFieldSchema,
     validateField,
     validateForm,
     handleSubmit,
