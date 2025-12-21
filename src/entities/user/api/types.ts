@@ -51,11 +51,15 @@ export type StatusProgressionsStatic = {
   xp: number;
   order: number;
 };
-export type StatusProgressionsDynamic = {
+export type StatusProgressionsDynamicBase = {
   sp: number;
   isConfirmed: boolean;
   isAutoConfirmed: boolean;
   code: number;
+  seasonId?: string;
+};
+export type StatusProgressionsDynamic = StatusProgressionsDynamicBase & {
+  previous?: StatusProgressionsDynamicBase;
 };
 export type StatusProgressions = {
   static: StatusProgressionsStatic;
