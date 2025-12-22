@@ -1,6 +1,6 @@
 {
   "name": "front-platform-core",
-  "version": "7.5.2",
+  "version": "7.6.0",
   "type": "module",
   "description": "front platform package for business logic",
   "repository": "https://github.com/upstars-global/front-platform-core.git",
@@ -65,5 +65,5 @@
     "vue-i18n": "9.14.4",
     "zod": "^4.1.8"
   },
-  "packageManager": "yarn@1.22.22"
+  "packageManager": "pnpm@10.13.1"
 }

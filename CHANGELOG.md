@@ -1,3 +1,93 @@
+## [7.6.0](https://github.com/upstars-global/front-platform-core/compare/v7.5.3...v7.6.0) (2025-12-18)
+
+### 🚀 Features
+
+* **FP-4230:** add remind form and restore password request functionality
+ ([47a67bf](https://github.com/upstars-global/front-platform-core/commit/47a67bf29d3fa8a0db9cc046f7756ab4f25f501f))
+
+
+* **FP-4230:** added clearGLobalError
+ ([4b4d5ea](https://github.com/upstars-global/front-platform-core/commit/4b4d5eab74c7a67610384587f9453bb6cf3e0a24))
+
+
+* **FP-4230:** added tests for new email regex
+ ([a9c0835](https://github.com/upstars-global/front-platform-core/commit/a9c08352f4650bf9aa2f8473f53b41359520d6b4))
+
+
+* **FP-4230:** change restore scheme
+ ([e491567](https://github.com/upstars-global/front-platform-core/commit/e4915679a5a6c98e882707b9c7d5613060a2e57d))
+
+
+* **FP-4230:** change schema for auth
+ ([8249163](https://github.com/upstars-global/front-platform-core/commit/8249163c6959109dd9cf0ae691c048b1a4d2fd8c))
+
+
+* **FP-4230:** export hook error constants
+ ([c0bc2f6](https://github.com/upstars-global/front-platform-core/commit/c0bc2f6aea8f3b0fb6b53b48198acde8667c84b5))
+
+
+* **FP-4230:** fix test cases
+ ([bd1e0e4](https://github.com/upstars-global/front-platform-core/commit/bd1e0e45f889b5c500533244ee572c8d74433fbc))
+
+
+* **FP-4230:** fixed edge case
+ ([76786ee](https://github.com/upstars-global/front-platform-core/commit/76786ee9022ca23650ab2e194e56dc8a0b0cdb2f))
+
+
+* **FP-4230:** fixed path
+ ([91b0237](https://github.com/upstars-global/front-platform-core/commit/91b02374a09ffd37c8b6804ea8d71287b8ab62ec))
+
+
+* **FP-4230:** lint fix
+ ([34bc89e](https://github.com/upstars-global/front-platform-core/commit/34bc89e39a2a4573c31384278e3e157df79f869c))
+
+
+* **FP-4230:** lint fix
+ ([6bb7efd](https://github.com/upstars-global/front-platform-core/commit/6bb7efd39dbf51a91720eb26b8df069bcec25d90))
+
+
+* **FP-4230:** moved hook names to consts
+ ([c24130e](https://github.com/upstars-global/front-platform-core/commit/c24130e2441ecb6f25213d77a2d4c3b06616d503))
+
+
+* **FP-4230:** simplify test data structure by removing unnecessary spread operator
+ ([45e384d](https://github.com/upstars-global/front-platform-core/commit/45e384d41fefc822aa65770b589b6375bbab67ed))
+
+
+* **FP-4276:** custom error sorting
+ ([ec634d1](https://github.com/upstars-global/front-platform-core/commit/ec634d1662add191de4c178241e5f1bcab7d4cbc))
+
+
+* **FP-4276:** fix test cases
+ ([eac2158](https://github.com/upstars-global/front-platform-core/commit/eac21586584b8ca925095cd78fa8adf2fc1ee510))
+
+
+* **FP-4276:** useRestorePasswordForm
+ ([45f8366](https://github.com/upstars-global/front-platform-core/commit/45f83664a57b160c06426b8f7ee0bf98216b673b))
+
+## [7.5.3](https://github.com/upstars-global/front-platform-core/compare/v7.5.2...v7.5.3) (2025-12-16)
+
+### 🔧 Maintenance
+
+* fix pnpm-lock.yaml
+ ([21e177e](https://github.com/upstars-global/front-platform-core/commit/21e177e3db84dd70cc79dbc026eda2e99293fcaa))
+
+
+* migrate from yarn to pnpm. fix linter errors
+ ([a9f1140](https://github.com/upstars-global/front-platform-core/commit/a9f1140e30074d5d1db8b1b7acdf82e25e30d582))
+
+
+* readme.md update
+ ([d659099](https://github.com/upstars-global/front-platform-core/commit/d659099fa429d6fe60ee19cbf3c5cfb41a336a13))
+
+
+* remove pnpm-workspace.yaml
+ ([90317f2](https://github.com/upstars-global/front-platform-core/commit/90317f2ea70a8a4650f616e77be34b63ad2d3c3d))
+
+
+* removed dependency
+ ([8a07f95](https://github.com/upstars-global/front-platform-core/commit/8a07f95edbbd85e32e476fc341a99da8cc3753de))
+
 ## [7.5.2](https://github.com/upstars-global/front-platform-core/compare/v7.5.1...v7.5.2) (2025-12-11)
 
 ### 🐛 Bug Fixes

@@ -22,14 +22,19 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.13.1
+
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22.14.0
-          cache: "yarn"
+          cache: "pnpm"
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: Get GitHub App Token
         id: app_token
