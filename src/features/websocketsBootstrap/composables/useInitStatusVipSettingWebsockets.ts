@@ -1,6 +1,5 @@
 import { onMounted } from 'vue';
 import { useWebsocketsBridge } from '../../../shared/libs/websockets';
-import { useUserProfile } from '../../../entities/user';
 import { useLoadStatusData, statusVipSettingWebsocketsEvents, VipSettingWebsocketType } from '../../../entities/status';
 
 function useInitProgressionsWebsocketsBridge() {
@@ -17,10 +16,9 @@ function useInitProgressionsWebsocketsBridge() {
 
 function useInitProgressionsWebsocketsHandlers() {
   const { loadStatusData } = useLoadStatusData();
-  const { loadUserProfile } = useUserProfile();
 
   async function handleStaticUpdate() {
-    await Promise.all([loadStatusData(), loadUserProfile({ reload: true })]);
+    await Promise.all([loadStatusData()]);
   }
 
   onMounted(() => {
