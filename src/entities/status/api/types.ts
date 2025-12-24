@@ -79,6 +79,7 @@ export type DynamicsSeasonInfoResources = {
   title: string;
   icon: string;
   description: string;
+  id: string;
 };
 export type StatusDataResources = {
   staticProgressionConfig: {
