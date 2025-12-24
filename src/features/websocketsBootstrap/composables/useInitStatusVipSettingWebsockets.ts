@@ -18,7 +18,7 @@ function useInitProgressionsWebsocketsHandlers() {
   const { loadStatusData } = useLoadStatusData();
 
   async function handleStaticUpdate() {
-    await Promise.all([loadStatusData()]);
+    await Promise.all([loadStatusData({ reload: true })]);
   }
 
   onMounted(() => {
