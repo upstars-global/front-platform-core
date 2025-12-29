@@ -45,7 +45,7 @@ export function useCheckClientNotification() {
 
         addShownNotification(code);
 
-        return Boolean(response.data.data?.count);
+        return Boolean(response.data?.count);
       } catch (error) {
         return {
           error: {

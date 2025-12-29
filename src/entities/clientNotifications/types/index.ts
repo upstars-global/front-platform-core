@@ -9,14 +9,8 @@ export type CustomUserNotificationError = {
   description: string;
 };
 
-type CustomUserNotificationShowData = {
+export type CustomUserNotificationShowData = {
   count: 0 | 1;
   validUntil: string | null;
   countChangedAt: string;
-};
-
-export type CustomUserNotificationShowResponse = {
-  responseId: string;
-  error: CustomUserNotificationError | null;
-  data: CustomUserNotificationShowData | null;
 };
