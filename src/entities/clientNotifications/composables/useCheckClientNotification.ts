@@ -3,16 +3,30 @@ import type {
   CustomUserNotificationError,
   CustomUserNotificationPayload,
 } from '../types';
-import { log } from '../../../shared';
+import { isServer, log } from '../../../shared';
 
 const STORAGE_KEY = "clientNotificationsShown";
 
 function getShownNotifications(): string[] {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    return stored ? JSON.parse(stored) : [];
+    if (isServer) {
+      return [];
+    }
+
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      return stored ? JSON.parse(stored) : [];
+    } catch {
+      log.error('GET_SHOWN_NOTIFICATIONS', 'Failed to parse stored notifications, clearing storage');
+      localStorage.removeItem(STORAGE_KEY);
+      return [];
+    }
 }
 
 function addShownNotification(code: string): void {
+    if (isServer) {
+      return;
+    }
+
     const notificationIds = getShownNotifications();
 
     if (!notificationIds.includes(code)) {
