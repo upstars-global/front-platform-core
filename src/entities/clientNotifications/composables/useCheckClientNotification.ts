@@ -3,23 +3,22 @@ import type {
   CustomUserNotificationError,
   CustomUserNotificationPayload,
 } from '../types';
-import { isServer, log } from '../../../shared';
+import {
+  isServer,
+  log,
+  LocalStorageKeyController
+} from '../../../shared';
 
-const STORAGE_KEY = "clientNotificationsShown";
+const notificationsController = new LocalStorageKeyController<string[]>('clientNotificationsShown', {
+  defaultValue: () => [],
+});
 
 function getShownNotifications(): string[] {
     if (isServer) {
       return [];
     }
 
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      return stored ? JSON.parse(stored) : [];
-    } catch {
-      log.error('GET_SHOWN_NOTIFICATIONS', 'Failed to parse stored notifications, clearing storage');
-      localStorage.removeItem(STORAGE_KEY);
-      return [];
-    }
+    return notificationsController.get();
 }
 
 function addShownNotification(code: string): void {
@@ -31,7 +30,7 @@ function addShownNotification(code: string): void {
 
     if (!notificationIds.includes(code)) {
         notificationIds.push(code);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(notificationIds));
+        notificationsController.set(notificationIds);
     }
 }
 
@@ -41,7 +40,9 @@ function isNotificationShown(id: string) {
 }
 
 export function useCheckClientNotification() {
-    async function checkClientNotification(id: CustomUserNotificationPayload['code']): Promise<boolean | { error: CustomUserNotificationError }> {
+    async function checkClientNotification(
+      id: CustomUserNotificationPayload['code']
+    ): Promise<boolean | { error: CustomUserNotificationError }> {
       const code = id.trim();
 
       if (isNotificationShown(code)) {
@@ -61,6 +62,7 @@ export function useCheckClientNotification() {
 
         return Boolean(response.data?.count);
       } catch (error) {
+        log.error('CHECK_CLIENT_NOTIFICATION', String(error));
         return {
           error: {
             type: 'CHECK_CLIENT_NOTIFICATION',
