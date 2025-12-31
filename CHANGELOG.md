@@ -1,3 +1,24 @@
+## [7.7.0](https://github.com/upstars-global/front-platform-core/compare/v7.6.0...v7.7.0) (2025-12-31)
+
+### 🐛 Bug Fixes
+
+* **FP-4407:**  `loadStatusData` add ` reload: true ` in `useInitStatusVipSettingWebsockets`
+ ([b3dc9b3](https://github.com/upstars-global/front-platform-core/commit/b3dc9b3b54e569d0a3a6e560bc8486ba3457b100))
+
+
+
+### 🚀 Features
+
+* **FP-4407:** add `useInitStatusVipSettingWebsockets` to handle SEASON_CHANGED events
+ ([44c9e2c](https://github.com/upstars-global/front-platform-core/commit/44c9e2cc68b1a99aaf7927774111dd870adff907))
+
+
+
+### 🔨 Refactoring
+
+* **FP-4407:** remove unused `useUserProfile` import and references from websocket handlers
+ ([a72fb38](https://github.com/upstars-global/front-platform-core/commit/a72fb387df3ddf50319f2334d3eecaab1ffbaf75))
+
 ## [7.6.0](https://github.com/upstars-global/front-platform-core/compare/v7.5.3...v7.6.0) (2025-12-18)
 
 ### 🚀 Features
