@@ -1,1 +1,1 @@
-export * from './useCheckClientNotification';
+export * from './useShowClientNotification';
