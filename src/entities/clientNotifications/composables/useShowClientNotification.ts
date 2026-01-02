@@ -69,10 +69,6 @@ export function useShowClientNotification() {
 
         return Boolean(response.data?.count);
       } catch (error) {
-        if (error instanceof ClientNotificationError) {
-          throw error;
-        }
-
         log.error('SHOW_CLIENT_NOTIFICATION', error);
         throw error;
       }
