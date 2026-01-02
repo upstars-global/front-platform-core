@@ -9,7 +9,7 @@ import {
   LocalStorageKeyController
 } from '../../../shared';
 
-class ClientNotificationError extends Error {
+export class ClientNotificationError extends Error {
   public readonly errorData: CustomUserNotificationError;
 
   constructor(message: string, errorData: CustomUserNotificationError) {
