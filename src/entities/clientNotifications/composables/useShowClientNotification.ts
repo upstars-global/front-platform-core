@@ -1,6 +1,5 @@
 import { clientNotificationsAPI } from '../api';
 import type {
-  CustomUserNotificationError,
   CustomUserNotificationPayload,
 } from '../types';
 import {
@@ -42,7 +41,7 @@ export function useShowClientNotification() {
 
     async function showClientNotification(
       id: CustomUserNotificationPayload['code']
-    ): Promise<boolean | { error: CustomUserNotificationError }> {
+    ) {
       const code = id.trim();
 
       if (isNotificationShown(code)) {
@@ -53,9 +52,7 @@ export function useShowClientNotification() {
         const response = await clientNotificationsAPI.showCustomUserNotification({ code });
 
         if (response.error) {
-          const message = `[Type]: ${response.error.type} [Description]: ${response.error.description}`;
-          log.error('SHOW_CLIENT_NOTIFICATION', message);
-          return { error: response.error };
+          throw response.error;
         }
 
         addShownNotification(code);
@@ -63,12 +60,7 @@ export function useShowClientNotification() {
         return Boolean(response.data?.count);
       } catch (error) {
         log.error('SHOW_CLIENT_NOTIFICATION', String(error));
-        return {
-          error: {
-            type: 'SHOW_CLIENT_NOTIFICATION',
-            description: String(error),
-          },
-        };
+        throw error;
       }
     }
 
