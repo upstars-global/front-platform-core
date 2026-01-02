@@ -1,5 +1,6 @@
 import { clientNotificationsAPI } from '../api';
 import type {
+  CustomUserNotificationError,
   CustomUserNotificationPayload,
 } from '../types';
 import {
@@ -7,6 +8,15 @@ import {
   log,
   LocalStorageKeyController
 } from '../../../shared';
+
+class ClientNotificationError extends Error {
+  public readonly errorData: CustomUserNotificationError;
+
+  constructor(message: string, errorData: CustomUserNotificationError) {
+    super(message);
+    this.errorData = errorData;
+  }
+}
 
 export function useShowClientNotification() {
     const notificationsLocalStorageController = new LocalStorageKeyController<string[]>('clientNotificationsShown', {
@@ -41,7 +51,7 @@ export function useShowClientNotification() {
 
     async function showClientNotification(
       id: CustomUserNotificationPayload['code']
-    ) {
+    ): Promise<boolean> {
       const code = id.trim();
 
       if (isNotificationShown(code)) {
@@ -52,14 +62,18 @@ export function useShowClientNotification() {
         const response = await clientNotificationsAPI.showCustomUserNotification({ code });
 
         if (response.error) {
-          throw response.error;
+          throw new ClientNotificationError('SHOW_CLIENT_NOTIFICATION', response.error);
         }
 
         addShownNotification(code);
 
         return Boolean(response.data?.count);
       } catch (error) {
-        log.error('SHOW_CLIENT_NOTIFICATION', String(error));
+        if (error instanceof ClientNotificationError) {
+          throw error;
+        }
+
+        log.error('SHOW_CLIENT_NOTIFICATION', error);
         throw error;
       }
     }
