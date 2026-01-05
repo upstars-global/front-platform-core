@@ -62,14 +62,14 @@ export function useShowClientNotification() {
         const response = await clientNotificationsAPI.showCustomUserNotification({ code });
 
         if (response.error) {
-          throw new ClientNotificationError('SHOW_CLIENT_NOTIFICATION', response.error);
+          throw new ClientNotificationError(`SHOW_CLIENT_NOTIFICATION_RESPONSE_ERROR_${id}`, response.error);
         }
 
         addShownNotification(code);
 
         return Boolean(response.data?.count);
       } catch (error) {
-        log.error('SHOW_CLIENT_NOTIFICATION', error);
+        log.error(`SHOW_CLIENT_NOTIFICATION_ERROR_${id}`, error);
         throw error;
       }
     }
