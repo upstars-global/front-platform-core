@@ -1,3 +1,52 @@
+## [7.8.0](https://github.com/upstars-global/front-platform-core/compare/v7.7.0...v7.8.0) (2026-01-07)
+
+### 🐛 Bug Fixes
+
+* **FP-4400:** handle local storage errors in client notifications logic
+ ([daf2d53](https://github.com/upstars-global/front-platform-core/commit/daf2d53192b79a986aee5e960dc8b086a924b9fc))
+
+
+
+### 🚀 Features
+
+* **FP-4400:** add client notifications handling with API integration and local storage support
+ ([90e3d98](https://github.com/upstars-global/front-platform-core/commit/90e3d98037b17cc33c8143256a91db74c4443b7d))
+
+
+* **FP-4400:** simplify client notifications type structure and API usage
+ ([1f22f33](https://github.com/upstars-global/front-platform-core/commit/1f22f33d4d2e1ca354ee4878f4ba31febe25b614))
+
+
+* **FP-4400:** update client notification error message, add notification id to message
+ ([364e81c](https://github.com/upstars-global/front-platform-core/commit/364e81ce6cc41baaf530f3ce5190e23d80cd05a6))
+
+
+
+### 🔨 Refactoring
+
+* **FP-4400:** add custom error class for client notifications and improve error handling
+ ([ce5f1e6](https://github.com/upstars-global/front-platform-core/commit/ce5f1e6dc1a0ce1149668565076e5425fea653ad))
+
+
+* **FP-4400:** add export to ClientNotificationError class
+ ([5c188c1](https://github.com/upstars-global/front-platform-core/commit/5c188c12528dcc2a52286423b372caa55d1c7d03))
+
+
+* **FP-4400:** remove redundant error handling in client notifications logic
+ ([6677bde](https://github.com/upstars-global/front-platform-core/commit/6677bde9f3a96b9912e34f6f88b754f8a4555ae1))
+
+
+* **FP-4400:** rename and update client notifications logic
+ ([f06bc09](https://github.com/upstars-global/front-platform-core/commit/f06bc095b58d14885ddf8a7b07560c4d0234da70))
+
+
+* **FP-4400:** replace manual local storage handling with LocalStorageKeyController
+ ([24b90b7](https://github.com/upstars-global/front-platform-core/commit/24b90b78eb54f42ace9946250d2384f3138e52e7))
+
+
+* **FP-4400:** simplify error handling in client notifications logic
+ ([b225481](https://github.com/upstars-global/front-platform-core/commit/b225481d8fcc70baba4eb1b497f7aab679725c81))
+
 ## [7.7.0](https://github.com/upstars-global/front-platform-core/compare/v7.6.0...v7.7.0) (2025-12-31)
 
 ### 🐛 Bug Fixes
