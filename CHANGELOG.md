@@ -1,3 +1,10 @@
+## [7.9.0](https://github.com/upstars-global/front-platform-core/compare/v7.8.0...v7.9.0) (2026-01-08)
+
+### 🚀 Features
+
+* **FP-4441:** track window close events to distinguish fetch errors caused by navigation
+ ([5516df8](https://github.com/upstars-global/front-platform-core/commit/5516df81c5599b3063f880e2692a73d51e4143ea))
+
 ## [7.8.0](https://github.com/upstars-global/front-platform-core/compare/v7.7.0...v7.8.0) (2026-01-07)
 
 ### 🐛 Bug Fixes
