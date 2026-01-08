@@ -2,6 +2,7 @@ export enum JsonHttpErrorType {
   JSON_PARSE = 'JSON_PARSE',
   SERVER = 'SERVER',
   TIMEOUT = 'TIMEOUT',
+  FAILED_TO_FETCH = 'FAILED_TO_FETCH',
   UNKNOWN = 'UNKNOWN',
 }
 export type JsonHttpErrorBase = {
@@ -22,6 +23,12 @@ export type JsonHttpErrorTimeoutParams = JsonHttpErrorBase & {
   type: JsonHttpErrorType.TIMEOUT;
   error: unknown;
 };
+export type JsonHttpErrorFailedToFetchParams = JsonHttpErrorBase & {
+  type: JsonHttpErrorType.FAILED_TO_FETCH;
+  error: unknown;
+  reason: string;
+  isWindowClosed?: boolean;
+};
 export type JsonHttpErrorUnknownParams = JsonHttpErrorBase & {
   type: JsonHttpErrorType.UNKNOWN;
   error: unknown;
@@ -31,6 +38,7 @@ export type JsonHttpErrorParams =
   | JsonHttpErrorJsonParseParams
   | JsonHttpErrorServerParams
   | JsonHttpErrorTimeoutParams
+  | JsonHttpErrorFailedToFetchParams
   | JsonHttpErrorUnknownParams;
 
 type TypeLess<T> = Omit<T, 'type'>;
@@ -68,6 +76,19 @@ export class JsonHttpTimeoutError extends JsonHttpError {
       ...error,
       type: JsonHttpErrorType.TIMEOUT,
     }, `[HTTP]: ${JsonHttpErrorType.TIMEOUT} - ${error.method} ${error.url}`);
+  }
+}
+
+export class JsonHttpFailedToFetchError extends JsonHttpError<JsonHttpErrorFailedToFetchParams> {
+  constructor(error: TypeLess<JsonHttpErrorFailedToFetchParams>) {
+    const isWindowClosedReason = error.isWindowClosed ? '(window closed)' : '';
+    super(
+      {
+        ...error,
+        type: JsonHttpErrorType.FAILED_TO_FETCH,
+      },
+      `[HTTP]: ${JsonHttpErrorType.FAILED_TO_FETCH} ${isWindowClosedReason} - ${error.method} ${error.url}`,
+    );
   }
 }
 
