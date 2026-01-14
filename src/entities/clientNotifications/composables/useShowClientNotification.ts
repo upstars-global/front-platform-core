@@ -75,6 +75,7 @@ export function useShowClientNotification() {
     }
 
     return {
+        isNotificationShown,
         showClientNotification,
     };
 }
