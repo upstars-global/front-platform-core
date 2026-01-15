@@ -1,5 +1,6 @@
 import { useFormValidation, type BaseClientErrorKey, type FormValidationMode, type I18nErrorMapper } from "../../../shared/libs/validation";
-import { RemindFormSchema, type AuthBackendErrorKey, type RemindFormSchemaType } from "../libs";
+import { RemindFormSchema, type RemindFormSchemaType } from "../libs";
+import type { AuthBackendErrorKey } from "../../../entities/auth";
 import { useRestorePasswordRequest } from "./useRestorePasswordRequest";
 
 export type RemindErrorKey = BaseClientErrorKey | AuthBackendErrorKey

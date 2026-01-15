@@ -1,27 +1,45 @@
 import { useMultiLangStore } from "../../../entities/multilang";
-import { useFormValidation, mapErrorFields, type BaseClientErrorKey, type I18nErrorMapper} from "../../../shared/libs/validation";
-import { ref } from "vue";
-import { RegistrationFormSchema, type AuthBackendErrorKey, VerifyEmailStatus, type RegistrationFormSchemaType } from "../libs";
+import { useFormValidation, mapErrorFields, type BaseClientErrorKey, type I18nErrorMapper, type FormValidationMode} from "../../../shared/libs/validation";
+import { RegistrationFormSchema, VerifyEmailStatus, type RegistrationFormSchemaType } from "../libs";
 import { useEmailVerify } from "./useEmailVerify";
-import { useRegister, RegistrationFailureError } from "./useRegister";
+import { useRegister } from "./useRegister";
 import { fingerprintHelper } from "../../../entities/covery";
-import type { IbizaErrorKey } from "../../../entities/auth";
+import type { IbizaErrorKey, RegisterDTO, AuthBackendErrorKey } from "../../../entities/auth";
 import { RegistrationType } from "../../../shared/api";
+import { ref } from "vue";
 
 export type RegistrationErrorKey = BaseClientErrorKey | AuthBackendErrorKey | IbizaErrorKey
 
-export function useRegistrationForm<T extends string>(i18nErrorMapper: I18nErrorMapper<RegistrationErrorKey, T>) {
-    const { verifyEmail, isVerified: isEmailVerified, isVerifying: isEmailVerifying } = useEmailVerify();
+export function useRegistrationForm<T extends string>({
+    i18nErrorMapper,
+    validationMode = "passive",
+    initialValues,
+    isAcceptTermsRequired = true,
+}: {
+    i18nErrorMapper: I18nErrorMapper<RegistrationErrorKey, T>;
+    validationMode?: FormValidationMode;
+    initialValues?: Partial<RegistrationFormSchemaType>;
+    isAcceptTermsRequired?: boolean;
+}) {
+    const { 
+        verifyEmail: verifyEmailByService, 
+        isVerified: isEmailVerified, 
+        isVerifying: isEmailVerifying,
+        isError: isEmailVerificationError,
+    } = useEmailVerify();
 
     const form = useFormValidation<RegistrationFormSchemaType, RegistrationErrorKey, T>({
-        validationSchema: RegistrationFormSchema,
+        validationSchema: RegistrationFormSchema(isAcceptTermsRequired),
         i18nErrorMapper,
-        validationMode: "lazy"
+        validationMode,
+        initialValues,
     });
 
     const {
         values: formValues,
+        fieldsFromSchema,
         setFieldError,
+        setValue,
         validateField,
         errors,
         isSubmitting,
@@ -30,9 +48,10 @@ export function useRegistrationForm<T extends string>(i18nErrorMapper: I18nError
         dirty,
         touched,
         valid,
+        validateForm,
     } = form;
 
-    const loginField = defineField("login");
+    const emailField = defineField("email");
     const passwordField = defineField("password");
     const countryField = defineField("country");
     const currencyField = defineField("currency");
@@ -40,123 +59,57 @@ export function useRegistrationForm<T extends string>(i18nErrorMapper: I18nError
     const acceptTermsField = defineField("acceptTerms");
     const acceptNotificationsField = defineField("acceptNotifications");
 
+    const captchaKey = ref<string | undefined>(undefined);
+
+    function setCaptchaKey(value: string) {
+        captchaKey.value = value;
+    }
+
     const { register } = useRegister();
     const multiLangStore = useMultiLangStore();
 
-    const isSuccess = ref(false);
-
     const onSubmit = handleSubmit(async (values) => {
         const {
-            login,
+            email,
             currency,
             password,
             acceptTerms: accept_terms,
-            acceptNotifications: accept_notification,
+            acceptNotifications: accept_notifications,
             country: chosen_country,
             promoCode,
         } = values;
 
-        const registrationData = fingerprintHelper({
-            login,
+        const registrationData = fingerprintHelper<RegisterDTO>({
+            login: email,
             currency,
             password,
             auth_type: RegistrationType.EMAIL,
             localization: multiLangStore.userLocale || "",
             chosen_country,
-            accept_notification,
-            accept_terms,
+            accept_notifications,
+            accept_terms: accept_terms || false,
             promo_code: promoCode || "",
+            captcha_key: captchaKey.value,
         });
 
-        try {
-            await register(registrationData);
-
-            isSuccess.value = true;
-        } catch (error) {
-            function isObject(data: unknown): data is Record<string, unknown> {
-                return typeof data === "object" && data !== null;
-            }
-
-            let registrationError: unknown = undefined;
-            if (error instanceof RegistrationFailureError) {
-                registrationError = error.errorData;
-            } else {
-                registrationError = error;
-            }
-
-            let requestErrors: undefined | Partial<Record<string, AuthBackendErrorKey[]>> = undefined;
-            let forbiddenError: undefined | string = undefined;
-            let fraud: undefined | string = undefined;
-
-            if (isObject(registrationError)) {
-                if ("errors" in registrationError) {
-                    requestErrors = registrationError.errors as Partial<Record<string, AuthBackendErrorKey[]>>;
-                }
-                if ("message" in registrationError) {
-                    forbiddenError = registrationError.message as string;
-                }
-                if (
-                    "error" in registrationError &&
-                    isObject(registrationError.error) &&
-                    "data" in registrationError.error &&
-                    isObject(registrationError.error.data) &&
-                    "message" in registrationError.error.data
-                ) {
-                    fraud = registrationError?.error?.data?.message as string;
-                }
-            }
-
-            let message = "";
-            let messageKey = "";
-
-            const SERVER_VALIDATION_LOCALIZE_PREFIX = "VALIDATION_BACK";
-
-            if (fraud) {
-                message = `${SERVER_VALIDATION_LOCALIZE_PREFIX}.${fraud}`;
-                messageKey = fraud;
-            } else if (forbiddenError) {
-                message = forbiddenError;
-                messageKey = forbiddenError;
-            }
-
-            if (message && messageKey) {
-                requestErrors = {
-                    login: [ message as AuthBackendErrorKey ],
-                };
-            }
-            if (requestErrors) {
-                const mappedErrors = mapErrorFields({
-                    errors: requestErrors,
-                    fieldMap: {
-                        chosen_country: "country",
-                        promo_code: "promoCode",
-                        accept_notifications: "acceptNotifications",
-                    },
-                });
-
-                mappedErrors.forEach(({ field, key }) => {
-                    // @ts-expect-error Lack of response type definition
-                    setFieldError(field, key);
-                });
-            }
-        }
+        await register(registrationData);
     })
 
-    const handleEmailChange = async (email?: string) => {
-        const LOGIN_FIELD_KEY = "login";
+    const verifyEmail = async (email?: string) => {
+        const EMAIL_FIELD_KEY = "email";
 
-        const isLoginValid = validateField(LOGIN_FIELD_KEY);
+        const isEmailValid = validateField(EMAIL_FIELD_KEY);
 
-        if (!isLoginValid || !email) {
+        if (!isEmailValid || !email) {
             return;
         }
 
-        const response = await verifyEmail(email);
+        const response = await verifyEmailByService(email);
 
         if (response?.status === VerifyEmailStatus.INVALID && response.invalidCode) {
             const [ { field, key } ] = mapErrorFields({
                 errors: {
-                    [LOGIN_FIELD_KEY]: [ response.invalidCode ],
+                    [EMAIL_FIELD_KEY]: [ response.invalidCode ],
                 },
             });
 
@@ -167,23 +120,28 @@ export function useRegistrationForm<T extends string>(i18nErrorMapper: I18nError
     return {
         isEmailVerified,
         isEmailVerifying,
+        isEmailVerificationError,
         formValues,
         errors,
         isSubmitting,
-        loginField,
+        fieldsFromSchema,
+        emailField,
         passwordField,
         countryField,
         currencyField,
         promoCodeField,
         acceptNotificationsField,
         acceptTermsField,
-        isSuccess,
         dirty,
         touched,
         valid,
+        captchaKey,
+        setCaptchaKey,
+        setValue,
+        validateForm,
         setFieldError,
         onSubmit,
         handleSubmit,
-        handleEmailChange,
+        verifyEmail,
     };
 }

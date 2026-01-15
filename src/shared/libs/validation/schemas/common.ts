@@ -21,7 +21,7 @@ export const createEmailSchema = ({
   requiredMessage?: string;
   invalidMessage?: string;
 } = {}) => {
-  const requiredMsg = requiredMessage || BASE_CLIENT_ERROR_KEY.REQUIRED;
+  const requiredMsg = requiredMessage || BASE_CLIENT_ERROR_KEY.EMAIL_INVALID;
   const invalidMsg = invalidMessage || BASE_CLIENT_ERROR_KEY.EMAIL_INVALID;
 
   return z.string({ error: requiredMsg }).min(MIN_LENGTH, { error: requiredMsg }).regex(EMAIL_REGEX, {

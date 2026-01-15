@@ -5,7 +5,7 @@ import type {
   ILoginResource,
   ILogoutResource,
   RegisterDTO,
-  IRegisterResource,
+  RegisterResource,
   IChangePasswordDTO,
   IVerifyEmailResource,
 } from './types';
@@ -26,7 +26,7 @@ export const authAPI = {
     }
   },
   async register(data: RegisterDTO) {
-    return await jsonApi<IRegisterResource>('/users/register', {
+    return await jsonApi<RegisterResource>('/users/register', {
       data,
     });
   },
