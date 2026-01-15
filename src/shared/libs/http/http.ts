@@ -6,9 +6,11 @@ import {
   JsonHttpJsonParseError,
   JsonHttpServerError,
   JsonHttpTimeoutError,
+  JsonHttpFailedToFetchError,
   JsonHttpUnknownError,
 } from './errors';
 import { httpRequestDurationHook } from './httpRequestDurationHook';
+import { getIsWindowClosed } from './windowCloseTracker';
 
 export function jsonHttp<R = unknown>(url: string, request?: RequestInit, options: HTTPOptions = {}): Promise<R> {
   const { timeout, retryCount, headersDecorator, baseUrl } = getHttpConfig();
@@ -128,13 +130,39 @@ export function jsonHttp<R = unknown>(url: string, request?: RequestInit, option
                 );
               });
           } else {
-            reject(
-              new JsonHttpUnknownError({
-                error,
-                url: requestUrl,
-                method: request?.method || 'GET',
-              }),
-            );
+            const isTypeError = error instanceof TypeError;
+            const errorMessage = error instanceof Error ? error.message : JSON.stringify(error);
+            const isNetworkError = isTypeError && ['Failed to fetch', 'Load failed'].includes(errorMessage);
+            const isWindowClosed = getIsWindowClosed();
+
+            if (isWindowClosed && isNetworkError) {
+              reject(
+                new JsonHttpFailedToFetchError({
+                  error,
+                  url: requestUrl,
+                  method: request?.method || 'GET',
+                  reason: errorMessage,
+                  isWindowClosed,
+                }),
+              );
+            } else if (isNetworkError) {
+              reject(
+                new JsonHttpFailedToFetchError({
+                  error,
+                  url: requestUrl,
+                  method: request?.method || 'GET',
+                  reason: errorMessage,
+                }),
+              );
+            } else {
+              reject(
+                new JsonHttpUnknownError({
+                  error,
+                  url: requestUrl,
+                  method: request?.method || 'GET',
+                }),
+              );
+            }
           }
         });
     }
