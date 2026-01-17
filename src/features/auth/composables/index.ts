@@ -5,6 +5,7 @@ export * from './useFetchAllUserData';
 export * from './useInitAuth';
 export * from './useChangePassword';
 export * from './useEmailVerify';
+export * from './useLoginForm';
 export * from './useRegistrationForm'
 export * from './useLoadAuthUserStrategies';
 export * from './useRemindForm';

@@ -2,7 +2,7 @@ import { jsonApi, publicApi, publicApiV1 } from '../../../shared/libs/http';
 import { isServer } from '../../../shared/helpers/ssr';
 import type {
   LoginDTO,
-  ILoginResource,
+  LoginResource,
   ILogoutResource,
   RegisterDTO,
   RegisterResource,
@@ -13,10 +13,9 @@ import { log } from '../../../shared/helpers/log';
 
 export const authAPI = {
   async login(data: LoginDTO) {
-    const response = await jsonApi<ILoginResource>('/login', {
+    return await jsonApi<LoginResource>('/login', {
       data,
     });
-    return response.step;
   },
   async logout() {
     try {

@@ -1,10 +1,12 @@
 import { ref } from 'vue';
-import { authAPI, authEvents, type LoginDTO, type LoginErrorDTO } from '../../../entities/auth';
+import { authAPI, authEvents, type LoginDTO, type LoginResource } from '../../../entities/auth';
 import { log } from '../../../shared/helpers/log';
-import { JsonHttpServerError } from '../../../shared/libs/http';
 import { useFetchAllUserData } from './useFetchAllUserData';
 import { useCaptcha } from './useCaptcha';
 import { isServer } from '../../../shared/helpers/ssr';
+import { afterLoginHook, onErrorLoginHook } from '../config';
+import { isLoginErrorCaptchaRequiredResource } from '../guards';
+import { JsonHttpServerError } from '../../../shared/libs/http';
 
 export type LoginParams = Record<string, unknown> & {
   login: string;
@@ -36,7 +38,7 @@ export function useLogin() {
     captchaFailed.value = false;
   }
 
-  async function loginAction(params: LoginParams, options?: LoginOptions): Promise<string | undefined> {
+  async function loginAction(params: LoginParams, options?: LoginOptions): Promise<LoginResource | undefined> {
     const { login, password, captcha, ...extraParams } = params;
     const { preventCaptchaHandler } = options || {};
 
@@ -48,24 +50,28 @@ export function useLogin() {
         ...extraParams,
       };
 
-      const step = await authAPI.login(loginData);
+      const response = await authAPI.login(loginData);
+
       await fetchAllUserData();
+
+      afterLoginHook.run(response);
+
       authEvents.emit('login');
 
-      return step;
+      return response;
     } catch (error: unknown) {
-      if (error instanceof JsonHttpServerError) {
-        const errorData = error.error.data as LoginErrorDTO;
-        if (errorData && errorData.captcha_required) {
-          captchaFailed.value = true;
-          if (!preventCaptchaHandler) {
-            return await loginWithCaptcha(params, options);
-          }
+      onErrorLoginHook.run(error);
+
+
+      if (error instanceof JsonHttpServerError && isLoginErrorCaptchaRequiredResource(error.error.data)) {
+        captchaFailed.value = true;
+
+        if (!preventCaptchaHandler) {
+          return await loginWithCaptcha(params, options);
         }
       }
 
-      log.error('LOGIN_ERROR', error);
-      throw error;
+      log.error('LOGIN_REQUEST_ERROR', error);
     }
   }
 

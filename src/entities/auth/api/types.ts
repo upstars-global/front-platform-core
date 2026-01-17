@@ -103,14 +103,19 @@ export enum LoginResourceStep {
   EMAIL_VERIFICATION = 'email_verification',
 }
 
-export interface ILoginResource {
-  step?: LoginResourceStep | string;
-}
-
-export type LoginErrorDTO = {
-  captcha_required?: boolean;
-  message?: string;
+export type LoginErrorResource = {
+  message: AuthBackendErrorKey;
 };
+
+export type LoginErrorCaptchaRequiredResource = {
+  captcha_required: boolean;
+};
+
+export type LoginSuccessResource = {
+  step?: LoginResourceStep | string;
+};
+
+export type LoginResource = LoginSuccessResource | LoginErrorResource | LoginErrorCaptchaRequiredResource;
 
 export interface ILogoutResource {
   redirect: string;
