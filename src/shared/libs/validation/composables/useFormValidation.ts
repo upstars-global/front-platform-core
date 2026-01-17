@@ -57,6 +57,9 @@ interface UseFormValidationReturn<
   dirty: Ref<Partial<Record<keyof T, boolean>>>;
   valid: Ref<boolean>;
   submitting: Ref<boolean>;
+  submitCount: Ref<number>;
+  formValidated: Ref<boolean>;
+  fieldsFromSchema: ComputedRef<(keyof T)[]>;
   
   isValid: ComputedRef<boolean>;
   isSubmitting: ComputedRef<boolean>;
@@ -92,8 +95,24 @@ export function useFormValidation<
   const dirty = ref({}) as Ref<Partial<Record<keyof T, boolean>>>;
   const valid = ref(false);
   const submitting = ref(false);
+  const submitCount = ref(0);
+  const formValidated = ref(false);
 
   const validationMode = options.validationMode || 'eager';
+
+  const fieldsFromSchema = computed<(keyof T)[]>(() => {
+    if (!schema.value) {
+      return [];
+    }
+
+    const rawSchema = toRaw(schema.value);
+
+    if (rawSchema instanceof z.ZodObject) {
+      return Object.keys(rawSchema.shape) as (keyof T)[];
+    }
+
+    return [];
+  });
 
   const getFieldSchema = (name: keyof T): z.ZodType | null => {
     if (!schema.value) {
@@ -196,6 +215,8 @@ export function useFormValidation<
       valid.value = false;
 
       return false;
+    } finally {
+      formValidated.value = true;
     }
   };
 
@@ -207,11 +228,15 @@ export function useFormValidation<
 
     if (validationMode === 'eager') {
       validateField(name);
-
       return;
     }
 
     if (validationMode === 'lazy' && Boolean(touched.value[name])) {
+      validateField(name);
+      return;
+    }
+
+    if (validationMode === 'passive' && formValidated.value) {
       validateField(name);
     }
   };
@@ -241,6 +266,8 @@ export function useFormValidation<
       e?.preventDefault();
 
       submitting.value = true;
+      submitCount.value++;
+      formValidated.value = true;
 
       const isValid = validateForm();
 
@@ -261,6 +288,8 @@ export function useFormValidation<
     dirty.value = resetOptions?.meta?.dirty || {};
     valid.value = resetOptions?.meta?.valid ?? true;
     submitting.value = resetOptions?.meta?.submitting ?? false;
+    submitCount.value = 0;
+    formValidated.value = false;
   };
 
   const setValues = (newValues: Partial<T>) => {
@@ -302,7 +331,9 @@ export function useFormValidation<
     dirty,
     valid,
     submitting,
-
+    submitCount,
+    formValidated,
+    fieldsFromSchema,
     isValid,
     isSubmitting,
     isDirty,

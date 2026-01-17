@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { RemindFormSchema } from './remind';
 import { validateData } from '../../../../shared/libs/validation/helpers/validateData';
-import { AUTH_BACKEND_ERROR_KEY } from './config/keys';
+import { AUTH_BACKEND_ERROR_KEY } from '../../../../entities/auth/api/types';
 
 describe('RemindFormSchema', () => {
   it('should validate complete valid registration form', () => {

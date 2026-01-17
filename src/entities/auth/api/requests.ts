@@ -2,10 +2,10 @@ import { jsonApi, publicApi, publicApiV1 } from '../../../shared/libs/http';
 import { isServer } from '../../../shared/helpers/ssr';
 import type {
   LoginDTO,
-  ILoginResource,
+  LoginResource,
   ILogoutResource,
   RegisterDTO,
-  IRegisterResource,
+  RegisterResource,
   IChangePasswordDTO,
   IVerifyEmailResource,
 } from './types';
@@ -13,10 +13,9 @@ import { log } from '../../../shared/helpers/log';
 
 export const authAPI = {
   async login(data: LoginDTO) {
-    const response = await jsonApi<ILoginResource>('/login', {
+    return await jsonApi<LoginResource>('/login', {
       data,
     });
-    return response.step;
   },
   async logout() {
     try {
@@ -26,7 +25,7 @@ export const authAPI = {
     }
   },
   async register(data: RegisterDTO) {
-    return await jsonApi<IRegisterResource>('/users/register', {
+    return await jsonApi<RegisterResource>('/users/register', {
       data,
     });
   },

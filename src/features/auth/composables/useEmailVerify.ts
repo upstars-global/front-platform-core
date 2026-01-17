@@ -2,10 +2,12 @@ import { authAPI } from '../../../entities/auth';
 import { ref } from 'vue';
 import { handleVerifyEmailResponse, VerifyEmailStatus } from '../libs';
 import { log } from '../../../shared/helpers';
+import { afterEmailVerifyHook } from '../config';
 
 export function useEmailVerify() {
   const isVerified = ref(false);
   const isVerifying = ref(false);
+  const isError = ref(false);
   const invalidCode = ref<string | null>(null);
 
   function setVerified(valid: boolean) {
@@ -20,9 +22,14 @@ export function useEmailVerify() {
     invalidCode.value = code;
   }
 
+  function setError(error: boolean) {
+    isError.value = error;
+  }
+
   async function verifyEmail(email?: string) {
     setVerified(false);
     setInvalidCode(null);
+    setError(false);
 
     if (!email) return;
 
@@ -33,10 +40,17 @@ export function useEmailVerify() {
 
       if (!response) {
         setVerified(false);
+        setError(true);
         return;
       }
 
       const handledEmailResponse = handleVerifyEmailResponse(response);
+
+      await afterEmailVerifyHook.run({
+        email,
+        status: handledEmailResponse.status,
+        invalidCode: handledEmailResponse.invalidCode,
+      });
 
       if (handledEmailResponse.status === VerifyEmailStatus.INVALID) {
         setVerified(false);
@@ -52,6 +66,7 @@ export function useEmailVerify() {
       log.error('EMAIL_VERIFICATION_FAILED', error)
 
       setVerified(false);
+      setError(true);
     } finally {
       setVerifying(false);
     }
@@ -59,9 +74,11 @@ export function useEmailVerify() {
 
   return {
     isVerified,
+    isError,
     isVerifying,
     invalidCode,
     setVerified,
+    setError,
     verifyEmail,
   };
 }
