@@ -6,6 +6,7 @@ export enum Currency {
   USD = 'USD',
   INR = 'INR',
   BRL = 'BRL',
+  GBP = 'GBP',
 }
 
 export enum Gender {
