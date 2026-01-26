@@ -1,6 +1,5 @@
 import { watch } from 'vue';
 import * as Sentry from '@sentry/vue';
-import type { Pinia } from 'pinia';
 import type { SentrySetupConfig, SentrySetupOptions } from './types';
 import { USER_REGULAR_STATUS } from '../../../entities/user';
 import { useEnvironmentStore } from '../../../entities/environment';
@@ -19,7 +18,7 @@ export function setupSentry(config: SentrySetupConfig, options?: SentrySetupOpti
     tracesSampleRate = 0.1
   } = config;
 
-  const { isMockerMode, environment, version } = useEnvironmentStore(pinia as Pinia);
+  const { isMockerMode, environment, version } = useEnvironmentStore(pinia);
 
   Sentry.init({
     app,
