@@ -11,7 +11,7 @@ export type Locale = {
 export const useMultiLangStore = defineStore('multilang', () => {
   const localeInCookies = ref<string>();
   const country = ref(configI18nConfig.getDefaultCountry());
-  const defaultLocale = ref(configI18nConfig.getDefaultLocale());
+  const defaultLocale = ref<string>(configI18nConfig.getDefaultLocale());
   const locale = ref('');
   const forcedLocale = ref(''); // used just during ssg
   const userGeo = ref(configI18nConfig.getDefaultCountry());
@@ -40,6 +40,14 @@ export const useMultiLangStore = defineStore('multilang', () => {
 
   function setLocale(localeName: string) {
     locale.value = localeName;
+  }
+
+  function setDefaultLocale(localeName: string) {
+    locale.value = localeName;
+  }
+
+  function setForcedLocale(localeName: string) {
+    forcedLocale.value = localeName;
   }
 
   function setUserGeo(geo: string) {
@@ -71,6 +79,8 @@ export const useMultiLangStore = defineStore('multilang', () => {
     localeInCookies,
     availableLocales,
     setLocale,
+    setDefaultLocale,
+    setForcedLocale,
     setUserGeo,
     setUserGeoRegion,
     setAvailableLocales,
