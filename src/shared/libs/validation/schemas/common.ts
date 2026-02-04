@@ -21,7 +21,7 @@ export const createEmailSchema = ({
   requiredMessage?: string;
   invalidMessage?: string;
 } = {}) => {
-  const requiredMsg = requiredMessage || BASE_CLIENT_ERROR_KEY.EMAIL_INVALID;
+  const requiredMsg = requiredMessage || BASE_CLIENT_ERROR_KEY.EMAIL_REQUIRED;
   const invalidMsg = invalidMessage || BASE_CLIENT_ERROR_KEY.EMAIL_INVALID;
 
   return z.string({ error: requiredMsg }).min(MIN_LENGTH, { error: requiredMsg }).regex(EMAIL_REGEX, {
@@ -66,13 +66,13 @@ export const createCountrySchema = (message?: string) => {
 };
 
 export const createCurrencySchema = (message?: string) => {
-  const msg = message || BASE_CLIENT_ERROR_KEY.REQUIRED;
+  const msg = message || BASE_CLIENT_ERROR_KEY.REQUIRED_FIELD;
 
   return z.string({ error: msg }).min(1, { error: msg });
 };
 
 export const createAcceptTermsSchema = (message?: string) => {
-  const msg = message || BASE_CLIENT_ERROR_KEY.REQUIRED;
+  const msg = message || BASE_CLIENT_ERROR_KEY.REQUIRED_FIELD;
 
   return z
     .boolean({

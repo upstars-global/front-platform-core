@@ -1,7 +1,6 @@
 import * as z from "zod";
 
 import {
-  BASE_CLIENT_ERROR_KEY,
   createEmailSchema,
   createFormSchema,
   createPasswordSchema,
@@ -10,7 +9,6 @@ import {
 
 const emailSchema = createEmailSchema();
 const passwordSchema = createPasswordSchema({
-  lengthMessage: BASE_CLIENT_ERROR_KEY.PASSWORD_ENTER_LENGTH,
   passwordMinLength: PASSWORD_REQUIRED_LENGTH
 });
 

@@ -21,7 +21,7 @@ export interface FieldState<T = FieldValue, U extends string = string> {
   meta: FieldMeta;
 }
 
-interface FormState<T extends Record<string, unknown>, U extends string> {
+export interface FormState<T extends Record<string, unknown>, U extends string> {
   values: T;
   errors: FormErrors<T, U>;
   meta: {
@@ -72,6 +72,7 @@ interface UseFormValidationReturn<
   clearFieldError: (name: keyof T) => void;
   clearGlobalError: () => void;
   getFieldSchema: (name: keyof T) => z.ZodType | null;
+  isFieldValid: (name: keyof T) => boolean;
   validateField: (name: keyof T) => boolean;
   validateForm: () => boolean;
   handleSubmit: (submitCallback: (values: T) => void | Promise<void>) => (e?: Event) => Promise<boolean>;
@@ -158,39 +159,41 @@ export function useFormValidation<
     updateFormValidity();
   };
 
-  const validateField = (name: keyof T): boolean => {
-    if (!schema.value) return true;
-
-    if (lockedFields.has(name)) {
-      return false;
-    }
-
+  const getFieldErrorFromSchema = (name: keyof T) => {
+    if (!schema.value) return null;
+  
     try {
       schema.value.parse(values.value);
-      
-      clearFieldError(name);
-      return true;
+      return null;
     } catch (err) {
       if (err instanceof z.ZodError) {
-        const fieldError = err.issues.find(
-          (issue) => issue.path[0] === name
-        );
-        
-        if (fieldError) {
-          setFieldError(name, fieldError.message as TErrorKeys, false);
-          return false;
-        }
-        
-        clearFieldError(name);
-        
-        return true;
+        return err.issues.find((issue) => issue.path[0] === name) || null;
       }
-  
-      log.error(`FAILED_TO_VALIDATE_FIELD`, { field: name });
-      valid.value = false;
 
+      log.error(`FAILED_TO_GET_FIELD_ERROR`, { field: name });
+
+      return null;
+    }
+  };
+
+  const isFieldValid = (name: keyof T)=> {
+    if (lockedFields.has(name)) return false;
+    
+    return !getFieldErrorFromSchema(name);
+  };
+
+  const validateField = (name: keyof T): boolean => {
+    if (lockedFields.has(name)) return false;
+  
+    const issue = getFieldErrorFromSchema(name);
+  
+    if (issue) {
+      setFieldError(name, issue.message as TErrorKeys, false);
       return false;
     }
+  
+    clearFieldError(name);
+    return true;
   };
   
 
@@ -360,6 +363,7 @@ export function useFormValidation<
     clearFieldError,
     clearGlobalError,
     getFieldSchema,
+    isFieldValid,
     validateField,
     validateForm,
     handleSubmit,

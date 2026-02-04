@@ -43,18 +43,13 @@ export function useRegistrationForm<T extends string>({
 
   const {
     values: formValues,
-    fieldsFromSchema,
     setFieldError,
-    setValue,
     validateField,
     errors,
     isSubmitting,
     handleSubmit,
     defineField,
-    dirty,
-    touched,
-    valid,
-    validateForm,
+    ...rest
   } = form;
 
   const emailField = defineField('email');
@@ -124,13 +119,13 @@ export function useRegistrationForm<T extends string>({
   };
 
   return {
+    ...rest,
     isEmailVerified,
     isEmailVerifying,
     isEmailVerificationError,
     formValues,
     errors,
     isSubmitting,
-    fieldsFromSchema,
     emailField,
     passwordField,
     countryField,
@@ -138,13 +133,8 @@ export function useRegistrationForm<T extends string>({
     promoCodeField,
     acceptNotificationsField,
     acceptTermsField,
-    dirty,
-    touched,
-    valid,
     captchaKey,
     setCaptchaKey,
-    setValue,
-    validateForm,
     setFieldError,
     onSubmit,
     handleSubmit,
