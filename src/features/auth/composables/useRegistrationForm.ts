@@ -94,7 +94,7 @@ export function useRegistrationForm<T extends string>({
       chosen_country,
       accept_notifications,
       accept_terms: accept_terms || false,
-      promo_code: promoCode || '',
+      promo_code: promoCode ? promoCode.trim() : '',
       captcha_key: captchaKey.value,
     });
 

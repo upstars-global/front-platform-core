@@ -32,7 +32,6 @@ export const AUTH_BACKEND_ERROR_KEY = {
   REG_FROM_COUNTRY_FORBIDDEN: 'ANTI_FRAUD.REGISTRATION_FROM_COUNTRY_FORBIDDEN',
   LOGIN_FROM_COUNTRY_FORBIDDEN: 'ANTI_FRAUD.LOGIN_FROM_COUNTRY_FORBIDDEN',
   NOT_ALLOWED_DOMAIN_COUNTRY: 'NOT_ALLOWED_DOMAIN_COUNTRY',
-  REG_NOT_ALLOWED_DOMAIN_COUNTRY: 'REGISTRATION_NOT_ALLOWED_DOMAIN_COUNTRY',
 
   // CURRENCY
   CURRENCY_NOT_SUPPORTED: 'CURRENCY_NOT_SUPPORTED',
@@ -134,20 +133,15 @@ export enum RegisterBackendValidationFieldKeys {
 
 type RegisterErrors = Partial<Record<RegisterBackendValidationFieldKeys, AuthBackendErrorKey[]>>;
 
-type RegisterSuccessResource = {
+export type RegisterSuccessResource = {
   success: true;
   user_is_logged: boolean;
   isAlreadyRegistered?: boolean;
 };
 
-type RegisterErrorResource = Partial<{
+export type RegisterErrorResource = Partial<{
   success: false;
-  message: AuthBackendErrorKey;
-  error: {
-    data?: {
-      message?: AuthBackendErrorKey;
-    }
-  }
+  message?: AuthBackendErrorKey;
   errors: RegisterErrors;
 }>;
 

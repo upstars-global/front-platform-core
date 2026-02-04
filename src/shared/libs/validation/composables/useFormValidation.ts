@@ -68,7 +68,7 @@ interface UseFormValidationReturn<
   
   setValue: (name: keyof T, value: unknown) => void;
   setTouched: (name: keyof T, isTouched?: boolean) => void;
-  setFieldError: (name: keyof T, error: TErrorKeys) => void;
+  setFieldError: (name: keyof T, error: TErrorKeys, lock?: boolean) => void;
   clearFieldError: (name: keyof T) => void;
   clearGlobalError: () => void;
   getFieldSchema: (name: keyof T) => z.ZodType | null;
@@ -91,6 +91,7 @@ export function useFormValidation<
 
   const values = ref((options.initialValues || {}) as Partial<T>) as Ref<Partial<T>>;
   const errors = ref({}) as Ref<FormErrors<T, TI18nKeys>>;
+  const lockedFields = new Set<keyof T>();
   const touched = ref({}) as Ref<Partial<Record<keyof T, boolean>>>;
   const dirty = ref({}) as Ref<Partial<Record<keyof T, boolean>>>;
   const valid = ref(false);
@@ -136,6 +137,7 @@ export function useFormValidation<
 
   const clearFieldError = (name: keyof T) => {
     delete errors.value[name];
+    lockedFields.delete(name);
     updateFormValidity();
   };    
 
@@ -146,13 +148,22 @@ export function useFormValidation<
     }
   };
 
-  const setFieldError = (name: keyof T, error: TErrorKeys) => {
+  const setFieldError = (name: keyof T, error: TErrorKeys, lock: boolean = false) => {
     errors.value[name] = i18nErrorMapper.getI18nKey(error);
+
+    if (lock) {
+      lockedFields.add(name);
+    }
+
     updateFormValidity();
   };
 
   const validateField = (name: keyof T): boolean => {
     if (!schema.value) return true;
+
+    if (lockedFields.has(name)) {
+      return false;
+    }
 
     try {
       schema.value.parse(values.value);
@@ -166,7 +177,7 @@ export function useFormValidation<
         );
         
         if (fieldError) {
-          setFieldError(name, fieldError.message as TErrorKeys);
+          setFieldError(name, fieldError.message as TErrorKeys, false);
           return false;
         }
         
@@ -186,27 +197,28 @@ export function useFormValidation<
   const validateForm = (): boolean => {
     if (!schema.value) return true;
 
+    for (const key of Object.keys(errors.value)) {
+      if (!lockedFields.has(key as keyof T)) {
+        delete errors.value[key as keyof T];
+      }
+    }
+
     try {
       schema.value.parse(values.value);
 
-      errors.value = {};
-      valid.value = true;
+      updateFormValidity();
 
-      return true;
+      return valid.value;
     } catch (err) {
       if (err instanceof z.ZodError) {
-        const formErrors: FormErrors<T, TI18nKeys> = {};
-
         err.issues.forEach((issue) => {
           const path = issue.path[0] as keyof T;
 
-          if (!formErrors[path]) {
-            const mapped = i18nErrorMapper.getI18nKey(issue.message as TErrorKeys);
-            formErrors[path] = mapped;
+          if (!errors.value[path]) {
+            errors.value[path] = i18nErrorMapper.getI18nKey(issue.message as TErrorKeys);
           }
         });
 
-        errors.value = formErrors;
         valid.value = false;
         return false;
       }
@@ -223,6 +235,8 @@ export function useFormValidation<
   const setValue = (name: keyof T, value: unknown) => {
     values.value[name] = value as T[keyof T];
     dirty.value[name] = true;
+
+    lockedFields.delete(name);
 
     clearGlobalError();
 
@@ -284,6 +298,7 @@ export function useFormValidation<
   const resetForm = (resetOptions?: Partial<FormState<Partial<T>, TErrorKeys>>) => {
     values.value = (resetOptions?.values || options.initialValues || {}) as T;
     errors.value = (resetOptions?.errors || {}) as FormErrors<T, TI18nKeys>;
+    lockedFields.clear();
     touched.value = resetOptions?.meta?.touched || {};
     dirty.value = resetOptions?.meta?.dirty || {};
     valid.value = resetOptions?.meta?.valid ?? true;

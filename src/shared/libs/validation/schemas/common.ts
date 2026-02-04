@@ -12,7 +12,7 @@ export const createFormSchema = <T extends z.ZodRawShape>(schema: T) => {
 const MIN_LENGTH = 1;
 
 export const EMAIL_REGEX =
-  /^[\w.!#$%&'*+\/=?^`{|}~-]+@[a-z\d](?:[a-z\d-]{0,61}[a-z\d])?(?:\.[a-z\d](?:[a-z\d-]{0,61}[a-z\d])?)*$/i;
+  /^[\w.!#$%&'*+\/=?^`{|}~-]+@[a-z\d](?:[a-z\d-]{0,61}[a-z\d])?(?:\.[a-z\d](?:[a-z\d-]{0,61}[a-z\d])?)*\.[a-z]{2,}$/i
 
 export const createEmailSchema = ({
   requiredMessage,
@@ -50,6 +50,7 @@ export const createPasswordSchema = (
 
   return z
     .string({ error: emptyMsg })
+    .min(1, { error: emptyMsg })
     .regex(PASSWORD_REGEX, {
       error: charsMsg,
     })

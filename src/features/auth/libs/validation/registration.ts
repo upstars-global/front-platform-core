@@ -1,6 +1,7 @@
 import * as z from "zod";
 
 import {
+  BASE_CLIENT_ERROR_KEY,
   createAcceptTermsSchema,
   createCountrySchema,
   createCurrencySchema,
@@ -16,7 +17,7 @@ const passwordSchema = createPasswordSchema({
 });
 const countrySchema = createCountrySchema();
 const currencySchema = createCurrencySchema();
-const acceptTerms = createAcceptTermsSchema();
+const acceptTerms = createAcceptTermsSchema(BASE_CLIENT_ERROR_KEY.REQUIRED_FIELD);
 
 export function RegistrationFormSchema(isAcceptTermsRequired: boolean = true) {
   return createFormSchema({
