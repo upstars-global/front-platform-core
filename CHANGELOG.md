@@ -1,3 +1,10 @@
+## [7.10.0](https://github.com/upstars-global/front-platform-core/compare/v7.9.0...v7.10.0) (2026-02-02)
+
+### 🚀 Features
+
+* **FP-4474:** add GBP currency to Currency enum
+ ([5623f38](https://github.com/upstars-global/front-platform-core/commit/5623f3886d84dcc39457601f3483fd052cc495c8))
+
 ## [7.9.0](https://github.com/upstars-global/front-platform-core/compare/v7.8.0...v7.9.0) (2026-01-08)
 
 ### 🚀 Features
