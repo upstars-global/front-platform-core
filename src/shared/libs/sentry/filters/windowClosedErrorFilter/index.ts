@@ -1,0 +1,1 @@
+export { windowClosedErrorFilter } from "./filter";
