@@ -30,6 +30,7 @@ export type SocialLink = {
 };
 
 export type AppGlobalConfig = Partial<{
+  allowedForSegmentation: boolean;
   isLockAuthForGuestUser: boolean;
   mirrorDomain: string;
   supportEmail: string;
