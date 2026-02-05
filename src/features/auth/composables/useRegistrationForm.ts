@@ -46,7 +46,7 @@ export function useRegistrationForm<T extends string>({
     values: formValues,
     setFieldError,
     clearFieldError,
-    isFieldValid,
+    validateField,
     errors,
     isSubmitting,
     handleSubmit,
@@ -104,7 +104,7 @@ export function useRegistrationForm<T extends string>({
     setVerified(false);
     clearFieldError(EMAIL_FIELD_KEY);
 
-    const isEmailValid = isFieldValid(EMAIL_FIELD_KEY);
+    const isEmailValid = validateField(EMAIL_FIELD_KEY, true);
 
     if (!isEmailValid || !email) {
       return;
@@ -142,9 +142,10 @@ export function useRegistrationForm<T extends string>({
     setCaptchaKey,
     setFieldError,
     clearFieldError,
-    isFieldValid,
+    validateField,
     onSubmit,
     handleSubmit,
+    setEmailVerified: setVerified,
     verifyEmail,
   };
 }

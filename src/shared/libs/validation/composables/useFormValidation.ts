@@ -72,8 +72,7 @@ interface UseFormValidationReturn<
   clearFieldError: (name: keyof T) => void;
   clearGlobalError: () => void;
   getFieldSchema: (name: keyof T) => z.ZodType | null;
-  isFieldValid: (name: keyof T) => boolean;
-  validateField: (name: keyof T) => boolean;
+  validateField: (name: keyof T, silent?: boolean) => boolean;
   validateForm: () => boolean;
   handleSubmit: (submitCallback: (values: T) => void | Promise<void>) => (e?: Event) => Promise<boolean>;
   resetForm: (resetOptions?: Partial<FormState<Partial<T>, TErrorKeys>>) => void;
@@ -176,23 +175,23 @@ export function useFormValidation<
     }
   };
 
-  const isFieldValid = (name: keyof T)=> {
-    if (lockedFields.has(name)) return false;
-    
-    return !getFieldErrorFromSchema(name);
-  };
-
-  const validateField = (name: keyof T): boolean => {
+  const validateField = (name: keyof T, silent: boolean = false): boolean => {
     if (lockedFields.has(name)) return false;
   
     const issue = getFieldErrorFromSchema(name);
   
     if (issue) {
-      setFieldError(name, issue.message as TErrorKeys, false);
+      if (!silent) {
+        setFieldError(name, issue.message as TErrorKeys, false);
+      }
+
       return false;
     }
   
-    clearFieldError(name);
+    if (!silent) {
+      clearFieldError(name);
+    }
+    
     return true;
   };
   
@@ -363,7 +362,6 @@ export function useFormValidation<
     clearFieldError,
     clearGlobalError,
     getFieldSchema,
-    isFieldValid,
     validateField,
     validateForm,
     handleSubmit,
