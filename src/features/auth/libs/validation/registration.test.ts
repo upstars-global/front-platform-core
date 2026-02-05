@@ -5,7 +5,7 @@ import { validateData } from '../../../../shared/libs/validation/helpers/validat
 
 describe('RegistrationFormSchema', () => {
   const validData = {
-    login: 'test@example.com',
+    email: 'test@example.com',
     password: 'Test123',
     country: 'US',
     currency: 'USD',
@@ -13,23 +13,23 @@ describe('RegistrationFormSchema', () => {
   };
 
   it('should validate complete valid registration form', () => {
-    const { errors } = validateData(RegistrationFormSchema, validData);
+    const { errors } = validateData(RegistrationFormSchema(), validData);
     expect(errors).toBeNull();
   });
 
   it('should validate form with optional fields', () => {
     const dataWithOptional = {
       ...validData,
-      promo_code: 'PROMO123',
-      accept_notifications: true,
+      promoCode: 'PROMO123',
+      acceptNotifications: true,
     };
-    const { errors } = validateData(RegistrationFormSchema, dataWithOptional);
+    const { errors } = validateData(RegistrationFormSchema(), dataWithOptional);
     expect(errors).toBeNull();
   });
 
   it('should reject form without acceptTerms', () => {
     const invalidData = { ...validData, acceptTerms: false };
-    const { errors } = validateData(RegistrationFormSchema, invalidData);
+    const { errors } = validateData(RegistrationFormSchema(), invalidData);
     expect(errors).not.toBeNull();
     expect(errors!.length).toBeGreaterThan(0);
     const termsError = errors!.find(e => e.field === 'acceptTerms');
@@ -38,17 +38,17 @@ describe('RegistrationFormSchema', () => {
   });
 
   it('should reject form with invalid email', () => {
-    const invalidData = { ...validData, login: 'invalid-email' };
-    const { errors } = validateData(RegistrationFormSchema, invalidData);
+    const invalidData = { ...validData, email: 'invalid-email' };
+    const { errors } = validateData(RegistrationFormSchema(), invalidData);
     expect(errors).not.toBeNull();
-    const emailError = errors!.find(e => e.field === 'login');
+    const emailError = errors!.find(e => e.field === 'email');
     expect(emailError).toBeDefined();
     expect(emailError!.key).toBe(BASE_CLIENT_ERROR_KEY.EMAIL_INVALID);
   });
 
   it('should reject form with short password', () => {
     const invalidData = { ...validData, password: '12345' };
-    const { errors } = validateData(RegistrationFormSchema, invalidData);
+    const { errors } = validateData(RegistrationFormSchema(), invalidData);
     expect(errors).not.toBeNull();
     const passwordError = errors!.find(e => e.field === 'password');
     expect(passwordError).toBeDefined();
@@ -57,7 +57,7 @@ describe('RegistrationFormSchema', () => {
 
   it('should reject form without country', () => {
     const invalidData = { ...validData, country: '' };
-    const { errors } = validateData(RegistrationFormSchema, invalidData);
+    const { errors } = validateData(RegistrationFormSchema(), invalidData);
     expect(errors).not.toBeNull();
     const countryError = errors!.find(e => e.field === 'country');
     expect(countryError).toBeDefined();
@@ -66,7 +66,7 @@ describe('RegistrationFormSchema', () => {
 
   it('should reject form without currency', () => {
     const invalidData = { ...validData, currency: '' };
-    const { errors } = validateData(RegistrationFormSchema, invalidData);
+    const { errors } = validateData(RegistrationFormSchema(), invalidData);
     expect(errors).not.toBeNull();
     const currencyError = errors!.find(e => e.field === 'currency');
     expect(currencyError).toBeDefined();
@@ -75,7 +75,7 @@ describe('RegistrationFormSchema', () => {
 
   it('should reject form with empty password', () => {
     const invalidData = { ...validData, password: '' };
-    const { errors } = validateData(RegistrationFormSchema, invalidData);
+    const { errors } = validateData(RegistrationFormSchema(), invalidData);
     expect(errors).not.toBeNull();
     const passwordError = errors!.find(e => e.field === 'password');
     expect(passwordError).toBeDefined();
@@ -84,7 +84,7 @@ describe('RegistrationFormSchema', () => {
 
   it('should reject form with password containing invalid characters', () => {
     const invalidData = { ...validData, password: '月月月123' }; 
-    const { errors } = validateData(RegistrationFormSchema, invalidData);
+    const { errors } = validateData(RegistrationFormSchema(), invalidData);
     expect(errors).not.toBeNull();
     const passwordError = errors!.find(e => e.field === 'password');
     expect(passwordError).toBeDefined();
@@ -93,30 +93,30 @@ describe('RegistrationFormSchema', () => {
 
   it('should accept password with exactly minimum length', () => {
     const validDataMinPassword = { ...validData, password: '123456' };
-    const { errors } = validateData(RegistrationFormSchema, validDataMinPassword);
+    const { errors } = validateData(RegistrationFormSchema(), validDataMinPassword);
     expect(errors).toBeNull();
   });
 
   it('should accept password with special characters', () => {
     const validDataSpecialPassword = { ...validData, password: 'Test@123' };
-    const { errors } = validateData(RegistrationFormSchema, validDataSpecialPassword);
+    const { errors } = validateData(RegistrationFormSchema(), validDataSpecialPassword);
     expect(errors).toBeNull();
   });
 
   it('should return multiple errors for form with multiple invalid fields', () => {
     const invalidData = {
-      login: 'invalid-email',
+      email: 'invalid-email',
       password: '123',
       country: '',
       currency: '',
       acceptTerms: false,
-      accept_notifications: true,
+      acceptNotifications: true,
     };
-    const { errors } = validateData(RegistrationFormSchema, invalidData);
+    const { errors } = validateData(RegistrationFormSchema(), invalidData);
     expect(errors).not.toBeNull();
     expect(errors!.length).toBeGreaterThan(1);
     
-    const emailError = errors!.find(e => e.field === 'login');
+    const emailError = errors!.find(e => e.field === 'email');
     expect(emailError).toBeDefined();
     expect(emailError!.key).toBe(BASE_CLIENT_ERROR_KEY.EMAIL_INVALID);
     
@@ -138,31 +138,31 @@ describe('RegistrationFormSchema', () => {
   });
 
   it('should accept email with special characters', () => {
-    const validDataSpecialEmail = { ...validData, login: 'test+tag@example.com' };
-    const { errors } = validateData(RegistrationFormSchema, validDataSpecialEmail);
+    const validDataSpecialEmail = { ...validData, email: 'test+tag@example.com' };
+    const { errors } = validateData(RegistrationFormSchema(), validDataSpecialEmail);
     expect(errors).toBeNull();
   });
 
   it('should accept email with subdomain', () => {
-    const validDataSubdomainEmail = { ...validData, login: 'user@mail.company.com' };
-    const { errors } = validateData(RegistrationFormSchema, validDataSubdomainEmail);
+    const validDataSubdomainEmail = { ...validData, email: 'user@mail.company.com' };
+    const { errors } = validateData(RegistrationFormSchema(), validDataSubdomainEmail);
     expect(errors).toBeNull();
   });
 
   it('should reject email without domain', () => {
-    const invalidData = { ...validData, login: 'test@' };
-    const { errors } = validateData(RegistrationFormSchema, invalidData);
+    const invalidData = { ...validData, email: 'test@' };
+    const { errors } = validateData(RegistrationFormSchema(), invalidData);
     expect(errors).not.toBeNull();
-    const emailError = errors!.find(e => e.field === 'login');
+    const emailError = errors!.find(e => e.field === 'email');
     expect(emailError).toBeDefined();
     expect(emailError!.key).toBe(BASE_CLIENT_ERROR_KEY.EMAIL_INVALID);
   });
 
   it('should reject email without @ symbol', () => {
-    const invalidData = { ...validData, login: 'testexample.com' };
-    const { errors } = validateData(RegistrationFormSchema, invalidData);
+    const invalidData = { ...validData, email: 'testexample.com' };
+    const { errors } = validateData(RegistrationFormSchema(), invalidData);
     expect(errors).not.toBeNull();
-    const emailError = errors!.find(e => e.field === 'login');
+    const emailError = errors!.find(e => e.field === 'email');
     expect(emailError).toBeDefined();
     expect(emailError!.key).toBe(BASE_CLIENT_ERROR_KEY.EMAIL_INVALID);
   });
@@ -170,20 +170,20 @@ describe('RegistrationFormSchema', () => {
   it('should validate form with all optional fields', () => {
     const dataWithAllOptional = {
       ...validData,
-      promo_code: 'PROMO123',
-      accept_notifications: true,
+      promoCode: 'PROMO123',
+      acceptNotifications: true,
     };
-    const { errors } = validateData(RegistrationFormSchema, dataWithAllOptional);
+    const { errors } = validateData(RegistrationFormSchema(), dataWithAllOptional);
     expect(errors).toBeNull();
   });
 
   it('should validate form with empty optional fields', () => {
     const dataWithEmptyOptional = {
       ...validData,
-      promo_code: '',
-      accept_notifications: false,
+      promoCode: '',
+      acceptNotifications: false,
     };
-    const { errors } = validateData(RegistrationFormSchema, dataWithEmptyOptional);
+    const { errors } = validateData(RegistrationFormSchema(), dataWithEmptyOptional);
     expect(errors).toBeNull();
   });
 });

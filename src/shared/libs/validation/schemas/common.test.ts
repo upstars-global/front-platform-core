@@ -40,7 +40,7 @@ describe('Email Schema', () => {
   it('should reject empty string', () => {
     const { errors } = validateData(emailSchema, '');
     expect(errors).not.toBeNull();
-    expect(errors![0].key).toBe(BASE_CLIENT_ERROR_KEY.REQUIRED);
+    expect(errors![0].key).toBe(BASE_CLIENT_ERROR_KEY.EMAIL_INVALID);
     expect(errors![0].field).toBe('');
   });
 

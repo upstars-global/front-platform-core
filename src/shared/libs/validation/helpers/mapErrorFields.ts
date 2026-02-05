@@ -1,5 +1,5 @@
 export function mapErrorFields<
-  TErrors extends Record<string, readonly string[] | undefined>,
+  TErrors extends Record<string, readonly string[]>,
   TFieldMap extends Partial<{ [K in keyof TErrors]: string }> = object
 >({
   errors,
