@@ -29,19 +29,9 @@ export function useLoginForm<T extends string>({
   });
 
   const {
-    values: formValues,
-    fieldsFromSchema,
-    setFieldError,
-    setValue,
-    errors,
-    isSubmitting,
     handleSubmit,
     defineField,
-    dirty,
-    touched,
-    valid,
-    getFieldState,
-    validateForm,
+    ...rest
   } = form;
 
   const emailField = defineField('email');
@@ -63,20 +53,9 @@ export function useLoginForm<T extends string>({
   });
 
   return {
-    formValues,
-    errors,
-    isSubmitting,
-    fieldsFromSchema,
+    ...rest,
     emailField,
     passwordField,
-    dirty,
-    touched,
-    valid,
-    setValue,
-    validateForm,
-    setFieldError,
     onSubmit,
-    getFieldState,
-    handleSubmit,
   };
 }

@@ -32,6 +32,7 @@ export function useRegistrationForm<T extends string>({
     isVerified: isEmailVerified,
     isVerifying: isEmailVerifying,
     isError: isEmailVerificationError,
+    setVerified,
   } = useEmailVerify();
 
   const form = useFormValidation<RegistrationFormSchemaType, RegistrationErrorKey, T>({
@@ -44,7 +45,8 @@ export function useRegistrationForm<T extends string>({
   const {
     values: formValues,
     setFieldError,
-    validateField,
+    clearFieldError,
+    isFieldValid,
     errors,
     isSubmitting,
     handleSubmit,
@@ -99,7 +101,10 @@ export function useRegistrationForm<T extends string>({
   const verifyEmail = async (email?: string) => {
     const EMAIL_FIELD_KEY = 'email';
 
-    const isEmailValid = validateField(EMAIL_FIELD_KEY);
+    setVerified(false);
+    clearFieldError(EMAIL_FIELD_KEY);
+
+    const isEmailValid = isFieldValid(EMAIL_FIELD_KEY);
 
     if (!isEmailValid || !email) {
       return;
@@ -114,7 +119,7 @@ export function useRegistrationForm<T extends string>({
         },
       });
 
-      setFieldError(field, key);
+      setFieldError(field, key, true);
     }
   };
 
@@ -136,6 +141,8 @@ export function useRegistrationForm<T extends string>({
     captchaKey,
     setCaptchaKey,
     setFieldError,
+    clearFieldError,
+    isFieldValid,
     onSubmit,
     handleSubmit,
     verifyEmail,
