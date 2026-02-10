@@ -30,6 +30,10 @@ export const useAppGlobalConfigStore = defineStore('appGlobalConfig', () => {
   const freshChatConfig = computed(() => {
     return globalConfig.value?.freshChatConfig;
   });
+  const betsHistoryEnabled = computed(() => {
+    return globalConfig.value?.betsHistoryEnabled;
+  });
+
 
   return {
     isLoaded,
@@ -40,6 +44,7 @@ export const useAppGlobalConfigStore = defineStore('appGlobalConfig', () => {
     isLicenceDomain,
 
     isSelfExclusionEnabled,
+    betsHistoryEnabled,
 
     freshChatConfig,
 
