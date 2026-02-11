@@ -110,6 +110,6 @@ describe('validateForm utility', () => {
 
     const currencyError = errors!.find((e) => e.field === 'user.profile.currency');
     expect(currencyError).toBeDefined();
-    expect(currencyError!.key).toBe(BASE_CLIENT_ERROR_KEY.REQUIRED);
+    expect(currencyError!.key).toBe(BASE_CLIENT_ERROR_KEY.REQUIRED_FIELD);
   });
 });

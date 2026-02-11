@@ -2,12 +2,6 @@ import { log } from '../../../shared/helpers/log';
 import { captchaHandler as defaultCaptchaHandler } from '../config';
 import type { CaptchaHandler } from '../types';
 
-export class CaptchaError extends Error {
-  constructor(message: string) {
-    super(message);
-  }
-}
-
 type CaptchaPromiseCallback<T> = (captchaValue: string) => Promise<T>;
 
 export function useCaptcha() {
@@ -19,10 +13,10 @@ export function useCaptcha() {
       }
     } catch (error: unknown) {
       log.error('USE_CAPTCHA_ERROR', error);
-      throw new CaptchaError('Captcha input error');
+      throw error;
     }
 
-    throw new CaptchaError('Captcha input failed');
+    throw new Error('Captcha input failed');
   }
 
   return {

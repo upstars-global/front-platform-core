@@ -21,7 +21,7 @@ export interface FieldState<T = FieldValue, U extends string = string> {
   meta: FieldMeta;
 }
 
-interface FormState<T extends Record<string, unknown>, U extends string> {
+export interface FormState<T extends Record<string, unknown>, U extends string> {
   values: T;
   errors: FormErrors<T, U>;
   meta: {
@@ -57,6 +57,9 @@ interface UseFormValidationReturn<
   dirty: Ref<Partial<Record<keyof T, boolean>>>;
   valid: Ref<boolean>;
   submitting: Ref<boolean>;
+  submitCount: Ref<number>;
+  formValidated: Ref<boolean>;
+  fieldsFromSchema: ComputedRef<(keyof T)[]>;
   
   isValid: ComputedRef<boolean>;
   isSubmitting: ComputedRef<boolean>;
@@ -65,13 +68,13 @@ interface UseFormValidationReturn<
   
   setValue: (name: keyof T, value: unknown) => void;
   setTouched: (name: keyof T, isTouched?: boolean) => void;
-  setFieldError: (name: keyof T, error: TErrorKeys) => void;
+  setFieldError: (name: keyof T, error: TErrorKeys, lock?: boolean) => void;
   clearFieldError: (name: keyof T) => void;
   clearGlobalError: () => void;
   getFieldSchema: (name: keyof T) => z.ZodType | null;
-  validateField: (name: keyof T) => boolean;
+  validateField: (name: keyof T, silent?: boolean) => boolean;
   validateForm: () => boolean;
-  handleSubmit: (submitCallback: (values: T) => void | Promise<void>) => (e?: Event) => Promise<boolean>;
+  handleSubmit: <TResult = unknown>(submitCallback: (values: T) => TResult | Promise<TResult>) => (e?: Event) => Promise<{ isValid: boolean; result?: TResult }>;
   resetForm: (resetOptions?: Partial<FormState<Partial<T>, TErrorKeys>>) => void;
   setValues: (newValues: Partial<T>) => void;
   getFieldState: (name: keyof T) => FieldState<FieldValue, TI18nKeys>;
@@ -88,12 +91,29 @@ export function useFormValidation<
 
   const values = ref((options.initialValues || {}) as Partial<T>) as Ref<Partial<T>>;
   const errors = ref({}) as Ref<FormErrors<T, TI18nKeys>>;
+  const lockedFields = new Set<keyof T>();
   const touched = ref({}) as Ref<Partial<Record<keyof T, boolean>>>;
   const dirty = ref({}) as Ref<Partial<Record<keyof T, boolean>>>;
   const valid = ref(false);
   const submitting = ref(false);
+  const submitCount = ref(0);
+  const formValidated = ref(false);
 
   const validationMode = options.validationMode || 'eager';
+
+  const fieldsFromSchema = computed<(keyof T)[]>(() => {
+    if (!schema.value) {
+      return [];
+    }
+
+    const rawSchema = toRaw(schema.value);
+
+    if (rawSchema instanceof z.ZodObject) {
+      return Object.keys(rawSchema.shape) as (keyof T)[];
+    }
+
+    return [];
+  });
 
   const getFieldSchema = (name: keyof T): z.ZodType | null => {
     if (!schema.value) {
@@ -117,6 +137,7 @@ export function useFormValidation<
 
   const clearFieldError = (name: keyof T) => {
     delete errors.value[name];
+    lockedFields.delete(name);
     updateFormValidity();
   };    
 
@@ -127,67 +148,79 @@ export function useFormValidation<
     }
   };
 
-  const setFieldError = (name: keyof T, error: TErrorKeys) => {
+  const setFieldError = (name: keyof T, error: TErrorKeys, lock: boolean = false) => {
     errors.value[name] = i18nErrorMapper.getI18nKey(error);
+
+    if (lock) {
+      lockedFields.add(name);
+    }
+
     updateFormValidity();
   };
 
-  const validateField = (name: keyof T): boolean => {
-    if (!schema.value) return true;
-
+  const getFieldErrorFromSchema = (name: keyof T) => {
+    if (!schema.value) return null;
+  
     try {
       schema.value.parse(values.value);
-      
-      clearFieldError(name);
-      return true;
+      return null;
     } catch (err) {
       if (err instanceof z.ZodError) {
-        const fieldError = err.issues.find(
-          (issue) => issue.path[0] === name
-        );
-        
-        if (fieldError) {
-          setFieldError(name, fieldError.message as TErrorKeys);
-          return false;
-        }
-        
-        clearFieldError(name);
-        
-        return true;
+        return err.issues.find((issue) => issue.path[0] === name) || null;
       }
+
+      log.error(`FAILED_TO_GET_FIELD_ERROR`, { field: name });
+
+      return null;
+    }
+  };
+
+  const validateField = (name: keyof T, silent: boolean = false): boolean => {
+    if (lockedFields.has(name)) return false;
   
-      log.error(`FAILED_TO_VALIDATE_FIELD`, { field: name });
-      valid.value = false;
+    const issue = getFieldErrorFromSchema(name);
+  
+    if (issue) {
+      if (!silent) {
+        setFieldError(name, issue.message as TErrorKeys, false);
+      }
 
       return false;
     }
+  
+    if (!silent) {
+      clearFieldError(name);
+    }
+    
+    return true;
   };
   
 
   const validateForm = (): boolean => {
     if (!schema.value) return true;
 
+    for (const key of Object.keys(errors.value)) {
+      if (!lockedFields.has(key as keyof T)) {
+        delete errors.value[key as keyof T];
+      }
+    }
+
     try {
       schema.value.parse(values.value);
 
-      errors.value = {};
-      valid.value = true;
+      updateFormValidity();
 
-      return true;
+      return valid.value;
     } catch (err) {
       if (err instanceof z.ZodError) {
-        const formErrors: FormErrors<T, TI18nKeys> = {};
-
         err.issues.forEach((issue) => {
           const path = issue.path[0] as keyof T;
 
-          if (!formErrors[path]) {
-            const mapped = i18nErrorMapper.getI18nKey(issue.message as TErrorKeys);
-            formErrors[path] = mapped;
+          if (!errors.value[path]) {
+            errors.value[path] = i18nErrorMapper.getI18nKey(issue.message as TErrorKeys);
           }
         });
 
-        errors.value = formErrors;
         valid.value = false;
         return false;
       }
@@ -196,6 +229,8 @@ export function useFormValidation<
       valid.value = false;
 
       return false;
+    } finally {
+      formValidated.value = true;
     }
   };
 
@@ -203,15 +238,21 @@ export function useFormValidation<
     values.value[name] = value as T[keyof T];
     dirty.value[name] = true;
 
+    lockedFields.delete(name);
+
     clearGlobalError();
 
     if (validationMode === 'eager') {
       validateField(name);
-
       return;
     }
 
     if (validationMode === 'lazy' && Boolean(touched.value[name])) {
+      validateField(name);
+      return;
+    }
+
+    if (validationMode === 'passive' && formValidated.value) {
       validateField(name);
     }
   };
@@ -236,31 +277,43 @@ export function useFormValidation<
     };
   };
 
-  const handleSubmit = (submitCallback: (values: T) => void | Promise<void>) => {
+  const handleSubmit = <TResult = unknown>(submitCallback: (values: T) => TResult | Promise<TResult>) => {
     return async (e?: Event) => {
       e?.preventDefault();
 
       submitting.value = true;
+      submitCount.value++;
+      formValidated.value = true;
 
       const isValid = validateForm();
 
+      let result: TResult | undefined;
+
       if (isValid) {
-        await submitCallback(values.value as T);
+        try {
+          result = await submitCallback(values.value as T);
+        } catch (err) {
+          submitting.value = false;
+          throw err;
+        }
       }
 
       submitting.value = false;
 
-      return isValid;
+      return { isValid, result };
     };
   };
 
   const resetForm = (resetOptions?: Partial<FormState<Partial<T>, TErrorKeys>>) => {
     values.value = (resetOptions?.values || options.initialValues || {}) as T;
     errors.value = (resetOptions?.errors || {}) as FormErrors<T, TI18nKeys>;
+    lockedFields.clear();
     touched.value = resetOptions?.meta?.touched || {};
     dirty.value = resetOptions?.meta?.dirty || {};
     valid.value = resetOptions?.meta?.valid ?? true;
     submitting.value = resetOptions?.meta?.submitting ?? false;
+    submitCount.value = 0;
+    formValidated.value = false;
   };
 
   const setValues = (newValues: Partial<T>) => {
@@ -302,7 +355,9 @@ export function useFormValidation<
     dirty,
     valid,
     submitting,
-
+    submitCount,
+    formValidated,
+    fieldsFromSchema,
     isValid,
     isSubmitting,
     isDirty,

@@ -1,28 +1,25 @@
+import { log } from '../../../shared/helpers/log';
 import { authAPI, authEvents, type RegisterDTO } from '../../../entities/auth';
 import { useFetchAllUserData } from './useFetchAllUserData';
-
-export class RegistrationFailureError extends Error {
-  public readonly errorData: unknown;
-
-  constructor(message: string, errorData: unknown) {
-    super(message);
-    this.errorData = errorData;
-  }
-}
 
 export function useRegister() {
   const { fetchAllUserData } = useFetchAllUserData();
 
   async function register(data: RegisterDTO) {
-    const registerResponse = await authAPI.register(data);
-    if (!registerResponse.success) {
-      throw new RegistrationFailureError('Registration not success', registerResponse);
+    try {
+      const response = await authAPI.register(data);
+
+      authEvents.emit('register');
+
+      if (response.success && response.user_is_logged) {
+        await fetchAllUserData();
+      }
+
+      return response;
+    } catch (error) {
+      log.error('REGISTRATION_REQUEST_ERROR', error);
+      throw error;
     }
-    authEvents.emit('register');
-    if (registerResponse.user_is_logged) {
-      await fetchAllUserData();
-    }
-    return registerResponse;
   }
 
   return {

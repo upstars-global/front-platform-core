@@ -1,6 +1,6 @@
 import { toValue, type MaybeRefOrGetter } from "vue";
 import { useFormValidation, type BaseClientErrorKey, type I18nErrorMapper } from "../../../shared/libs/validation";
-import { type AuthBackendErrorKey } from "../libs";
+import type { AuthBackendErrorKey } from "../../../entities/auth";
 import { RestorePasswordFormSchema, type RestorePasswordFormSchemaType } from "../libs/validation/restore";
 import { useRestorePassword } from "./useRestorePassword";
 
@@ -47,7 +47,7 @@ export function useRestorePasswordForm<T extends string>({
       password,
     } = values;
 
-    await restorePassword({
+    return await restorePassword({
       password,
       code: toValue(code),
     });
