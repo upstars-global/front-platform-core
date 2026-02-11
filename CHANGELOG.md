@@ -1,3 +1,10 @@
+## [7.11.0](https://github.com/upstars-global/front-platform-core/compare/v7.10.0...v7.11.0) (2026-02-05)
+
+### 🚀 Features
+
+* **FP-4346:** add set methods for multilang store
+ ([53d209a](https://github.com/upstars-global/front-platform-core/commit/53d209a1a20f30ea4eb2a17967124817f098b571))
+
 ## [7.10.0](https://github.com/upstars-global/front-platform-core/compare/v7.9.0...v7.10.0) (2026-02-02)
 
 ### 🚀 Features
