@@ -207,7 +207,8 @@ describe('useFormValidation', () => {
 
     const result = await handleSubmit(onSubmit)();
     expect(onSubmit).not.toHaveBeenCalled();
-    expect(result).toBe(false);
+    expect(result.isValid).toBe(false);
+    expect(result.result).toBeUndefined();
   });
 
   it('clearFieldError removes error and unlocks field', () => {
@@ -341,7 +342,7 @@ describe('useFormValidation', () => {
     expect(event.preventDefault).toHaveBeenCalled();
     expect(onSubmit).toHaveBeenCalledTimes(1);
     expect(isSubmitting.value).toBe(false);
-    expect(result).toBe(true);
+    expect(result.isValid).toBe(true);
   });
 
   it('handleSubmit: does not call callback when invalid and returns false', async () => {
@@ -358,7 +359,8 @@ describe('useFormValidation', () => {
     const submit = handleSubmit(onSubmit);
     const result = await submit();
     expect(onSubmit).not.toHaveBeenCalled();
-    expect(result).toBe(false);
+    expect(result.isValid).toBe(false);
+    expect(result.result).toBeUndefined();
   });
 
   it('resetForm restores provided state (including meta)', () => {

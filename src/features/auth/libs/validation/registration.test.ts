@@ -34,7 +34,7 @@ describe('RegistrationFormSchema', () => {
     expect(errors!.length).toBeGreaterThan(0);
     const termsError = errors!.find(e => e.field === 'acceptTerms');
     expect(termsError).toBeDefined();
-    expect(termsError!.key).toBe(BASE_CLIENT_ERROR_KEY.REQUIRED);
+    expect(termsError!.key).toBe(BASE_CLIENT_ERROR_KEY.REQUIRED_FIELD);
   });
 
   it('should reject form with invalid email', () => {
@@ -70,7 +70,7 @@ describe('RegistrationFormSchema', () => {
     expect(errors).not.toBeNull();
     const currencyError = errors!.find(e => e.field === 'currency');
     expect(currencyError).toBeDefined();
-    expect(currencyError!.key).toBe(BASE_CLIENT_ERROR_KEY.REQUIRED);
+    expect(currencyError!.key).toBe(BASE_CLIENT_ERROR_KEY.REQUIRED_FIELD);
   });
 
   it('should reject form with empty password', () => {
@@ -79,7 +79,7 @@ describe('RegistrationFormSchema', () => {
     expect(errors).not.toBeNull();
     const passwordError = errors!.find(e => e.field === 'password');
     expect(passwordError).toBeDefined();
-    expect(passwordError!.key).toBe(BASE_CLIENT_ERROR_KEY.PASSWORD_LENGTH);
+    expect(passwordError!.key).toBe(BASE_CLIENT_ERROR_KEY.PASSWORD_EMPTY);
   });
 
   it('should reject form with password containing invalid characters', () => {
@@ -130,11 +130,11 @@ describe('RegistrationFormSchema', () => {
     
     const currencyError = errors!.find(e => e.field === 'currency');
     expect(currencyError).toBeDefined();
-    expect(currencyError!.key).toBe(BASE_CLIENT_ERROR_KEY.REQUIRED);
+    expect(currencyError!.key).toBe(BASE_CLIENT_ERROR_KEY.REQUIRED_FIELD);
     
     const termsError = errors!.find(e => e.field === 'acceptTerms');
     expect(termsError).toBeDefined();
-    expect(termsError!.key).toBe(BASE_CLIENT_ERROR_KEY.REQUIRED);
+    expect(termsError!.key).toBe(BASE_CLIENT_ERROR_KEY.REQUIRED_FIELD);
   });
 
   it('should accept email with special characters', () => {
