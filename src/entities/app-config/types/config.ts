@@ -44,6 +44,7 @@ export type AppGlobalConfig = Partial<{
   socialLinks?: SocialLink[];
   digitainRestricted: boolean;
   selfExclusionEnabled: boolean;
+  betsHistoryEnabled: boolean;
 }>;
 
 export type ReelsVersion = {

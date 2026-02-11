@@ -22,6 +22,8 @@ import {
   type IUserCallbackDataResource,
   type IUserFastTrackSIDResource,
   type IUserStatusResource,
+  type UserBetListResource,
+  type UserBetListDTO,
 } from './types';
 
 export const userAPI = {
@@ -224,6 +226,21 @@ export const userAPI = {
       return data;
     } catch (error) {
       log.error('LOAD_USER_BALANCE', error);
+      throw error;
+    }
+  },
+
+  async loadBetsList(data: UserBetListDTO) {
+    try {
+      const response = await publicApiV1<UserBetListResource>({
+        url: '/bets/list',
+        secured: true,
+        type: (securedType) => `Balance.V1.${securedType}.Bets.List`,
+        data: { filter: data },
+      });
+      return response.data;
+    } catch (error) {
+      log.error('LOAD_BETS_LIST', error);
       throw error;
     }
   },

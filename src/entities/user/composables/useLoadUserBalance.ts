@@ -32,8 +32,13 @@ export function useLoadUserBalance(pinia?: Pinia) {
     },
   );
 
+  async function loadBetsList(cursor: string | null) {
+    return await userAPI.loadBetsList({ cursor });
+  }
+
   return {
     loadWinbackData,
     loadUserBalance,
+    loadBetsList,
   };
 }
