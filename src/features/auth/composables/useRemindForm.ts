@@ -42,7 +42,7 @@ export function useRemindForm<T extends string>({
       login,
     } = values;
 
-    await restorePasswordRequest(login);
+    return await restorePasswordRequest(login);
   });
 
   return {

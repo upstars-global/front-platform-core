@@ -47,9 +47,7 @@ export function useLoginForm<T extends string>({
         password,
     });
 
-    await safeLogin(loginData, {
-        silent: true,
-    });
+    return await safeLogin(loginData);
   });
 
   return {

@@ -74,7 +74,7 @@ interface UseFormValidationReturn<
   getFieldSchema: (name: keyof T) => z.ZodType | null;
   validateField: (name: keyof T, silent?: boolean) => boolean;
   validateForm: () => boolean;
-  handleSubmit: (submitCallback: (values: T) => void | Promise<void>) => (e?: Event) => Promise<boolean>;
+  handleSubmit: <TResult = unknown>(submitCallback: (values: T) => TResult | Promise<TResult>) => (e?: Event) => Promise<{ isValid: boolean; result?: TResult }>;
   resetForm: (resetOptions?: Partial<FormState<Partial<T>, TErrorKeys>>) => void;
   setValues: (newValues: Partial<T>) => void;
   getFieldState: (name: keyof T) => FieldState<FieldValue, TI18nKeys>;
@@ -277,7 +277,7 @@ export function useFormValidation<
     };
   };
 
-  const handleSubmit = (submitCallback: (values: T) => void | Promise<void>) => {
+  const handleSubmit = <TResult = unknown>(submitCallback: (values: T) => TResult | Promise<TResult>) => {
     return async (e?: Event) => {
       e?.preventDefault();
 
@@ -287,13 +287,20 @@ export function useFormValidation<
 
       const isValid = validateForm();
 
+      let result: TResult | undefined;
+
       if (isValid) {
-        await submitCallback(values.value as T);
+        try {
+          result = await submitCallback(values.value as T);
+        } catch (err) {
+          submitting.value = false;
+          throw err;
+        }
       }
 
       submitting.value = false;
 
-      return isValid;
+      return { isValid, result };
     };
   };
 

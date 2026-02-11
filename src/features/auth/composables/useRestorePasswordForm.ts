@@ -47,7 +47,7 @@ export function useRestorePasswordForm<T extends string>({
       password,
     } = values;
 
-    await restorePassword({
+    return await restorePassword({
       password,
       code: toValue(code),
     });

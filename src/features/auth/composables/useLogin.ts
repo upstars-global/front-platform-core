@@ -4,7 +4,6 @@ import { log } from '../../../shared/helpers/log';
 import { useFetchAllUserData } from './useFetchAllUserData';
 import { useCaptcha } from './useCaptcha';
 import { isServer } from '../../../shared/helpers/ssr';
-import { afterLoginHook, onErrorLoginHook } from '../config';
 import { isLoginErrorCaptchaRequiredResource } from '../guards';
 import { JsonHttpServerError } from '../../../shared/libs/http';
 
@@ -17,7 +16,6 @@ export type LoginParams = Record<string, unknown> & {
 export type LoginOptions = {
   preventCaptchaHandler?: boolean;
   captchaHandler?: () => Promise<string>;
-  silent?: boolean;
 };
 
 declare global {
@@ -55,14 +53,10 @@ export function useLogin() {
 
       await fetchAllUserData();
 
-      afterLoginHook.run(response);
-
       authEvents.emit('login');
 
       return response;
     } catch (error: unknown) {
-      onErrorLoginHook.run(error);
-
       if (error instanceof JsonHttpServerError && isLoginErrorCaptchaRequiredResource(error.error.data)) {
         captchaFailed.value = true;
 
@@ -73,9 +67,7 @@ export function useLogin() {
 
       log.error('LOGIN_REQUEST_ERROR', error);
 
-      if (!options?.silent) {
-        throw error;
-      }
+      throw error;
     }
   }
 

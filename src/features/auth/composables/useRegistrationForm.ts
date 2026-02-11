@@ -95,7 +95,7 @@ export function useRegistrationForm<T extends string>({
       captcha_key: captchaKey.value,
     });
 
-    await register(registrationData);
+    return await register(registrationData);
   });
 
   const verifyEmail = async (email?: string) => {
