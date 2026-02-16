@@ -1,3 +1,10 @@
+## [7.12.1](https://github.com/upstars-global/front-platform-core/compare/v7.12.0...v7.12.1) (2026-02-16)
+
+### 🐛 Bug Fixes
+
+* **FP-4492:** extend AppGlobalConfig with new field allowedForSegmentation
+ ([230fe06](https://github.com/upstars-global/front-platform-core/commit/230fe066962e0861f9a2e598698fc1caf20eb6c3))
+
 ## [7.12.0](https://github.com/upstars-global/front-platform-core/compare/v7.11.0...v7.12.0) (2026-02-13)
 
 ### 🚀 Features
