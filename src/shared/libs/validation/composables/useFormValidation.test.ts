@@ -33,7 +33,7 @@ const i18nMapper = createI18nErrorMapper<RawErrorKey, I18nKey>(
   },
   {
     fallback: () => I18nKey.UNKNOWN,
-  }
+  },
 );
 
 const schema = z.object({
@@ -46,11 +46,13 @@ type Form = z.infer<typeof schema>;
 
 describe('useFormValidation', () => {
   it('initializes with defaults and computed flags', () => {
-    const { values, errors, isValid, isDirty, isTouched, isSubmitting } = useFormValidation<Form, RawErrorKey, I18nKey>({
-      validationSchema: schema,
-      initialValues: { email: '', password: '', country: '' },
-      i18nErrorMapper: i18nMapper,
-    });
+    const { values, errors, isValid, isDirty, isTouched, isSubmitting } = useFormValidation<Form, RawErrorKey, I18nKey>(
+      {
+        validationSchema: schema,
+        initialValues: { email: '', password: '', country: '' },
+        i18nErrorMapper: i18nMapper,
+      },
+    );
 
     expect(values.value).toEqual({ email: '', password: '', country: '' });
     expect(errors.value).toEqual({});
@@ -140,6 +142,112 @@ describe('useFormValidation', () => {
     clearFieldError('password');
     expect(errors.value.password).toBeUndefined();
     expect(isValid.value).toBe(true);
+  });
+
+  it('locked field error prevents validation from clearing it', () => {
+    const { setFieldError, validateField, errors } = useFormValidation<Form, RawErrorKey, I18nKey>({
+      validationSchema: schema,
+      initialValues: { email: 'test@example.com', password: '123456', country: 'UA' },
+      i18nErrorMapper: i18nMapper,
+    });
+
+    setFieldError('email', RawErrorKey.EMAIL_INVALID, true);
+    
+    const result = validateField('email');
+    expect(result).toBe(false);
+    expect(errors.value.email).toBe(I18nKey.EMAIL_INVALID);
+  });
+
+  it('validateForm preserves locked errors', () => {
+    const { setFieldError, validateForm, errors } = useFormValidation<Form, RawErrorKey, I18nKey>({
+      validationSchema: schema,
+      initialValues: { email: 'test@example.com', password: '123456', country: 'UA' },
+      i18nErrorMapper: i18nMapper,
+    });
+
+    setFieldError('email', RawErrorKey.EMAIL_INVALID, true);
+
+    const result = validateForm();
+    expect(result).toBe(false);
+    expect(errors.value.email).toBe(I18nKey.EMAIL_INVALID);
+  });
+
+  it('setValue unlocks field - clears error on valid value, shows new error on invalid', async () => {
+    const { setFieldError, setValue, errors, isValid } = useFormValidation<Form, RawErrorKey, I18nKey>({
+      validationSchema: schema,
+      initialValues: { email: 'test@example.com', password: '123456', country: 'UA' },
+      validationMode: 'eager',
+      i18nErrorMapper: i18nMapper,
+    });
+
+    setFieldError('email', RawErrorKey.EMAIL_INVALID, true);
+    expect(errors.value.email).toBe(I18nKey.EMAIL_INVALID);
+
+    setValue('email', 'valid@example.com');
+    await nextTick();
+    expect(errors.value.email).toBeUndefined();
+    expect(isValid.value).toBe(true);
+
+    setFieldError('email', RawErrorKey.EMAIL_INVALID, true);
+    setValue('email', 'invalid-email');
+    await nextTick();
+    expect(errors.value.email).toBe(I18nKey.EMAIL_INVALID);
+  });
+
+  it('handleSubmit blocks submission when locked error exists', async () => {
+    const onSubmit = vi.fn();
+    const { setFieldError, setValues, handleSubmit } = useFormValidation<Form, RawErrorKey, I18nKey>({
+      validationSchema: schema,
+      initialValues: { email: '', password: '', country: '' },
+      i18nErrorMapper: i18nMapper,
+    });
+
+    setValues({ email: 'john@doe.com', password: '123456', country: 'DE' });
+    setFieldError('email', RawErrorKey.EMAIL_INVALID, true);
+
+    const result = await handleSubmit(onSubmit)();
+    expect(onSubmit).not.toHaveBeenCalled();
+    expect(result.isValid).toBe(false);
+    expect(result.result).toBeUndefined();
+  });
+
+  it('clearFieldError removes error and unlocks field', () => {
+    const { setFieldError, clearFieldError, errors } = useFormValidation<Form, RawErrorKey, I18nKey>({
+      validationSchema: schema,
+      initialValues: { email: 'test@example.com', password: '123456', country: 'UA' },
+      i18nErrorMapper: i18nMapper,
+    });
+
+    setFieldError('email', RawErrorKey.EMAIL_INVALID, true);
+    clearFieldError('email');
+    expect(errors.value.email).toBeUndefined();
+  });
+
+  it('resetForm clears locked fields', () => {
+    const { setFieldError, resetForm, errors } = useFormValidation<Form, RawErrorKey, I18nKey>({
+      validationSchema: schema,
+      initialValues: { email: 'test@example.com', password: '123456', country: 'UA' },
+      i18nErrorMapper: i18nMapper,
+    });
+
+    setFieldError('email', RawErrorKey.EMAIL_INVALID, true);
+    resetForm();
+    expect(errors.value.email).toBeUndefined();
+  });
+
+  it('validateForm clears non-locked errors, preserves locked ones', () => {
+    const { setFieldError, validateForm, errors } = useFormValidation<Form, RawErrorKey, I18nKey>({
+      validationSchema: schema,
+      initialValues: { email: 'test@example.com', password: '123456', country: 'UA' },
+      i18nErrorMapper: i18nMapper,
+    });
+
+    setFieldError('email', RawErrorKey.EMAIL_INVALID, true);
+    setFieldError('password', RawErrorKey.PASSWORD_LENGTH, false);
+    validateForm();
+
+    expect(errors.value.email).toBe(I18nKey.EMAIL_INVALID);
+    expect(errors.value.password).toBeUndefined();
   });
 
   it('eager mode: setValue validates immediately', () => {
@@ -234,7 +342,7 @@ describe('useFormValidation', () => {
     expect(event.preventDefault).toHaveBeenCalled();
     expect(onSubmit).toHaveBeenCalledTimes(1);
     expect(isSubmitting.value).toBe(false);
-    expect(result).toBe(true);
+    expect(result.isValid).toBe(true);
   });
 
   it('handleSubmit: does not call callback when invalid and returns false', async () => {
@@ -251,7 +359,8 @@ describe('useFormValidation', () => {
     const submit = handleSubmit(onSubmit);
     const result = await submit();
     expect(onSubmit).not.toHaveBeenCalled();
-    expect(result).toBe(false);
+    expect(result.isValid).toBe(false);
+    expect(result.result).toBeUndefined();
   });
 
   it('resetForm restores provided state (including meta)', () => {
@@ -309,5 +418,144 @@ describe('useFormValidation', () => {
     const ok = validateForm();
     expect(ok).toBe(false);
     expect(errors.value.email).toBe(I18nKey.UNKNOWN);
+  });
+
+  describe('validateField with silent parameter', () => {
+    it('returns true when field value is valid (silent mode)', () => {
+      const { validateField, setValues } = useFormValidation<Form, RawErrorKey, I18nKey>({
+        validationSchema: schema,
+        initialValues: { email: '', password: '', country: '' },
+        i18nErrorMapper: i18nMapper,
+      });
+
+      setValues({ email: 'valid@example.com', password: '123456', country: 'UA' });
+
+      expect(validateField('email', true)).toBe(true);
+      expect(validateField('password', true)).toBe(true);
+      expect(validateField('country', true)).toBe(true);
+    });
+
+    it('returns false when field value is invalid (silent mode)', () => {
+      const { validateField, setValues } = useFormValidation<Form, RawErrorKey, I18nKey>({
+        validationSchema: schema,
+        initialValues: { email: '', password: '', country: '' },
+        i18nErrorMapper: i18nMapper,
+      });
+
+      setValues({ email: 'invalid-email', password: '123', country: '' });
+
+      expect(validateField('email', true)).toBe(false);
+      expect(validateField('password', true)).toBe(false);
+      expect(validateField('country', true)).toBe(false);
+    });
+
+    it('returns false when field has locked error (silent mode)', () => {
+      const { validateField, setFieldError, setValues } = useFormValidation<Form, RawErrorKey, I18nKey>({
+        validationSchema: schema,
+        initialValues: { email: '', password: '', country: '' },
+        i18nErrorMapper: i18nMapper,
+      });
+
+      setValues({ email: 'valid@example.com', password: '123456', country: 'UA' });
+      setFieldError('email', RawErrorKey.EMAIL_INVALID, true);
+
+      expect(validateField('email', true)).toBe(false);
+    });
+
+    it('returns true after locked field is unlocked via setValue (silent mode)', () => {
+      const { validateField, setFieldError, setValue } = useFormValidation<Form, RawErrorKey, I18nKey>({
+        validationSchema: schema,
+        initialValues: { email: 'valid@example.com', password: '123456', country: 'UA' },
+        i18nErrorMapper: i18nMapper,
+      });
+
+      setFieldError('email', RawErrorKey.EMAIL_INVALID, true);
+      expect(validateField('email', true)).toBe(false);
+
+      setValue('email', 'another-valid@example.com');
+      expect(validateField('email', true)).toBe(true);
+    });
+
+    it('returns true after locked field is cleared (silent mode)', () => {
+      const { validateField, setFieldError, clearFieldError, setValues } = useFormValidation<Form, RawErrorKey, I18nKey>({
+        validationSchema: schema,
+        initialValues: { email: '', password: '', country: '' },
+        i18nErrorMapper: i18nMapper,
+      });
+
+      setValues({ email: 'valid@example.com', password: '123456', country: 'UA' });
+      setFieldError('email', RawErrorKey.EMAIL_INVALID, true);
+      expect(validateField('email', true)).toBe(false);
+
+      clearFieldError('email');
+      expect(validateField('email', true)).toBe(true);
+    });
+
+    it('validates against schema without changing errors state (silent mode)', () => {
+      const { validateField, errors, setValue } = useFormValidation<Form, RawErrorKey, I18nKey>({
+        validationSchema: schema,
+        initialValues: { email: '', password: '', country: '' },
+        validationMode: 'passive',
+        i18nErrorMapper: i18nMapper,
+      });
+
+      setValue('email', 'invalid-email');
+      
+      expect(errors.value.email).toBeUndefined();
+      expect(validateField('email', true)).toBe(false);
+      expect(errors.value.email).toBeUndefined();
+    });
+
+    it('works correctly when one field is valid and another is invalid (silent mode)', () => {
+      const { validateField, setValues } = useFormValidation<Form, RawErrorKey, I18nKey>({
+        validationSchema: schema,
+        initialValues: { email: '', password: '', country: '' },
+        i18nErrorMapper: i18nMapper,
+      });
+
+      setValues({ email: 'valid@example.com', password: '123', country: 'UA' });
+
+      expect(validateField('email', true)).toBe(true);
+      expect(validateField('password', true)).toBe(false);
+      expect(validateField('country', true)).toBe(true);
+    });
+
+    it('returns true for initially valid values (silent mode)', () => {
+      const { validateField } = useFormValidation<Form, RawErrorKey, I18nKey>({
+        validationSchema: schema,
+        initialValues: { email: 'initial@example.com', password: '123456', country: 'UA' },
+        i18nErrorMapper: i18nMapper,
+      });
+
+      expect(validateField('email', true)).toBe(true);
+      expect(validateField('password', true)).toBe(true);
+      expect(validateField('country', true)).toBe(true);
+    });
+
+    it('returns false for initially invalid values (silent mode)', () => {
+      const { validateField } = useFormValidation<Form, RawErrorKey, I18nKey>({
+        validationSchema: schema,
+        initialValues: { email: 'bad-email', password: '123', country: '' },
+        i18nErrorMapper: i18nMapper,
+      });
+
+      expect(validateField('email', true)).toBe(false);
+      expect(validateField('password', true)).toBe(false);
+      expect(validateField('country', true)).toBe(false);
+    });
+
+    it('does not affect form validity state (silent mode)', () => {
+      const { validateField, isValid, setValues } = useFormValidation<Form, RawErrorKey, I18nKey>({
+        validationSchema: schema,
+        initialValues: { email: '', password: '', country: '' },
+        i18nErrorMapper: i18nMapper,
+      });
+
+      setValues({ email: 'invalid-email', password: '123', country: '' });
+
+      const initialIsValid = isValid.value;
+      validateField('email', true);
+      expect(isValid.value).toBe(initialIsValid);
+    });
   });
 });

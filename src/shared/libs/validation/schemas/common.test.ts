@@ -40,7 +40,7 @@ describe('Email Schema', () => {
   it('should reject empty string', () => {
     const { errors } = validateData(emailSchema, '');
     expect(errors).not.toBeNull();
-    expect(errors![0].key).toBe(BASE_CLIENT_ERROR_KEY.REQUIRED);
+    expect(errors![0].key).toBe(BASE_CLIENT_ERROR_KEY.EMAIL_REQUIRED);
     expect(errors![0].field).toBe('');
   });
 
@@ -79,7 +79,7 @@ describe('Password Schema', () => {
   it('should reject empty password', () => {
     const { errors } = validateData(passwordSchema, '');
     expect(errors).not.toBeNull();
-    expect(errors![0].key).toBe(BASE_CLIENT_ERROR_KEY.PASSWORD_LENGTH);
+    expect(errors![0].key).toBe(BASE_CLIENT_ERROR_KEY.PASSWORD_EMPTY);
     expect(errors![0].field).toBe('');
   });
 
@@ -145,7 +145,7 @@ describe('Currency Schema', () => {
     const { errors } = validateData(currencySchema, '');
     expect(errors).not.toBeNull();
     expect(errors).toHaveLength(1);
-    expect(errors![0].key).toBe(BASE_CLIENT_ERROR_KEY.REQUIRED);
+    expect(errors![0].key).toBe(BASE_CLIENT_ERROR_KEY.REQUIRED_FIELD);
     expect(errors![0].field).toBe('');
   });
 

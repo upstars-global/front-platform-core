@@ -12,7 +12,7 @@ export const createFormSchema = <T extends z.ZodRawShape>(schema: T) => {
 const MIN_LENGTH = 1;
 
 export const EMAIL_REGEX =
-  /^[\w.!#$%&'*+\/=?^`{|}~-]+@[a-z\d](?:[a-z\d-]{0,61}[a-z\d])?(?:\.[a-z\d](?:[a-z\d-]{0,61}[a-z\d])?)*$/i;
+  /^[\w.!#$%&'*+\/=?^`{|}~-]+@[a-z\d](?:[a-z\d-]{0,61}[a-z\d])?(?:\.[a-z\d](?:[a-z\d-]{0,61}[a-z\d])?)*\.[a-z]{2,}$/i
 
 export const createEmailSchema = ({
   requiredMessage,
@@ -21,7 +21,7 @@ export const createEmailSchema = ({
   requiredMessage?: string;
   invalidMessage?: string;
 } = {}) => {
-  const requiredMsg = requiredMessage || BASE_CLIENT_ERROR_KEY.REQUIRED;
+  const requiredMsg = requiredMessage || BASE_CLIENT_ERROR_KEY.EMAIL_REQUIRED;
   const invalidMsg = invalidMessage || BASE_CLIENT_ERROR_KEY.EMAIL_INVALID;
 
   return z.string({ error: requiredMsg }).min(MIN_LENGTH, { error: requiredMsg }).regex(EMAIL_REGEX, {
@@ -50,6 +50,7 @@ export const createPasswordSchema = (
 
   return z
     .string({ error: emptyMsg })
+    .min(1, { error: emptyMsg })
     .regex(PASSWORD_REGEX, {
       error: charsMsg,
     })
@@ -65,13 +66,13 @@ export const createCountrySchema = (message?: string) => {
 };
 
 export const createCurrencySchema = (message?: string) => {
-  const msg = message || BASE_CLIENT_ERROR_KEY.REQUIRED;
+  const msg = message || BASE_CLIENT_ERROR_KEY.REQUIRED_FIELD;
 
   return z.string({ error: msg }).min(1, { error: msg });
 };
 
 export const createAcceptTermsSchema = (message?: string) => {
-  const msg = message || BASE_CLIENT_ERROR_KEY.REQUIRED;
+  const msg = message || BASE_CLIENT_ERROR_KEY.REQUIRED_FIELD;
 
   return z
     .boolean({
