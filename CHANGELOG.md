@@ -1,3 +1,35 @@
+## [7.12.1](https://github.com/upstars-global/front-platform-core/compare/v7.12.0...v7.12.1) (2026-02-16)
+
+### 🐛 Bug Fixes
+
+* **FP-4492:** extend AppGlobalConfig with new field allowedForSegmentation
+ ([230fe06](https://github.com/upstars-global/front-platform-core/commit/230fe066962e0861f9a2e598698fc1caf20eb6c3))
+
+## [7.12.0](https://github.com/upstars-global/front-platform-core/compare/v7.11.0...v7.12.0) (2026-02-13)
+
+### 🚀 Features
+
+* **FP-4523:** add @sentry/vue to dependencies
+ ([8c905a4](https://github.com/upstars-global/front-platform-core/commit/8c905a4b7a85d40dc0ca828caa5783d99e94b7b0))
+
+
+* **FP-4523:** integrate Sentry for error monitoring and add event filtering logic
+ ([eae6e45](https://github.com/upstars-global/front-platform-core/commit/eae6e45ce85ac3dfffb24a7b2e24d1b764545cfb))
+
+
+
+### 🔨 Refactoring
+
+* **FP-4523:** type pinia in Sentry setup configuration and simplify imports
+ ([75c7ee4](https://github.com/upstars-global/front-platform-core/commit/75c7ee43260d039afc71609e3181cfd51f4b1f42))
+
+## [7.11.0](https://github.com/upstars-global/front-platform-core/compare/v7.10.0...v7.11.0) (2026-02-05)
+
+### 🚀 Features
+
+* **FP-4346:** add set methods for multilang store
+ ([53d209a](https://github.com/upstars-global/front-platform-core/commit/53d209a1a20f30ea4eb2a17967124817f098b571))
+
 ## [7.10.0](https://github.com/upstars-global/front-platform-core/compare/v7.9.0...v7.10.0) (2026-02-02)
 
 ### 🚀 Features
