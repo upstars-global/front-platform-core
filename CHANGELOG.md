@@ -1,3 +1,57 @@
+## [7.13.0](https://github.com/upstars-global/front-platform-core/compare/v7.12.1...v7.13.0) (2026-02-17)
+
+### 🚀 Features
+
+* **FP-3987:** add silent option to login handling
+ ([48f1b07](https://github.com/upstars-global/front-platform-core/commit/48f1b070d9baf30dc502a39ed2dc78d6f787128a))
+
+
+* **FP-3987:** added isFieldValid; removed inconsistency between translations
+ ([427200d](https://github.com/upstars-global/front-platform-core/commit/427200d7cf6c6bf678c1505949bb9d032464af98))
+
+
+* **FP-3987:** login schema
+ ([f7b3ee2](https://github.com/upstars-global/front-platform-core/commit/f7b3ee22246e6d01f9153d5a12cc72271129ab11))
+
+
+* **FP-3987:** pnpm-lock fix
+ ([b67af10](https://github.com/upstars-global/front-platform-core/commit/b67af1097e604a62f61ea8c6b4a895687658877e))
+
+
+* **FP-3987:** remove hooks
+ ([b3fdae5](https://github.com/upstars-global/front-platform-core/commit/b3fdae5762b4089358ebd79608d58d5c51180706))
+
+
+* **FP-3987:** replace isFieldValid with validateField and add silent mode
+ ([a3cb80b](https://github.com/upstars-global/front-platform-core/commit/a3cb80bca893ecbd92b880c408d007c267101399))
+
+
+* **FP-3987:** simplify error handling in useCaptcha
+ ([4c719d7](https://github.com/upstars-global/front-platform-core/commit/4c719d7024cc838f7aa12f1c387134a130842222))
+
+
+* **FP-3987:** update error keys for registration, form validation, and schema tests
+ ([d4b44ba](https://github.com/upstars-global/front-platform-core/commit/d4b44ba589cd9cae01f76a28f4ac50600520f62c))
+
+
+* **FP-3987:** update validation schemas and error handling; remove unused common schema
+ ([e80c869](https://github.com/upstars-global/front-platform-core/commit/e80c869ed17cd61adc3f99732c05e12340df848b))
+
+
+
+### 🔨 Refactoring
+
+* **FP-3987:**  enhancing validation methods
+ ([1cd916d](https://github.com/upstars-global/front-platform-core/commit/1cd916d1e6ce3b933751fe2b11e1bd995fb9aab0))
+
+
+* **FP-3987:** fix tests
+ ([928d534](https://github.com/upstars-global/front-platform-core/commit/928d534640276b2179e1b7027dc8fd9c739e53d8))
+
+
+* **FP-3987:** improvements for registration; move AuthBackendErrorKey from features to entities
+ ([ef89e85](https://github.com/upstars-global/front-platform-core/commit/ef89e85a47288ae12371d91d59ae07dc1549d70f))
+
 ## [7.12.1](https://github.com/upstars-global/front-platform-core/compare/v7.12.0...v7.12.1) (2026-02-16)
 
 ### 🐛 Bug Fixes
