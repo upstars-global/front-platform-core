@@ -1,23 +1,23 @@
-import { onMounted, onUnmounted } from "vue";
-import { storeToRefs } from "pinia";
-import { authEvents } from "../../../entities/auth";
-import { TransactionType, type TransactionHistoryItemResource } from "../../../entities/cashbox";
-import { useShowClientNotification } from "../../../entities/clientNotifications";
-import { useEnvironmentStore } from "../../../entities/environment";
-import { useMultiLangStore } from "../../../entities/multilang";
-import { pixelOrchestratorEvents, type BaseDepositParams, PixelOrchestratorEventsEnum } from '../../../entities/pixel-orchestrator';
-import { useUserProfileStore } from "../../../entities/user";
-import { log, Currency } from '../../../shared';
-import { useCashboxLoad, useTransactions, useTransactionsStore } from "../../cashbox";
-import { userBalanceWebsocketsEmitter, UserBalanceWebsocketTypes } from "../../user";
-import { isGeoAllowedForDepositPixels } from "../config";
-import type { PixelConfigMap } from '../types';
+import { computed, onMounted, onUnmounted } from 'vue';
+import { storeToRefs } from 'pinia';
+import { authEvents } from '../../../entities/auth';
+import { type TransactionHistoryItemResource, TransactionType } from '../../../entities/cashbox';
+import { useShowClientNotification } from '../../../entities/clientNotifications';
+import { useEnvironmentStore } from '../../../entities/environment';
+import { useMultiLangStore } from '../../../entities/multilang';
+import {
+  type BaseDepositParams,
+  pixelOrchestratorEvents,
+  PixelOrchestratorEventsEnum,
+} from '../../../entities/pixel-orchestrator';
+import { useUserProfileStore } from '../../../entities/user';
+import { Currency, log } from '../../../shared';
+import { useCashboxLoad, useTransactions, useTransactionsStore } from '../../cashbox';
+import { userBalanceWebsocketsEmitter, UserBalanceWebsocketTypes } from '../../user';
+import { isGeoAllowedForDepositPixels } from '../config';
+import { type PixelConfigMap, PixelGeoCountry, PixelType } from '../types';
 
 const TWO_DAYS_IN_MS = 2 * 24 * 60 * 60 * 1000;
-
-// Release date for BE-based pixel tracking (Unix timestamp in milliseconds)
-// Only process deposits created after this date for backward compatibility
-const RELEASE_DATE = new Date("2026-01-14T00:00:00Z").getTime(); // TODO: Update with actual release date
 
 /**
  * Module-level state to ensure singleton behavior across multiple component instances
@@ -66,6 +66,19 @@ export function usePixelOrchestrator<T = unknown>(...configs: PixelConfigMap<T>[
   const { showClientNotification } = useShowClientNotification();
   const { loadUserDepositNumbers } = useCashboxLoad();
 
+  const isDepositPixelEnabled = computed(() =>
+    configs.some((config) => {
+      const secondaryDepositExist =
+        config[PixelType.DEPOSIT].enabledGeos.includes(multiLangStore.userGeo as PixelGeoCountry) ||
+        config[PixelType.DEPOSIT].enabledGeos.includes(PixelGeoCountry.All);
+      const firstDepositExist =
+        config[PixelType.FIRST_TIME_DEPOSIT].enabledGeos.includes(multiLangStore.userGeo as PixelGeoCountry) ||
+        config[PixelType.FIRST_TIME_DEPOSIT].enabledGeos.includes(PixelGeoCountry.All);
+
+      return secondaryDepositExist || firstDepositExist;
+    }),
+  );
+
   function emitVisitViaPixelAnalytic() {
     pixelOrchestratorEvents.emit(PixelOrchestratorEventsEnum.VISIT);
   }
@@ -108,8 +121,8 @@ export function usePixelOrchestrator<T = unknown>(...configs: PixelConfigMap<T>[
     const twoDaysAgo = now - TWO_DAYS_IN_MS;
     const timestampConvertedInMilliseconds = transaction.createdAt * 1000;
 
-    // Must be within last 2 days AND after release date
-    return timestampConvertedInMilliseconds >= twoDaysAgo && timestampConvertedInMilliseconds >= RELEASE_DATE;
+    // Must be within last 2 days
+    return timestampConvertedInMilliseconds >= twoDaysAgo;
   }
 
   function isTransactionSuccessful(transaction: TransactionHistoryItemResource): boolean {
@@ -282,7 +295,9 @@ export function usePixelOrchestrator<T = unknown>(...configs: PixelConfigMap<T>[
       return;
     }
     emitVisitViaPixelAnalytic();
-    await initPixelDepositProcessor();
+    if (isDepositPixelEnabled.value) {
+      await initPixelDepositProcessor();
+    }
     hasMounted = true;
   });
 
