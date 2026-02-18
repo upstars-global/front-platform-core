@@ -269,8 +269,7 @@ export type UserBetListDTO = {
 };
 
 export type UserBet = {
-  date: string;
-  time: string;
+  timestamp: number;
   amount: number;
   reason: userBetReasonType;
   gameName: string;
