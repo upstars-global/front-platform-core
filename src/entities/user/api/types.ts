@@ -1,6 +1,5 @@
 import { Currency, Gender, type Localisation, RegistrationType, type TimestampSocketData } from '../../../shared/api';
 
-
 export enum VerificationsStatusOld {
   INITIAL = 'initial',
   VERIFIED = 'verified',
@@ -265,6 +264,29 @@ export type IUserBalanceResource = {
   };
 };
 
+export type UserBetListDTO = {
+  cursor: string | null;
+};
+
+export type UserBet = {
+  timestamp: number;
+  amount: number;
+  reason: userBetReasonType;
+  gameName: string;
+  gameSlug: string | null;
+};
+
+export type UserBetListResource = {
+  bets: Array<UserBet>;
+  nextCursor: string | null;
+};
+
+export enum userBetReasonType {
+  SLOT_BET= 'eapi.roundbet',
+  SLOT_WIN = 'eapi.roundwin',
+  BETTING_BET = 'betting.bet',
+  BETTING_WIN = 'betting.win',
+}
 // other
 
 export enum profileType {
@@ -277,6 +299,7 @@ export enum treasuryType {
   SIMPLE = 'type.treasury.simple',
   HARD = 'type.treasury.hard',
 }
+
 
 export type IUserFeatureResource = {
   feature: string;
@@ -371,35 +394,35 @@ export type IUserStatusResource = {
 };
 
 export type BalanceChangedDataChange = {
-    real: number;
-    bonus: number;
-    wagering: number;
-    sportBonus: number;
-    sportWagering: number;
-    freeBetBonus: number;
-}
+  real: number;
+  bonus: number;
+  wagering: number;
+  sportBonus: number;
+  sportWagering: number;
+  freeBetBonus: number;
+};
 export type BalanceChangedDataBonusWagering = {
-    userGiftId: string;
-    sum: number;
-    sumWagering: number;
-}
+  userGiftId: string;
+  sum: number;
+  sumWagering: number;
+};
 export type BalanceChangedData = TimestampSocketData & {
-    type: "balance.changed";
-    balanceType?: "real" | string;
-    balance: number;
-    reason: string;
-    changes?: BalanceChangedDataChange[];
-    bonus?: number;
-    sumWagering?: number;
-    totalWagering?: number;
-    bonusesWagering?: {
-        sport?: BalanceChangedDataBonusWagering | null;
-        casino?: BalanceChangedDataBonusWagering | null;
-    };
-    bonuses: {
-        sport: ISportBonus | null;
-        freeBet: { sum: number; } | null;
-    };
+  type: 'balance.changed';
+  balanceType?: 'real' | string;
+  balance: number;
+  reason: string;
+  changes?: BalanceChangedDataChange[];
+  bonus?: number;
+  sumWagering?: number;
+  totalWagering?: number;
+  bonusesWagering?: {
+    sport?: BalanceChangedDataBonusWagering | null;
+    casino?: BalanceChangedDataBonusWagering | null;
+  };
+  bonuses: {
+    sport: ISportBonus | null;
+    freeBet: { sum: number } | null;
+  };
 };
 
 export type IUserRefcodeResource = {
