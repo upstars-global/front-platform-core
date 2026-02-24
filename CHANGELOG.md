@@ -1,3 +1,18 @@
+## [7.14.0](https://github.com/upstars-global/front-platform-core/compare/v7.13.0...v7.14.0) (2026-02-24)
+
+### 🚀 Features
+
+* **FP-4493:** add pixel-orchestrator feature module
+ ([d2848d5](https://github.com/upstars-global/front-platform-core/commit/d2848d5f3e15a5c747afe1deed899036d6359e15))
+
+
+* **pixel-orchestrator:** add deposit pixel enablement check and refactor imports
+ ([e769950](https://github.com/upstars-global/front-platform-core/commit/e7699504fa98329b02c08dcbc1c18a522c9bf914))
+
+
+* **pixel-orchestrator:** add deposit pixel enablement check and refactor imports
+ ([f2346ed](https://github.com/upstars-global/front-platform-core/commit/f2346ed3b5984cf1e729ba7c343278adeab5eebc))
+
 ## [7.13.0](https://github.com/upstars-global/front-platform-core/compare/v7.12.1...v7.13.0) (2026-02-17)
 
 ### 🚀 Features
