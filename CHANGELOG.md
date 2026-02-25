@@ -1,3 +1,22 @@
+## [7.15.0](https://github.com/upstars-global/front-platform-core/compare/v7.14.0...v7.15.0) (2026-02-25)
+
+### 🚀 Features
+
+* **FP-4556:** add bets history endpoint
+ ([25796e3](https://github.com/upstars-global/front-platform-core/commit/25796e33caedf4d909c9673de31b43f4010ec543))
+
+
+* **FP-4556:** add betsHistoryEnabled to global config
+ ([27b717b](https://github.com/upstars-global/front-platform-core/commit/27b717b1dbcb6ab5c7fdd8b2e5a6422a86248f7d))
+
+
+* **FP-4556:** add timestamp for type UserBet
+ ([7637a8d](https://github.com/upstars-global/front-platform-core/commit/7637a8df1263d243afccf4717c3a255d993ac6b1))
+
+
+* **FP-4556:** add useBetsHistory composable
+ ([9511afd](https://github.com/upstars-global/front-platform-core/commit/9511afd3e0218e1796d9a68f95797d222c7a8ce0))
+
 ## [7.14.0](https://github.com/upstars-global/front-platform-core/compare/v7.13.0...v7.14.0) (2026-02-24)
 
 ### 🚀 Features
