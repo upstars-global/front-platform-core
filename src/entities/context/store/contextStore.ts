@@ -14,6 +14,7 @@ export const useContextStore = defineStore('context', () => {
     setContext,
     isMobile: computed(() => context.value?.isMobile),
     isIOS: computed(() => context.value?.isIOS),
+    isDesktop: computed(() => context.value?.isDesktop),
     isMacOS: computed(() => context.value?.isMacOS),
     browser: computed(() => context.value?.browser),
     isBot: computed(() => context.value?.isBot),
