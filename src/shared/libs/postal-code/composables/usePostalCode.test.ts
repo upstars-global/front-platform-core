@@ -1,8 +1,10 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { usePostalCode } from "./usePostalCode";
 
-const invalidMessage = (placeholder: string) =>
+const getFailedPatternMessage = (placeholder: string) =>
     `Invalid postal code. Expected: ${placeholder}`;
+
+const requiredMessage = "Please enter your postal code.";
 
 // ---------------------------------------------------------------------------
 // Test-case registry
@@ -309,7 +311,7 @@ const DEFAULT_CASES = {
 // ---------------------------------------------------------------------------
 
 function makeRule(countryCode: string) {
-    const { postalCodeRule } = usePostalCode(countryCode, invalidMessage);
+    const { postalCodeRule } = usePostalCode({ country: countryCode, getFailedPatternMessage });
     return postalCodeRule;
 }
 
@@ -352,7 +354,7 @@ describe("usePostalCode — postalCodeRule", () => {
     });
 
     describe("DEFAULT config — unlisted country falls through to the generic pattern", () => {
-        const rule = makeRule("ZZ"); // ZZ is not in POSTAL_CODE_CONFIGS
+        const rule = makeRule("ZZ"); // ZZ is not in POSTAL_CODE_CONFIGS — triggers DEFAULT_CONFIG
 
         describe("accepts", () => {
             DEFAULT_CASES.valid.forEach(({ code, note }) => {
@@ -378,22 +380,53 @@ describe("usePostalCode — postalMask and postalPlaceholder", () => {
     it.each(Object.entries(CASES))(
         "%s — mask and placeholder match config",
         (countryCode, { expectedMask, expectedPlaceholder }) => {
-            const { postalMask, postalPlaceholder } = usePostalCode(countryCode, invalidMessage);
+            const { postalMask, postalPlaceholder } = usePostalCode({ country: countryCode, getFailedPatternMessage });
             expect(postalMask.value).toBe(expectedMask);
             expect(postalPlaceholder.value).toBe(expectedPlaceholder);
         },
     );
 
     it("unknown country code returns empty mask and placeholder", () => {
-        const { postalMask, postalPlaceholder } = usePostalCode("ZZ", invalidMessage);
+        const { postalMask, postalPlaceholder } = usePostalCode({ country: "ZZ", getFailedPatternMessage });
         expect(postalMask.value).toBe("");
         expect(postalPlaceholder.value).toBe("");
     });
 
     it("country code lookup is case-insensitive (lowercase input)", () => {
-        const lower = usePostalCode("ca", invalidMessage);
-        const upper = usePostalCode("CA", invalidMessage);
+        const lower = usePostalCode({ country: "ca", getFailedPatternMessage });
+        const upper = usePostalCode({ country: "CA", getFailedPatternMessage });
         expect(lower.postalMask.value).toBe(upper.postalMask.value);
         expect(lower.postalPlaceholder.value).toBe(upper.postalPlaceholder.value);
+    });
+});
+
+describe("usePostalCode — getFailedRequiredMessage", () => {
+    it("returns true for empty value when getFailedRequiredMessage is not provided", () => {
+        const { postalCodeRule } = usePostalCode({ country: "CA", getFailedPatternMessage });
+        expect(postalCodeRule("")).toBe(true);
+    });
+
+    it("returns the required message for empty value when getFailedRequiredMessage is provided", () => {
+        const { postalCodeRule } = usePostalCode({
+            country: "CA",
+            getFailedPatternMessage,
+            getFailedRequiredMessage: () => requiredMessage,
+        });
+        expect(postalCodeRule("")).toBe(requiredMessage);
+    });
+
+    it("does not call getFailedRequiredMessage for non-empty valid value", () => {
+        const getFailedRequiredMessage = vi.fn(() => requiredMessage);
+        const { postalCodeRule } = usePostalCode({ country: "CA", getFailedPatternMessage, getFailedRequiredMessage });
+        expect(postalCodeRule("K1A 0B1")).toBe(true);
+        expect(getFailedRequiredMessage).not.toHaveBeenCalled();
+    });
+
+    it("does not call getFailedRequiredMessage for non-empty invalid value", () => {
+        const getFailedRequiredMessage = vi.fn(() => requiredMessage);
+        const { postalCodeRule } = usePostalCode({ country: "CA", getFailedPatternMessage, getFailedRequiredMessage });
+        const result = postalCodeRule("INVALID");
+        expect(result).not.toBe(true);
+        expect(getFailedRequiredMessage).not.toHaveBeenCalled();
     });
 });
