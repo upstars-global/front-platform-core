@@ -66,28 +66,38 @@ const DEFAULT_CONFIG: PostalCodeConfig = {
  * @param countryCode - ISO 3166-1 alpha-2 country code string (e.g. "CA", "AU")
  * @param invalidMessage - factory called with the country placeholder when validation fails;
  *                         the caller is responsible for i18n (keeps this composable i18n-free).
+ * @param requiredMessage - returned when the field is empty; omit to let the generic requiredRule handle it.
  */
-export function usePostalCode(countryCode: string, invalidMessage: (placeholder: string) => string) {
-    const config = computed<PostalCodeConfig>(() => {
-        const code = countryCode?.toUpperCase();
-        return (code && POSTAL_CODE_CONFIGS[code]) ? POSTAL_CODE_CONFIGS[code] : DEFAULT_CONFIG;
-    });
 
-    const postalMask = computed(() => config.value.mask);
+type UsePostalCodeParams = {
+  country: string;
+  getFailedPatternMessage: (placeholder: string) => string;
+  getFailedRequiredMessage?: () => string;
+};
+export function usePostalCode(params: UsePostalCodeParams) {
+  const config = computed<PostalCodeConfig>(() => {
+    const code = params.country?.toUpperCase();
+    return code && POSTAL_CODE_CONFIGS[code] ? POSTAL_CODE_CONFIGS[code] : DEFAULT_CONFIG;
+  });
 
-    const postalPlaceholder = computed(() => config.value.placeholder);
+  const postalMask = computed(() => config.value.mask);
 
-    /** Validates the value exactly as it comes from the masked input. */
-    const postalCodeRule: InputRuleString = (value: string) => {
-        if (!value) {
-            return true; // let requiredRule handle empty values
-        }
-        return config.value.pattern.test(value) || invalidMessage(config.value.placeholder);
-    };
+  const postalPlaceholder = computed(() => config.value.placeholder);
 
-    return {
-        postalMask,
-        postalPlaceholder,
-        postalCodeRule,
-    };
+  /** Validates the value exactly as it comes from the masked input. */
+  const postalCodeRule: InputRuleString = (value: string) => {
+    if (!value) {
+      if (params.getFailedRequiredMessage) {
+        return params.getFailedRequiredMessage() ?? true;
+      }
+      return true; // let default requiredRule handle empty values
+    }
+    return config.value.pattern.test(value) || params.getFailedPatternMessage(config.value.placeholder);
+  };
+
+  return {
+    postalMask,
+    postalPlaceholder,
+    postalCodeRule,
+  };
 }
