@@ -18,33 +18,35 @@ type InputRuleString = (value: string) => boolean | string;
  * Patterns use /i so lowercase input passes without needing normalization.
  */
 const POSTAL_CODE_CONFIGS: Record<string, PostalCodeConfig> = {
-    // Canada: A1A 1A1 — mask inserts the space automatically
-    CA: { pattern: /^[A-Za-z]\d[A-Za-z][ ]?\d[A-Za-z]\d$/, mask: "A#A #A#", placeholder: "A1A 1A1" },
-    // Australia: 4 digits
-    AU: { pattern: /^\d{4}$/, mask: "####", placeholder: "2000" },
-    // Italy: 5 digits
-    IT: { pattern: /^\d{5}$/, mask: "#####", placeholder: "00100" },
-    // Germany: 5 digits
-    DE: { pattern: /^\d{5}$/, mask: "#####", placeholder: "12345" },
-    // New Zealand: 4 digits
-    NZ: { pattern: /^\d{4}$/, mask: "####", placeholder: "6011" },
-    // Estonia: 5 digits
-    EE: { pattern: /^\d{5}$/, mask: "#####", placeholder: "15165" },
-    // Finland: 5 digits
-    FI: { pattern: /^\d{5}$/, mask: "#####", placeholder: "00100" },
-    // Norway: 4 digits
-    NO: { pattern: /^\d{4}$/, mask: "####", placeholder: "0161" },
-    // Austria: 4 digits
-    AT: { pattern: /^\d{4}$/, mask: "####", placeholder: "1010" },
-    // Sweden: 123 45 — mask inserts the space
-    SE: { pattern: /^\d{3}\s?\d{2}$/, mask: "### ##", placeholder: "111 22" },
-    // Ireland: A12 B345 — mask inserts the space
-    IE: { pattern: /^[A-Za-z]\d{2}\s?[A-Za-z\d]{4}$/, mask: "A## NNNN", placeholder: "D01 F5P2" },
-    // Netherlands: 1234 AB — mask inserts the space
-    NL: { pattern: /^\d{4}\s?[A-Za-z]{2}$/, mask: "#### AA", placeholder: "1012 AB" },
-    // United Kingdom: variable length (A9 9AA … AA9A 9AA), no fixed mask.
-    // Space is \s? because the user must type it manually without a mask.
-    GB: { pattern: /^[A-Za-z]{1,2}\d[A-Za-z\d]?\s?\d[A-Za-z]{2}$/, mask: "", placeholder: "SW1A 2AA" },
+  // Canada: A1A 1A1 — mask inserts the space automatically
+  CA: { pattern: /^[A-Za-z]\d[A-Za-z][ ]?\d[A-Za-z]\d$/, mask: 'A#A #A#', placeholder: 'A1A 1A1' },
+  // Australia: 4 digits
+  AU: { pattern: /^\d{4}$/, mask: '####', placeholder: '2000' },
+  // Italy: 5 digits
+  IT: { pattern: /^\d{5}$/, mask: '#####', placeholder: '00100' },
+  // Germany: 5 digits
+  DE: { pattern: /^\d{5}$/, mask: '#####', placeholder: '12345' },
+  // New Zealand: 4 digits
+  NZ: { pattern: /^\d{4}$/, mask: '####', placeholder: '6011' },
+  // Estonia: 5 digits
+  EE: { pattern: /^\d{5}$/, mask: '#####', placeholder: '15165' },
+  // Finland: 5 digits
+  FI: { pattern: /^\d{5}$/, mask: '#####', placeholder: '00100' },
+  // France: 5 digits
+  FR: { pattern: /^\d{2}[ ]?\d{3}$/, mask: '## ###', placeholder: '75 001' },
+  // Norway: 4 digits
+  NO: { pattern: /^\d{4}$/, mask: '####', placeholder: '0161' },
+  // Austria: 4 digits
+  AT: { pattern: /^\d{4}$/, mask: '####', placeholder: '1010' },
+  // Sweden: 123 45 — mask inserts the space
+  SE: { pattern: /^\d{3}\s?\d{2}$/, mask: '### ##', placeholder: '111 22' },
+  // Ireland: A12 B345 — mask inserts the space
+  IE: { pattern: /^[A-Za-z]\d{2}\s?[A-Za-z\d]{4}$/, mask: 'A## NNNN', placeholder: 'D01 F5P2' },
+  // Netherlands: 1234 AB — mask inserts the space
+  NL: { pattern: /^\d{4}\s?[A-Za-z]{2}$/, mask: '#### AA', placeholder: '1012 AB' },
+  // United Kingdom: variable length (A9 9AA … AA9A 9AA), no fixed mask.
+  // Space is \s? because the user must type it manually without a mask.
+  GB: { pattern: /^[A-Za-z]{1,2}\d[A-Za-z\d]?\s?\d[A-Za-z]{2}$/, mask: '', placeholder: 'SW1A 2AA' },
 };
 
 /** Fallback.

@@ -157,6 +157,30 @@ const CASES: Record<string, CountryCase> = {
         ],
     },
 
+    FR: {
+        description: "France — 75 001",
+        expectedMask: "## ###",
+        expectedPlaceholder: "75 001",
+        valid: [
+            { code: "75 001", note: "Paris — with space" },
+            { code: "75001",  note: "no space (space optional)" },
+            { code: "13 001", note: "Marseille" },
+            { code: "69 001", note: "Lyon" },
+            { code: "00 000", note: "all zeros" },
+            { code: "99 999", note: "all nines" },
+        ],
+        invalid: [
+            { code: "7 001",   note: "only 1 digit in first group" },
+            { code: "750 01",  note: "space in wrong position" },
+            { code: "750001",  note: "6 digits — too long" },
+            { code: "7500",    note: "4 digits — too short" },
+            { code: "AB 001",  note: "letters in first group" },
+            { code: "75 0A1",  note: "letter in second group" },
+            { code: "75-001",  note: "hyphen instead of space" },
+            { code: "75  001", note: "double space" },
+        ],
+    },
+
     NO: {
         description: "Norway — 4 digits",
         expectedMask: "####",
