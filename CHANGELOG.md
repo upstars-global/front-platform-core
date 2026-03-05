@@ -1,3 +1,14 @@
+## [7.16.0](https://github.com/upstars-global/front-platform-core/compare/v7.15.0...v7.16.0) (2026-03-05)
+
+### 🚀 Features
+
+* **FP-4719:** add `isDesktop` property to the context type
+ ([0ef9096](https://github.com/upstars-global/front-platform-core/commit/0ef909687a6c35ed4fbc68b391a18ac9e9d6e4db))
+
+
+* **FP-4719:** make `isDesktop` property optional
+ ([699dfc5](https://github.com/upstars-global/front-platform-core/commit/699dfc51a65e0e14c5c1660cc5dfa41c67c54965))
+
 ## [7.15.0](https://github.com/upstars-global/front-platform-core/compare/v7.14.0...v7.15.0) (2026-02-25)
 
 ### 🚀 Features
