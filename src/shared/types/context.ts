@@ -9,6 +9,7 @@ export interface IClientContextResource {
   isMetaWebview?: boolean;
   isIOS?: boolean;
   isMobile: boolean;
+  isDesktop?: boolean;
   isApp?: boolean;
   isMacOS?: boolean;
   browser?: BrowserList;
