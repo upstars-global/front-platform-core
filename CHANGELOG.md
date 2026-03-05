@@ -1,3 +1,22 @@
+## [7.17.0](https://github.com/upstars-global/front-platform-core/compare/v7.16.0...v7.17.0) (2026-03-05)
+
+### 🚀 Features
+
+* **FP-3580:** add getFailedRequiredMessage for postal code
+ ([f292ede](https://github.com/upstars-global/front-platform-core/commit/f292edeb43443b3ba37e80f5b41b89c575e94190))
+
+
+* **FP-3580:** add new tests
+ ([d863457](https://github.com/upstars-global/front-platform-core/commit/d86345787f19d52639d87ae4d9edb9decc070491))
+
+
+* **FP-3580:** add rules for France
+ ([b40e744](https://github.com/upstars-global/front-platform-core/commit/b40e7449e3ef28d3d868c18c709909c456346b12))
+
+
+* **FP-3580:** create postal-code lib for validating zip code input
+ ([9e7ac96](https://github.com/upstars-global/front-platform-core/commit/9e7ac9668fbba6b78961f8259ef21c290a42836a))
+
 ## [7.16.0](https://github.com/upstars-global/front-platform-core/compare/v7.15.0...v7.16.0) (2026-03-05)
 
 ### 🚀 Features
