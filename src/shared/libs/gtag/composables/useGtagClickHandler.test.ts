@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { ref } from 'vue';
-import { useGtagClickHandler, type GtagEventData } from './useGtagClickHandler';
+import { useGtagClickHandler } from './useGtagClickHandler';
 
 // Mock log helper
 vi.mock('../../../helpers', () => {
@@ -40,20 +40,30 @@ type MockElement = {
 };
 
 const createMockElement = (tag: string): MockElement => {
-  const attributes: Record<string, string> = {};
+  const attributesMap: Record<string, string> = {};
   const listeners: Record<string, EventListener[]> = {};
   const children: MockElement[] = [];
 
   return {
     tagName: tag.toUpperCase(),
-    attributes,
+    get attributes() {
+      // Повертаємо масив-подібний об'єкт з атрибутами
+      const keys = Object.keys(attributesMap);
+      const result = keys.map((key) => ({
+        name: key,
+        value: attributesMap[key],
+      }));
+      Object.defineProperty(result, 'length', { value: keys.length });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return result as any;
+    },
     listeners,
     children,
     setAttribute(name: string, value: string) {
-      attributes[name] = value;
+      attributesMap[name] = value;
     },
     getAttribute(name: string) {
-      return attributes[name] || null;
+      return attributesMap[name] || null;
     },
     addEventListener(event: string, listener: EventListener) {
       if (!listeners[event]) {
@@ -82,7 +92,7 @@ const createMockElement = (tag: string): MockElement => {
 
       if (selector === '[data-gtag-event-name]') {
         const collectElements = (el: MockElement) => {
-          if (el.attributes['data-gtag-event-name'] !== undefined) {
+          if (el.getAttribute('data-gtag-event-name') !== null) {
             results.push(el);
           }
           el.children.forEach(collectElements);
@@ -550,7 +560,7 @@ describe('useGtagClickHandler', () => {
       button.setAttribute('data-gtag-event-name', 'event_only');
       container.appendChild(button);
 
-      const typedCallback = vi.fn<[GtagEventData], void>();
+      const typedCallback = vi.fn();
 
       useGtagClickHandler({
         onGtagClick: typedCallback,
@@ -568,7 +578,7 @@ describe('useGtagClickHandler', () => {
       button.setAttribute('data-gtag-param-key', 'value');
       container.appendChild(button);
 
-      const typedCallback = vi.fn<[GtagEventData], void>();
+      const typedCallback = vi.fn();
 
       useGtagClickHandler({
         onGtagClick: typedCallback,
