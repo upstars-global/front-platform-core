@@ -104,7 +104,7 @@ export function useGtagClickHandler(options: UseGtagClickHandlerOptions) {
   /**
    * Обробник кліку на елемент
    */
-  const handleClick = (element: HTMLElement) => (event: Event) => {
+  const handleClick = (element: HTMLElement) => () => {
     const eventData = parseGtagFromDataAttributes(element);
 
     if (eventData) {
