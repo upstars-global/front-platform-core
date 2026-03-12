@@ -1,3 +1,17 @@
+## [7.19.0](https://github.com/upstars-global/front-platform-core/compare/v7.18.0...v7.19.0) (2026-03-12)
+
+### 🚀 Features
+
+* **config:** add optional `widgetId` to app config type
+ ([d1146ad](https://github.com/upstars-global/front-platform-core/commit/d1146ad60060a0fc590c4aa7337e5e80bf37e79e))
+
+## [7.18.0](https://github.com/upstars-global/front-platform-core/compare/v7.17.0...v7.18.0) (2026-03-12)
+
+### 🚀 Features
+
+* **FP-4454:** add isIosNativeApp ;enhance storage methods with server-side checks
+ ([cc5cf72](https://github.com/upstars-global/front-platform-core/commit/cc5cf72134b8959ba64f35952b1a1e249467a61d))
+
 ## [7.17.0](https://github.com/upstars-global/front-platform-core/compare/v7.16.0...v7.17.0) (2026-03-05)
 
 ### 🚀 Features
