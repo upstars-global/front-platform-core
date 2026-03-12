@@ -20,7 +20,7 @@ export enum LimitStatus {
   WAITING_CHANGES = 'waiting_changes',
 }
 
-export interface ILimitResource<T extends LimitType = LimitType> {
+export type ILimitResource<T extends LimitType = LimitType> = {
   id: string;
   userId: string;
   type: T;
@@ -37,13 +37,13 @@ export interface ILimitResource<T extends LimitType = LimitType> {
 }
 
 // DTOs
-export interface IManageLimitDTO<T extends LimitType = LimitType> {
+export type IManageLimitDTO<T extends LimitType = LimitType> = {
   subType: LimitSubtype;
   type: T;
   limit: number;
 }
 
-export interface IDisableLimitDTO<T extends LimitType = LimitType> {
+export type IDisableLimitDTO<T extends LimitType = LimitType> = {
   subType: LimitSubtype;
   type: T;
 }
@@ -55,7 +55,7 @@ export enum SelfExclusionActivatePeriod {
   FOREVER = 'forever',
 }
 
-export interface ISelfExclusionActivateDTO {
+export type ISelfExclusionActivateDTO = {
   token: string;
   reason: string;
   period: {
