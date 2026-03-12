@@ -1,7 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { useSelfExclusionDurations } from './useSelfExclusionDurations';
 import { SELF_EXCLUSION_DURATIONS, TRANSLATE_MAP } from '../config';
-import { SelfExclusionActivatePeriod } from '../../../entities/limits';
 
 vi.mock('../config', () => ({
   SELF_EXCLUSION_DURATIONS: [

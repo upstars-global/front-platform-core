@@ -21,6 +21,14 @@ vi.mock('../../../entities/user', () => ({
   useUserProfile: vi.fn(),
 }));
 
+interface MockWebsocketStatusStore {
+  isConnected: ReturnType<typeof ref<boolean>>;
+}
+
+interface MockLimitsStore {
+  loadSelfExclusionLimit: ReturnType<typeof vi.fn>;
+}
+
 describe('useCoolingOffToken', () => {
   let pinia: ReturnType<typeof createPinia>;
   let mockGetToken: ReturnType<typeof vi.fn>;
@@ -29,8 +37,8 @@ describe('useCoolingOffToken', () => {
   let mockIsLoggedAsync: ReturnType<typeof vi.fn>;
   let mockLoadUserProfile: ReturnType<typeof vi.fn>;
   let mockLoadSelfExclusionLimit: ReturnType<typeof vi.fn>;
-  let mockWebsocketStatusStore: any;
-  let mockLimitsStore: any;
+  let mockWebsocketStatusStore: MockWebsocketStatusStore;
+  let mockLimitsStore: MockLimitsStore;
 
   beforeEach(() => {
     pinia = createPinia();
@@ -56,12 +64,12 @@ describe('useCoolingOffToken', () => {
       loadSelfExclusionLimit: mockLoadSelfExclusionLimit,
     };
 
-    vi.mocked(useWebsocketsStatusStore).mockReturnValue(mockWebsocketStatusStore);
-    vi.mocked(useLimitsStore).mockReturnValue(mockLimitsStore);
+    vi.mocked(useWebsocketsStatusStore).mockReturnValue(mockWebsocketStatusStore as ReturnType<typeof useWebsocketsStatusStore>);
+    vi.mocked(useLimitsStore).mockReturnValue(mockLimitsStore as ReturnType<typeof useLimitsStore>);
     vi.mocked(useUserProfile).mockReturnValue({
       isLoggedAsync: mockIsLoggedAsync,
       loadUserProfile: mockLoadUserProfile,
-    } as any);
+    } as ReturnType<typeof useUserProfile>);
   });
 
   afterEach(() => {

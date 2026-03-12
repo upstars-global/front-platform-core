@@ -19,10 +19,21 @@ vi.mock('../../../entities/user', () => ({
   },
 }));
 
+interface MockLimitsStore {
+  selfExclusionLimit: { tillDate?: string | null } | null;
+  loadSelfExclusionLimit: ReturnType<typeof vi.fn>;
+}
+
+interface MockUserProfileStore {
+  userInfo: {
+    selfExclusionStatus: string | null;
+  };
+}
+
 describe('useCoolingOffStatus', () => {
   let pinia: ReturnType<typeof createPinia>;
-  let mockLimitsStore: any;
-  let mockUserProfileStore: any;
+  let mockLimitsStore: MockLimitsStore;
+  let mockUserProfileStore: MockUserProfileStore;
   let mockIsLoggedAsync: ReturnType<typeof vi.fn>;
   let mockLoadSelfExclusionLimit: ReturnType<typeof vi.fn>;
 
@@ -45,11 +56,11 @@ describe('useCoolingOffStatus', () => {
       },
     });
 
-    vi.mocked(useLimitsStore).mockReturnValue(mockLimitsStore);
+    vi.mocked(useLimitsStore).mockReturnValue(mockLimitsStore as ReturnType<typeof useLimitsStore>);
     vi.mocked(useUserProfile).mockReturnValue({
       isLoggedAsync: mockIsLoggedAsync,
-    } as any);
-    vi.mocked(useUserProfileStore).mockReturnValue(mockUserProfileStore);
+    } as ReturnType<typeof useUserProfile>);
+    vi.mocked(useUserProfileStore).mockReturnValue(mockUserProfileStore as ReturnType<typeof useUserProfileStore>);
   });
 
   afterEach(() => {
