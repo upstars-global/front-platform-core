@@ -1,6 +1,6 @@
 import { onMounted, onServerPrefetch } from 'vue';
 import { configAPI } from '../api';
-import { isServer, promiseMemo } from '../../../shared';
+import { promiseMemo } from '../../../shared';
 import { useAppGlobalConfigStore } from '../store';
 import type { Pinia } from 'pinia';
 import { useMultiLangStore } from '../../multilang';
@@ -12,14 +12,17 @@ export function useFetchAppGlobalConfig(pinia?: Pinia) {
   const loadAppGlobalConfig = promiseMemo(
     async () => {
       if (!appGlobalConfigStore.isLoaded) {
-        return await configAPI.loadAppGlobalConfig();
+        const globalConfig = await configAPI.loadAppGlobalConfig();
+        if (globalConfig) {
+          appGlobalConfigStore.setGlobalConfig(globalConfig);
+        }
+        return globalConfig;
       }
 
       return appGlobalConfigStore.globalConfig;
     },
     {
       key: 'loadAppGlobalConfig',
-      cacheResult: !isServer, // global config should be requested just once, because rely on hostname, geo which can not be change during session
     },
   );
 
