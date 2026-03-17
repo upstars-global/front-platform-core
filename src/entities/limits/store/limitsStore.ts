@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { limitsAPI } from '../api/requests';
 import type { IDisableLimitDTO, ILimitResource, IManageLimitDTO } from '../api/types';
 import { LimitType, LimitSubtype } from '../api/types';
+import { promiseMemo } from '../../../shared/helpers/promise';
 
 export const LIMITS_SUBTYPE_ORDER: Record<LimitSubtype, number> = {
   [LimitSubtype.DAILY]: 1,
@@ -21,22 +22,6 @@ interface ILimitsByType {
   [LimitType.LOSS]: Array<ILimitResource<LimitType.LOSS>>;
 }
 
-// Simple promise memoizer to prevent multiple simultaneous requests
-function createPromiseMemoizer<T>(fn: () => Promise<T>) {
-  let promise: Promise<T> | null = null;
-
-  const memoized = () => {
-    if (!promise) {
-      promise = fn().finally(() => {
-        promise = null;
-      });
-    }
-    return promise;
-  };
-
-  return memoized;
-}
-
 export const useLimitsStore = defineStore('limits', () => {
   const limits = ref<ILimitsByType>({
     [LimitType.DEPOSIT]: [],
@@ -45,7 +30,7 @@ export const useLimitsStore = defineStore('limits', () => {
   const selfExclusionLimit = ref<ILimitResource<LimitType.SELF_EXCLUSION>>();
 
   async function loadLimits() {
-    await Promise.all([loadLossLimits(), loadDepositLimits(), loadSelfExclusionLimit()]);
+    await Promise.allSettled([loadLossLimits(), loadDepositLimits(), loadSelfExclusionLimit()]);
   }
 
   async function loadLimitsByType(type: LimitType) {
@@ -56,22 +41,33 @@ export const useLimitsStore = defineStore('limits', () => {
     }
   }
 
-  const loadDepositLimits = createPromiseMemoizer(async () => {
-    limits.value[LimitType.DEPOSIT] = sortLimitsBySubtype(
-      await limitsAPI.getActiveLimits(LimitType.DEPOSIT)
-    );
-  });
+  const loadDepositLimits = promiseMemo(
+    async () => {
+      limits.value[LimitType.DEPOSIT] = sortLimitsBySubtype(
+        await limitsAPI.getActiveLimits(LimitType.DEPOSIT)
+      );
+    },
+    { cacheResult: false, key: 'limits-deposit' }
+  );
 
-  const loadLossLimits = createPromiseMemoizer(async () => {
-    limits.value[LimitType.LOSS] = sortLimitsBySubtype(await limitsAPI.getActiveLimits(LimitType.LOSS));
-  });
+  const loadLossLimits = promiseMemo(
+    async () => {
+      limits.value[LimitType.LOSS] = sortLimitsBySubtype(
+        await limitsAPI.getActiveLimits(LimitType.LOSS)
+      );
+    },
+    { cacheResult: false, key: 'limits-loss' }
+  );
 
-  const loadSelfExclusionLimit = createPromiseMemoizer(async () => {
-    const [limit] = await limitsAPI.getActiveLimits(LimitType.SELF_EXCLUSION);
-    if (limit) {
-      selfExclusionLimit.value = limit;
-    }
-  });
+  const loadSelfExclusionLimit = promiseMemo(
+    async () => {
+      const [limit] = await limitsAPI.getActiveLimits(LimitType.SELF_EXCLUSION);
+      if (limit) {
+        selfExclusionLimit.value = limit;
+      }
+    },
+    { cacheResult: false, key: 'limits-self-exclusion' }
+  );
 
   async function createLimit(params: IManageLimitDTO) {
     const { data, error } = await limitsAPI.createLimit(params);
