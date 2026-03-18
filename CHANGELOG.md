@@ -1,3 +1,32 @@
+## [7.20.0](https://github.com/upstars-global/front-platform-core/compare/v7.19.0...v7.20.0) (2026-03-12)
+
+### 🚀 Features
+
+* **FP-4775:** add useGtagClickHandler
+ ([f2b0cd1](https://github.com/upstars-global/front-platform-core/commit/f2b0cd198102057c2012389ab8cb0ead91ce562b))
+
+
+* **FP-4775:** fix  useGtagClickHandler.test
+ ([32bc7b9](https://github.com/upstars-global/front-platform-core/commit/32bc7b98a2c7079104a08aa006c8301310b609a4))
+
+
+* **FP-4775:** fix  useGtagClickHandler.test
+ ([adb5abd](https://github.com/upstars-global/front-platform-core/commit/adb5abd43bb65f566c61ad59a7aa035b4aff71e1))
+
+## [7.19.0](https://github.com/upstars-global/front-platform-core/compare/v7.18.0...v7.19.0) (2026-03-12)
+
+### 🚀 Features
+
+* **config:** add optional `widgetId` to app config type
+ ([d1146ad](https://github.com/upstars-global/front-platform-core/commit/d1146ad60060a0fc590c4aa7337e5e80bf37e79e))
+
+## [7.18.0](https://github.com/upstars-global/front-platform-core/compare/v7.17.0...v7.18.0) (2026-03-12)
+
+### 🚀 Features
+
+* **FP-4454:** add isIosNativeApp ;enhance storage methods with server-side checks
+ ([cc5cf72](https://github.com/upstars-global/front-platform-core/commit/cc5cf72134b8959ba64f35952b1a1e249467a61d))
+
 ## [7.17.0](https://github.com/upstars-global/front-platform-core/compare/v7.16.0...v7.17.0) (2026-03-05)
 
 ### 🚀 Features
