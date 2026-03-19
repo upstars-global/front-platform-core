@@ -27,6 +27,10 @@ export const useAppGlobalConfigStore = defineStore('appGlobalConfig', () => {
     return Boolean(globalConfig.value?.selfExclusionEnabled);
   });
 
+  const isCoolingOffEnabled = computed(() => {
+    return Boolean(globalConfig.value?.coolingOffEnabled);
+  });
+
   const freshChatConfig = computed(() => {
     return globalConfig.value?.freshChatConfig;
   });
@@ -44,6 +48,7 @@ export const useAppGlobalConfigStore = defineStore('appGlobalConfig', () => {
     isLicenceDomain,
 
     isSelfExclusionEnabled,
+    isCoolingOffEnabled,
     betsHistoryEnabled,
 
     freshChatConfig,

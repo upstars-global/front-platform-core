@@ -5,7 +5,8 @@ import type {
   ILimitResource,
   IDisableLimitDTO,
   IManageLimitDTO,
-  ISelfExclusionActivateDTO, CoolingOffActivateDTO,
+  ISelfExclusionActivateDTO,
+  CoolingOffActivateDTO,
 } from './types';
 
 export const limitsAPI = {

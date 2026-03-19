@@ -46,6 +46,7 @@ export type AppGlobalConfig = Partial<{
   socialLinks?: SocialLink[];
   digitainRestricted: boolean;
   selfExclusionEnabled: boolean;
+  coolingOffEnabled: boolean;
   betsHistoryEnabled: boolean;
 }>;
 

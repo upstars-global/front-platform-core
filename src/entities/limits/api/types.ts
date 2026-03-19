@@ -72,6 +72,7 @@ export type ISelfExclusionActivateDTO = {
   };
 }
 export type CoolingOffActivateDTO = {
+  isLicensedDomain: boolean;
   period: {
     type: CollingOffActivatePeriod;
     value: number;
