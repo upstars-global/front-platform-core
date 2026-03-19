@@ -36,27 +36,27 @@ describe('useCoolingOffDuration', () => {
 
       expect(coolingOffDurations.value).toEqual([
         {
-          label: 'LIMITS.COOLING_OFF.DURATION_TYPES.DAY',
+          label: 'LIMITS.SELF_EXCLUSION.DURATION_TYPES.DAY',
           value: '1_DAY',
           duration: { type: 'DAY', value: 1 },
         },
         {
-          label: 'LIMITS.COOLING_OFF.DURATION_TYPES.DAY',
+          label: 'LIMITS.SELF_EXCLUSION.DURATION_TYPES.DAY',
           value: '3_DAY',
           duration: { type: 'DAY', value: 3 },
         },
         {
-          label: 'LIMITS.COOLING_OFF.DURATION_TYPES.WEEK',
+          label: 'LIMITS.SELF_EXCLUSION.DURATION_TYPES.WEEK',
           value: '1_WEEK',
           duration: { type: 'WEEK', value: 1 },
         },
         {
-          label: 'LIMITS.COOLING_OFF.DURATION_TYPES.WEEK',
+          label: 'LIMITS.SELF_EXCLUSION.DURATION_TYPES.WEEK',
           value: '2_WEEK',
           duration: { type: 'WEEK', value: 2 },
         },
         {
-          label: 'LIMITS.COOLING_OFF.DURATION_TYPES.MONTH',
+          label: 'LIMITS.SELF_EXCLUSION.DURATION_TYPES.MONTH',
           value: '1_MONTH',
           duration: { type: 'MONTH', value: 1 },
         },
@@ -76,7 +76,7 @@ describe('useCoolingOffDuration', () => {
       const { coolingOffDurations } = useCoolingOffDuration();
 
       coolingOffDurations.value.forEach((item) => {
-        expect(item.label).toMatch(/^LIMITS\.COOLING_OFF\.DURATION_TYPES\./);
+        expect(item.label).toMatch(/^LIMITS\.SELF_EXCLUSION\.DURATION_TYPES\./);
         expect(item.label).toContain(COOLING_OFF_TRANSLATE_MAP[item.duration.type]);
       });
     });
