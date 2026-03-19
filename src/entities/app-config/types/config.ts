@@ -10,6 +10,7 @@ type FreshChatConfig = {
   scriptUrl: string;
   widgetUuid: string;
   widgetUuidVip: string;
+  widgetId?: string;
 };
 
 type TrustpilotConfig = {
