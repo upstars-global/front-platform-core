@@ -1,3 +1,18 @@
+## [7.20.1](https://github.com/upstars-global/front-platform-core/compare/v7.20.0...v7.20.1) (2026-03-18)
+
+### 🐛 Bug Fixes
+
+* **FP-4433:** avoid using cacheResult in promiseMemo
+ ([59aa26a](https://github.com/upstars-global/front-platform-core/commit/59aa26a0b3ddb05713abe28809631332dfce2fc9))
+
+
+* **FP-4433:** extend with new field runtimeHostnameDuringSSR
+ ([102ab2f](https://github.com/upstars-global/front-platform-core/commit/102ab2fd5e7dc65b8fd7f15c13bb0f405ccb59a1))
+
+
+* **FP-4433:** move reusable logic. Cache result of loadAppGlobalConfig in promiseMemo
+ ([9a5e839](https://github.com/upstars-global/front-platform-core/commit/9a5e839caffbe4f56be2314a37352a6fa16fb297))
+
 ## [7.20.0](https://github.com/upstars-global/front-platform-core/compare/v7.19.0...v7.20.0) (2026-03-12)
 
 ### 🚀 Features
