@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { useSelfExclusionDurations } from './useSelfExclusionDurations';
-import { SELF_EXCLUSION_DURATIONS, TRANSLATE_MAP } from '../config';
+import { SELF_EXCLUSION_DURATIONS, SELF_EXCLUSION_TRANSLATE_MAP } from '../config';
 
 vi.mock('../config', () => ({
   SELF_EXCLUSION_DURATIONS: [
@@ -9,7 +9,7 @@ vi.mock('../config', () => ({
     { type: 'MONTH', value: 1 },
     { type: 'YEAR', value: 1 },
   ],
-  TRANSLATE_MAP: {
+  SELF_EXCLUSION_TRANSLATE_MAP: {
     DAY: 'DAY',
     MONTH: 'MONTH',
     YEAR: 'YEAR',
@@ -73,7 +73,7 @@ describe('useSelfExclusionDurations', () => {
 
       selfExclusionDurations.value.forEach((item) => {
         expect(item.label).toMatch(/^LIMITS\.SELF_EXCLUSION\.DURATION_TYPES\./);
-        expect(item.label).toContain(TRANSLATE_MAP[item.duration.type]);
+        expect(item.label).toContain(SELF_EXCLUSION_TRANSLATE_MAP[item.duration.type]);
       });
     });
 

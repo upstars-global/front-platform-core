@@ -5,7 +5,7 @@ import type {
   ILimitResource,
   IDisableLimitDTO,
   IManageLimitDTO,
-  ISelfExclusionActivateDTO,
+  ISelfExclusionActivateDTO, CoolingOffActivateDTO,
 } from './types';
 
 export const limitsAPI = {
@@ -134,6 +134,25 @@ export const limitsAPI = {
       return data?.success || false;
     } catch (error) {
       log.error('ACTIVATE_COOLING_OFF_ERROR', error);
+      return false;
+    }
+  },
+
+  async coolingOffStandaloneActivate(params: CoolingOffActivateDTO) {
+    try {
+      const { data } = await publicApiV1<{
+        success: boolean;
+      }>({
+        type: () => 'PublicApi.V1.CoolingOff.Standalone.Activate',
+        url: '/action/limit/cooling-off/activate-standalone',
+        secured: true,
+        data: {
+          data: params,
+        },
+      });
+      return data?.success || false;
+    } catch (error) {
+      log.error('ACTIVATE_COOLING_OFF_STANDALONE_ERROR', error);
       return false;
     }
   },

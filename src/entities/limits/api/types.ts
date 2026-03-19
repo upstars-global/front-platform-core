@@ -2,11 +2,14 @@ export enum LimitType {
   DEPOSIT = 'deposit',
   LOSS = 'loss',
   SELF_EXCLUSION = 'self-exclusion',
+  COOLING_OFF = 'cooling-off',
 }
 
 export enum LimitSubtype {
   DAILY = 'daily',
+  THREE_DAYS = '3days',
   WEEKLY = 'weekly',
+  TWO_WEEKS = '2weeks',
   MONTHLY = 'monthly',
 }
 
@@ -54,6 +57,11 @@ export enum SelfExclusionActivatePeriod {
   YEAR = 'y',
   FOREVER = 'forever',
 }
+export enum CollingOffActivatePeriod {
+  DAY = 'd',
+  MONTH = 'm',
+  WEEK = 'w',
+}
 
 export type ISelfExclusionActivateDTO = {
   token: string;
@@ -63,3 +71,9 @@ export type ISelfExclusionActivateDTO = {
     value?: number;
   };
 }
+export type CoolingOffActivateDTO = {
+  period: {
+    type: CollingOffActivatePeriod;
+    value: number;
+  };
+};

@@ -1,4 +1,9 @@
-import { type ISelfExclusionActivateDTO, SelfExclusionActivatePeriod } from "../../../entities/limits";
+import {
+  type ISelfExclusionActivateDTO,
+  type CoolingOffActivateDTO,
+  CollingOffActivatePeriod,
+  SelfExclusionActivatePeriod
+} from "../../../entities/limits";
 
 export const COOLING_OFF_TOKEN_QUERY_PARAM = "cooling-off-token";
 export const SELF_EXCLUSION_TOKEN_QUERY_PARAM = "self-exclusion-token";
@@ -17,6 +22,14 @@ export const SELF_EXCLUSION_DURATIONS: ISelfExclusionActivateDTO["period"][] = [
     { type: SelfExclusionActivatePeriod.MONTH, value: 3 },
     { type: SelfExclusionActivatePeriod.MONTH, value: 6 },
     { type: SelfExclusionActivatePeriod.YEAR, value: 1 },
+];
+
+export const COOLING_OFF_DURATIONS: CoolingOffActivateDTO['period'][] = [
+  { type: CollingOffActivatePeriod.DAY, value: 1 },
+  { type: CollingOffActivatePeriod.DAY, value: 3 },
+  { type: CollingOffActivatePeriod.WEEK, value: 1 },
+  { type: CollingOffActivatePeriod.WEEK, value: 2 },
+  { type: CollingOffActivatePeriod.MONTH, value: 1 },
 ];
 
 export const SELF_EXCLUSION_REASONS = [
@@ -42,9 +55,15 @@ export const REASON_PERIOD_OVERRIDE: Record<string, ISelfExclusionActivateDTO["p
     GAMBLING_ADDICTION: { type: SelfExclusionActivatePeriod.FOREVER },
 };
 
-export const TRANSLATE_MAP = {
+export const SELF_EXCLUSION_TRANSLATE_MAP = {
     [SelfExclusionActivatePeriod.DAY]: "DAY",
     [SelfExclusionActivatePeriod.MONTH]: "MONTH",
     [SelfExclusionActivatePeriod.YEAR]: "YEAR",
     [SelfExclusionActivatePeriod.FOREVER]: "FOREVER",
+};
+
+export const COOLING_OFF_TRANSLATE_MAP = {
+  [CollingOffActivatePeriod.DAY]: 'DAY',
+  [CollingOffActivatePeriod.MONTH]: 'MONTH',
+  [CollingOffActivatePeriod.WEEK]: 'WEEK',
 };
