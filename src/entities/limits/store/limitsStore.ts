@@ -7,10 +7,13 @@ import { promiseMemo } from '../../../shared/helpers/promise';
 
 export const LIMITS_SUBTYPE_ORDER: Record<LimitSubtype, number> = {
   [LimitSubtype.DAILY]: 1,
-  [LimitSubtype.WEEKLY]: 2,
-  [LimitSubtype.MONTHLY]: 3,
-  [LimitSubtype.TWO_WEEKS]: 4,
-  [LimitSubtype.THREE_DAYS]: 5,
+  [LimitSubtype.DAYS_3]: 2,
+  [LimitSubtype.DAYS_7]: 3,
+  [LimitSubtype.WEEKLY]: 4,
+  [LimitSubtype.DAYS_14]: 5,
+  [LimitSubtype.WEEKS_2]: 6,
+  [LimitSubtype.DAYS_30]: 7,
+  [LimitSubtype.MONTHLY]: 8,
 };
 
 function sortLimitsBySubtype<T extends LimitType = LimitType>(limits: Array<ILimitResource<T>>) {
