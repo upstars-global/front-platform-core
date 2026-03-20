@@ -7,12 +7,14 @@ export enum LimitType {
 
 export enum LimitSubtype {
   DAILY = 'daily',
-  THREE_DAYS = '3days',
+  DAYS_3 = '3days',
+  DAYS_7 = '7days',
+  DAYS_14 = '14days',
+  DAYS_30 = '30days',
   WEEKLY = 'weekly',
-  TWO_WEEKS = '2weeks',
+  WEEKS_2 = '2weeks',
   MONTHLY = 'monthly',
 }
-
 export enum LimitStatus {
   DISABLED = 'disabled',
   PROLONGATION_DISABLE = 'prolongation_disabled',

@@ -27,9 +27,9 @@ export const SELF_EXCLUSION_DURATIONS: ISelfExclusionActivateDTO["period"][] = [
 export const COOLING_OFF_DURATIONS: CoolingOffActivateDTO['period'][] = [
   { type: CollingOffActivatePeriod.DAY, value: 1 },
   { type: CollingOffActivatePeriod.DAY, value: 3 },
-  { type: CollingOffActivatePeriod.WEEK, value: 1 },
-  { type: CollingOffActivatePeriod.WEEK, value: 2 },
-  { type: CollingOffActivatePeriod.MONTH, value: 1 },
+  { type: CollingOffActivatePeriod.DAY, value: 7 },
+  { type: CollingOffActivatePeriod.DAY, value: 14 },
+  { type: CollingOffActivatePeriod.DAY, value: 30 },
 ];
 
 export const SELF_EXCLUSION_REASONS = [
