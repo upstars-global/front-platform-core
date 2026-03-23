@@ -1,3 +1,10 @@
+## [7.21.0](https://github.com/upstars-global/front-platform-core/compare/v7.20.1...v7.21.0) (2026-03-23)
+
+### 🚀 Features
+
+* **config:** add optional `smartico` field to app config type
+ ([0fe2dc7](https://github.com/upstars-global/front-platform-core/commit/0fe2dc773738c5498103207d9d3ac605d5609060))
+
 ## [7.20.1](https://github.com/upstars-global/front-platform-core/compare/v7.20.0...v7.20.1) (2026-03-18)
 
 ### 🐛 Bug Fixes
