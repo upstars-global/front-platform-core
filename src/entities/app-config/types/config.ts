@@ -25,13 +25,11 @@ type FooterSpecificCompliance = {
   companyName: string;
 };
 
+export type SelfExclusionFlowType = boolean | 'standalone' | 'email';
+
 export type SocialLink = {
   name: string;
   url?: string;
-};
-
-type SelfExclusionStandaloneConfig = {
-  enableForDomainGroups: string[];
 };
 
 export type AppGlobalConfig = Partial<{
@@ -57,7 +55,7 @@ export type AppGlobalConfig = Partial<{
     token?: string;
     scriptUrl?: string;
   };
-  selfExclusionStandaloneConfig: SelfExclusionStandaloneConfig;
+  selfExclusionFlowType: SelfExclusionFlowType;
 }>;
 
 export type ReelsVersion = {

@@ -31,10 +31,8 @@ export const useAppGlobalConfigStore = defineStore('appGlobalConfig', () => {
     return Boolean(globalConfig.value?.coolingOffEnabled);
   });
 
-  const isSelfExclusionStandalone = computed(() => {
-    const config = globalConfig.value?.selfExclusionStandaloneConfig;
-    if (!config) return false;
-    return config.enableForDomainGroups.includes('licence') && isLicenceDomain.value;
+  const selfExclusionFlowType = computed(() => {
+    return globalConfig.value?.selfExclusionFlowType;
   });
 
   const freshChatConfig = computed(() => {
@@ -55,7 +53,7 @@ export const useAppGlobalConfigStore = defineStore('appGlobalConfig', () => {
 
     isSelfExclusionEnabled,
     isCoolingOffEnabled,
-    isSelfExclusionStandalone,
+    selfExclusionFlowType,
     betsHistoryEnabled,
 
     freshChatConfig,
