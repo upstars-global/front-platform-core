@@ -47,6 +47,11 @@ export type AppGlobalConfig = Partial<{
   digitainRestricted: boolean;
   selfExclusionEnabled: boolean;
   betsHistoryEnabled: boolean;
+  smartico: {
+    key?: string;
+    token?: string;
+    scriptUrl?: string;
+  };
 }>;
 
 export type ReelsVersion = {
