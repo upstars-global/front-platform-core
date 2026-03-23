@@ -48,6 +48,11 @@ export type AppGlobalConfig = Partial<{
   selfExclusionEnabled: boolean;
   coolingOffEnabled: boolean;
   betsHistoryEnabled: boolean;
+  smartico: {
+    key?: string;
+    token?: string;
+    scriptUrl?: string;
+  };
 }>;
 
 export type ReelsVersion = {
