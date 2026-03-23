@@ -30,6 +30,10 @@ export type SocialLink = {
   url?: string;
 };
 
+type SelfExclusionStandaloneConfig = {
+  enableForDomainGroups: string[];
+};
+
 export type AppGlobalConfig = Partial<{
   allowedForSegmentation: boolean;
   isLockAuthForGuestUser: boolean;
@@ -53,6 +57,7 @@ export type AppGlobalConfig = Partial<{
     token?: string;
     scriptUrl?: string;
   };
+  selfExclusionStandaloneConfig: SelfExclusionStandaloneConfig;
 }>;
 
 export type ReelsVersion = {
