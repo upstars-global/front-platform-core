@@ -104,6 +104,9 @@ export const useLimitsStore = defineStore('limits', () => {
   async function coolingOffStandaloneActivate(params: CoolingOffActivateDTO) {
     return await limitsAPI.coolingOffStandaloneActivate(params);
   }
+  async function selfExclusionStandaloneActivate() {
+    return await limitsAPI.selfExclusionStandaloneActivate();
+  }
 
   return {
     limits,
@@ -116,5 +119,6 @@ export const useLimitsStore = defineStore('limits', () => {
     updateLimit,
     disableLimit,
     coolingOffStandaloneActivate,
+    selfExclusionStandaloneActivate,
   };
 });

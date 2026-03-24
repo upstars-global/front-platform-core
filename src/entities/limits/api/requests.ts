@@ -197,4 +197,19 @@ export const limitsAPI = {
       return false;
     }
   },
+  async selfExclusionStandaloneActivate() {
+    try {
+      const { data } = await publicApiV1<{
+        success: boolean;
+      }>({
+        type: () => 'PublicApi.V1.Json.Limit.Self.Exclusion.Standalone.Activate',
+        url: '/action/limit/self-exclusion/standalone/activate',
+        secured: true,
+      });
+      return data?.success || false;
+    } catch (error) {
+      log.error('SELF_EXCLUSION_STANDALONE_ACTIVATE_ERROR', error);
+      return false;
+    }
+  },
 };
