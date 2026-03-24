@@ -2,7 +2,8 @@ import {
   type ISelfExclusionActivateDTO,
   type CoolingOffActivateDTO,
   CollingOffActivatePeriod,
-  SelfExclusionActivatePeriod
+  SelfExclusionActivatePeriod,
+  LimitSubtype,
 } from "../../../entities/limits";
 
 export const COOLING_OFF_TOKEN_QUERY_PARAM = "cooling-off-token";
@@ -60,6 +61,14 @@ export const SELF_EXCLUSION_TRANSLATE_MAP = {
     [SelfExclusionActivatePeriod.MONTH]: "MONTH",
     [SelfExclusionActivatePeriod.YEAR]: "YEAR",
     [SelfExclusionActivatePeriod.FOREVER]: "FOREVER",
+};
+
+export const LIMIT_SUBTYPE_TO_DURATION_KEY: Partial<Record<LimitSubtype, string>> = {
+    [LimitSubtype.DAILY]: "1_d",
+    [LimitSubtype.DAYS_3]: "3_d",
+    [LimitSubtype.DAYS_7]: "7_d",
+    [LimitSubtype.DAYS_14]: "14_d",
+    [LimitSubtype.DAYS_30]: "30_d",
 };
 
 export const COOLING_OFF_TRANSLATE_MAP = {
