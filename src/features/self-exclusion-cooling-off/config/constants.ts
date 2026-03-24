@@ -6,6 +6,18 @@ import {
   LimitSubtype,
 } from "../../../entities/limits";
 
+export const SELF_EXCLUSION_BALANCE_THRESHOLD_BY_CURRENCY: Record<string, number> = {
+    USD: 5000,
+    EUR: 5000,
+    AUD: 5000,
+    CAD: 5000,
+    NZD: 5000,
+    INR: 500000,
+    BRL: 20000,
+};
+
+export const SELF_EXCLUSION_DEFAULT_BALANCE_THRESHOLD = 5000;
+
 export const COOLING_OFF_TOKEN_QUERY_PARAM = "cooling-off-token";
 export const SELF_EXCLUSION_TOKEN_QUERY_PARAM = "self-exclusion-token";
 
