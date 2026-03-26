@@ -64,10 +64,10 @@ function notify(message: string, options: NotificationOptions = {}): string {
         ...existing,
         actions: existing.actions.map(action => ({ ...action })),
         history: [],
+        id: uuidv4(),
       });
 
       Object.assign(existing, {
-        id: uuidv4(),
         message,
         type: options.type ?? existing.type,
         actions: options.actions ?? existing.actions,
