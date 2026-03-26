@@ -30,6 +30,7 @@ function tryPromote(hold: boolean): void {
 
 function removeNotification(targetId: string): void {
   const index = notifications.value.findIndex(({ id }) => id === targetId);
+
   if (index === -1) return;
 
   clearTimer(notifications.value[index]);
@@ -37,23 +38,36 @@ function removeNotification(targetId: string): void {
   tryPromote(isOnHold.value);
 }
 
-function findByGroup(targetGroup: string): Notification | undefined {
-  return (
-    notifications.value.find(({ group }) => group === targetGroup) ??
-    queue.value.find(({ group }) => group === targetGroup)
-  );
+function findByGroup(targetGroup: string): { notification: Notification; isVisible: boolean } | undefined {
+  const visible = notifications.value.find(({ group }) => group === targetGroup);
+
+  if (visible) return { notification: visible, isVisible: true };
+
+  const queued = queue.value.find(({ group }) => group === targetGroup);
+  
+  if (queued) return { notification: queued, isVisible: false };
+
+  return undefined;
 }
 
 function notify(message: string, options: NotificationOptions = {}): string {
   const group = options.group ?? null;
+  const force = options.force ?? false;
 
   if (group) {
-    const existing = findByGroup(group);
+    const found = findByGroup(group);
 
-    if (existing) {
-      existing.history.push({ ...existing, history: [], id: uuidv4() });
+    if (found) {
+      const { notification: existing, isVisible } = found;
+
+      existing.history.push({
+        ...existing,
+        actions: existing.actions.map(action => ({ ...action })),
+        history: [],
+      });
 
       Object.assign(existing, {
+        id: uuidv4(),
         message,
         type: options.type ?? existing.type,
         actions: options.actions ?? existing.actions,
@@ -61,7 +75,6 @@ function notify(message: string, options: NotificationOptions = {}): string {
         duplicateCount: existing.duplicateCount + 1,
       });
 
-      const isVisible = notifications.value.includes(existing);
       if (isVisible && existing.duration) {
         if (existing.paused) {
           existing.remainingTime = existing.duration;
@@ -92,12 +105,13 @@ function notify(message: string, options: NotificationOptions = {}): string {
   };
 
   const maxVisible = configNotifications.getMaxVisible();
-
   const lowestVisible = notifications.value[notifications.value.length - 1];
 
   const canShowNow =
-    !isOnHold.value &&
-    (notifications.value.length < maxVisible || (lowestVisible && notification.priority > lowestVisible.priority));
+    force ||
+    (!isOnHold.value &&
+      (notifications.value.length < maxVisible ||
+        (lowestVisible && notification.priority > lowestVisible.priority)));
 
   if (canShowNow) {
     insertAndEvict(notifications.value, queue.value, notification, maxVisible);
@@ -120,10 +134,20 @@ function dismiss(targetId: string): void {
   removeNotification(targetId);
 }
 
+function dismissVisible(): void {
+  notifications.value.forEach(clearTimer);
+  notifications.value = [];
+  tryPromote(isOnHold.value);
+}
+
+function dismissQueue(): void {
+  queue.value = [];
+}
+
 function dismissAll(): void {
   notifications.value.forEach(clearTimer);
-  notifications.value.length = 0;
-  queue.value.length = 0;
+  notifications.value = [];
+  queue.value = [];
 }
 
 function holdNotifications(hold: boolean): void {
@@ -146,9 +170,12 @@ function setMaxVisible(count: number): void {
   const maxVisible = configNotifications.getMaxVisible();
 
   while (notifications.value.length > maxVisible) {
-    const evicted = notifications.value.pop()!;
-    clearTimer(evicted);
-    insertSorted(queue.value, evicted);
+    const evicted = notifications.value.pop();
+    
+    if (evicted) {
+      clearTimer(evicted);
+      insertSorted(queue.value, evicted);
+    }
   }
   tryPromote(isOnHold.value);
 }
@@ -180,6 +207,8 @@ export function useNotifications() {
     isOnHold: readonly(isOnHold),
     notify,
     dismiss,
+    dismissQueue,
+    dismissVisible,
     dismissAll,
     holdNotifications,
     pauseTimer,

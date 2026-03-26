@@ -20,7 +20,7 @@ export interface NotificationAction {
 export interface NotificationOptions {
   type?: NotificationType;
   priority?: NotificationPriority;
-  /** Auto-dismiss duration in ms. `null` = persistent. Overrides `persistent`. */
+  /** Auto-dismiss duration in ms. `null` = persistent. Ignored if `persistent: true` is set. */
   duration?: number | null;
   /** If `true`, notification stays until manually dismissed (shorthand for `duration: null`). */
   persistent?: boolean;
@@ -32,6 +32,7 @@ export interface NotificationOptions {
    */
   group?: string;
   actions?: NotificationAction[];
+  force?: boolean;
 }
 
 export interface Notification {

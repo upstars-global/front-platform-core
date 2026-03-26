@@ -27,12 +27,18 @@ export const configNotifications = {
 
   getDefaultDuration: (): number => state.defaultDuration,
   setDefaultDuration: (value: number) => {
-    state = { ...state, defaultDuration: value };
+    state = { ...state, defaultDuration: Math.max(0, value) };
   },
 
   getDurationByType: (): Partial<Record<NotificationType, number | null>> => state.durationByType,
   setDurationByType: (value: Partial<Record<NotificationType, number | null>>) => {
-    state = { ...state, durationByType: { ...value } };
+    const sanitized = Object.fromEntries(
+      Object.entries(value).map(([key, val]) => [
+        key,
+        val === null ? null : Math.max(0, val),
+      ]),
+    );
+    state = { ...state, durationByType: sanitized };
   },
 
   getDurationConfig: (): DurationConfig => ({
