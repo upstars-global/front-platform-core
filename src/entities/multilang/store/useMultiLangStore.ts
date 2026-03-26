@@ -1,6 +1,6 @@
 import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
-import { configI18nConfig } from '../../../shared/multilang/config/config';
+import { configI18nConfig } from '../../../shared';
 
 export type Locale = {
   code: string;
@@ -17,6 +17,7 @@ export const useMultiLangStore = defineStore('multilang', () => {
   const userGeo = ref(configI18nConfig.getDefaultCountry());
   const userGeoRegion = ref('');
   const availableLocales = ref<Record<string, boolean>>({});
+  const runtimeHostnameDuringSSR = ref(''); // hostname used during SSR rendering
 
   const userLocale = computed(() => {
     return localeInCookies.value && availableLocales.value[localeInCookies.value]
@@ -66,6 +67,10 @@ export const useMultiLangStore = defineStore('multilang', () => {
     localeInCookies.value = localeName;
   }
 
+  function setRuntimeHostnameDuringSSR(domain: string) {
+    runtimeHostnameDuringSSR.value = domain;
+  }
+
   return {
     country,
     defaultLocale,
@@ -74,6 +79,8 @@ export const useMultiLangStore = defineStore('multilang', () => {
     locales,
     userGeo,
     userGeoRegion,
+    runtimeHostnameDuringSSR,
+    setRuntimeHostnameDuringSSR,
     userLocale,
     userLanguage,
     localeInCookies,
