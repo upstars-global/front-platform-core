@@ -145,6 +145,67 @@ describe('useNotifications', () => {
     });
   });
 
+  describe('dismissVisible', () => {
+    it('clears visible notifications and promotes from queue', () => {
+      configNotifications.setMaxVisible(1);
+      const { notify, dismissVisible, notifications, queue } = useNotifications();
+
+      notify('first');
+      notify('second');
+
+      expect(notifications.value).toHaveLength(1);
+      expect(queue.value).toHaveLength(1);
+
+      dismissVisible();
+
+      expect(notifications.value).toHaveLength(1);
+      expect(notifications.value[0].message).toBe('second');
+      expect(queue.value).toHaveLength(0);
+    });
+
+    it('clears every visible slot', () => {
+      configNotifications.setMaxVisible(3);
+      const { notify, dismissVisible, notifications } = useNotifications();
+
+      notify('a');
+      notify('b');
+      dismissVisible();
+
+      expect(notifications.value).toHaveLength(0);
+    });
+  });
+
+  describe('dismissQueue', () => {
+    it('clears queue without removing visible notifications', () => {
+      configNotifications.setMaxVisible(1);
+      const { notify, dismissQueue, notifications, queue } = useNotifications();
+
+      notify('visible');
+      notify('queued');
+
+      expect(notifications.value).toHaveLength(1);
+      expect(queue.value).toHaveLength(1);
+
+      dismissQueue();
+
+      expect(notifications.value).toHaveLength(1);
+      expect(notifications.value[0].message).toBe('visible');
+      expect(queue.value).toHaveLength(0);
+    });
+  });
+
+  describe('notify force option', () => {
+    it('shows a notification while hold is active', () => {
+      const { notify, notifications, queue, holdNotifications } = useNotifications();
+
+      holdNotifications(true);
+      notify('forced', { force: true });
+
+      expect(notifications.value).toHaveLength(1);
+      expect(queue.value).toHaveLength(0);
+    });
+  });
+
   describe('auto-dismiss', () => {
     it('removes notification after default duration', () => {
       configNotifications.setDefaultDuration(3000);
@@ -741,6 +802,13 @@ describe('useNotifications', () => {
       configNotifications.setMaxVisible(0);
 
       expect(configNotifications.getMaxVisible()).toBe(1);
+    });
+
+    it('setDurationByType preserves null for a type (no auto-dismiss by type)', () => {
+      configNotifications.setDurationByType({ [NotificationType.Error]: null });
+      const byType = configNotifications.getDurationByType();
+
+      expect(byType[NotificationType.Error]).toBeNull();
     });
   });
 });
