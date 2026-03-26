@@ -32,7 +32,6 @@ export interface NotificationOptions {
    */
   group?: string;
   actions?: NotificationAction[];
-  force?: boolean;
 }
 
 export interface Notification {

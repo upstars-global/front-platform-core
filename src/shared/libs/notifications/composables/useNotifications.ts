@@ -8,7 +8,7 @@ import {
   pauseNotificationTimer,
   resumeNotificationTimer,
   insertSorted,
-  insertAndEvict,
+  evictExcess,
   promoteFromQueue,
   _clearAllTimersForTesting,
 } from '../helpers';
@@ -22,10 +22,91 @@ function findById(list: Notification[], targetId: string): Notification | undefi
   return list.find(({ id }) => id === targetId);
 }
 
-function tryPromote(hold: boolean): void {
-  if (!hold) {
-    promoteFromQueue(notifications.value, queue.value, configNotifications.getMaxVisible(), removeNotification);
+function createNotification(message: string, options: NotificationOptions): Notification {
+  return {
+    id: uuidv4(),
+    message,
+    type: options.type ?? NotificationType.Info,
+    priority: options.priority ?? NotificationPriority.Normal,
+    duration: getEffectiveDuration(options, configNotifications.getDurationConfig()),
+    group: options.group ?? null,
+    actions: options.actions ?? [],
+    createdAt: Date.now(),
+    duplicateCount: 1,
+    paused: false,
+    remainingTime: null,
+    startedAt: null,
+    history: [],
+  };
+}
+
+function updateExisting(
+  target: Notification,
+  message: string,
+  options: Partial<NotificationOptions>,
+  isVisible: boolean,
+  onExpire: (id: string) => void,
+  sourceHistory: Notification['history'] = [],
+  addDuplicateCount: number = 1
+): void {
+  target.history.push(
+    {
+      ...target,
+      actions: target.actions.map(action => ({ ...action })),
+      history: [],
+      id: uuidv4(),
+    },
+    ...sourceHistory
+  );
+
+  Object.assign(target, {
+    message,
+    type: options.type ?? target.type,
+    actions: options.actions ?? target.actions,
+    createdAt: Date.now(),
+    duplicateCount: target.duplicateCount + addDuplicateCount,
+  });
+
+  if (!isVisible || !target.duration) return;
+
+  if (target.paused) {
+    target.remainingTime = target.duration;
+  } else {
+    clearTimer(target);
+    startTimer(target, onExpire);
   }
+}
+
+function tryPromote(hold: boolean): void {
+  if (hold) return;
+
+  queue.value = queue.value.filter(queued => {
+    if (!queued.group) return true;
+    const visible = notifications.value.find(n => n.group === queued.group);
+    
+    if (visible) {
+      updateExisting(
+        visible,
+        queued.message,
+        { type: queued.type, actions: queued.actions },
+        true,
+        removeNotification,
+        queued.history,
+        queued.duplicateCount
+      );
+      
+      return false;
+    }
+
+    return true;
+  });
+
+  promoteFromQueue(
+    notifications.value,
+    queue.value,
+    configNotifications.getMaxVisible(),
+    removeNotification
+  );
 }
 
 function removeNotification(targetId: string): void {
@@ -38,83 +119,39 @@ function removeNotification(targetId: string): void {
   tryPromote(isOnHold.value);
 }
 
-function findByGroup(targetGroup: string): { notification: Notification; isVisible: boolean } | undefined {
-  const visible = notifications.value.find(({ group }) => group === targetGroup);
-
-  if (visible) return { notification: visible, isVisible: true };
-
-  const queued = queue.value.find(({ group }) => group === targetGroup);
-  
-  if (queued) return { notification: queued, isVisible: false };
-
-  return undefined;
-}
-
 function notify(message: string, options: NotificationOptions = {}): string {
-  const group = options.group ?? null;
-  const force = options.force ?? false;
+  const group = options.group;
 
   if (group) {
-    const found = findByGroup(group);
+    const visible = notifications.value.find(n => n.group === group);
+    const queued = queue.value.find(n => n.group === group);
 
-    if (found) {
-      const { notification: existing, isVisible } = found;
-
-      existing.history.push({
-        ...existing,
-        actions: existing.actions.map(action => ({ ...action })),
-        history: [],
-        id: uuidv4(),
-      });
-
-      Object.assign(existing, {
-        message,
-        type: options.type ?? existing.type,
-        actions: options.actions ?? existing.actions,
-        createdAt: Date.now(),
-        duplicateCount: existing.duplicateCount + 1,
-      });
-
-      if (isVisible && existing.duration) {
-        if (existing.paused) {
-          existing.remainingTime = existing.duration;
-        } else {
-          clearTimer(existing);
-          startTimer(existing, removeNotification);
-        }
+    if (isOnHold.value && visible) {
+      if (queued) {
+        updateExisting(queued, message, options, false, removeNotification);
+        return queued.id;
       }
-
-      return existing.id;
+    } else {
+      const target = visible || queued;
+      if (target) {
+        updateExisting(target, message, options, !!visible, removeNotification);
+        return target.id;
+      }
     }
   }
 
-  const notification: Notification = {
-    id: uuidv4(),
-    message,
-    type: options.type ?? NotificationType.Info,
-    priority: options.priority ?? NotificationPriority.Normal,
-    duration: getEffectiveDuration(options, configNotifications.getDurationConfig()),
-    group,
-    actions: options.actions ?? [],
-    createdAt: Date.now(),
-    duplicateCount: 1,
-    paused: false,
-    remainingTime: null,
-    startedAt: null,
-    history: [],
-  };
-
+  const notification = createNotification(message, options);
   const maxVisible = configNotifications.getMaxVisible();
   const lowestVisible = notifications.value[notifications.value.length - 1];
 
   const canShowNow =
-    force ||
-    (!isOnHold.value &&
-      (notifications.value.length < maxVisible ||
-        (lowestVisible && notification.priority > lowestVisible.priority)));
+    !isOnHold.value &&
+    (notifications.value.length < maxVisible ||
+      (lowestVisible && notification.priority > lowestVisible.priority));
 
   if (canShowNow) {
-    insertAndEvict(notifications.value, queue.value, notification, maxVisible);
+    insertSorted(notifications.value, notification);
+    evictExcess(notifications.value, queue.value, maxVisible);
     startTimer(notification, removeNotification);
   } else {
     insertSorted(queue.value, notification);
@@ -169,28 +206,16 @@ function setMaxVisible(count: number): void {
   configNotifications.setMaxVisible(count);
   const maxVisible = configNotifications.getMaxVisible();
 
-  while (notifications.value.length > maxVisible) {
-    const evicted = notifications.value.pop();
-    
-    if (evicted) {
-      clearTimer(evicted);
-      insertSorted(queue.value, evicted);
-    }
-  }
+  evictExcess(notifications.value, queue.value, maxVisible);
   tryPromote(isOnHold.value);
 }
 
 const groupedNotifications = computed(() =>
-  notifications.value.reduce(
-    (groups, notification) => {
-      const key = notification.group ?? '__ungrouped__';
-
-      (groups[key] ??= []).push(notification);
-
-      return groups;
-    },
-    {} as Record<string, Notification[]>,
-  ),
+  notifications.value.reduce((groups, notification) => {
+    const key = notification.group ?? '__ungrouped__';
+    (groups[key] ??= []).push(notification);
+    return groups;
+  }, {} as Record<string, Notification[]>)
 );
 
 export function _resetForTesting(): void {

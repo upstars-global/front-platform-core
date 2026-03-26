@@ -194,18 +194,6 @@ describe('useNotifications', () => {
     });
   });
 
-  describe('notify force option', () => {
-    it('shows a notification while hold is active', () => {
-      const { notify, notifications, queue, holdNotifications } = useNotifications();
-
-      holdNotifications(true);
-      notify('forced', { force: true });
-
-      expect(notifications.value).toHaveLength(1);
-      expect(queue.value).toHaveLength(0);
-    });
-  });
-
   describe('auto-dismiss', () => {
     it('removes notification after default duration', () => {
       configNotifications.setDefaultDuration(3000);
@@ -410,6 +398,28 @@ describe('useNotifications', () => {
 
       expect(notifications.value).toHaveLength(0);
       expect(queue.value).toHaveLength(1);
+    });
+
+    it('does not merge duplicate group into visible while hold; merges on release', () => {
+      const { notify, notifications, queue, holdNotifications } = useNotifications();
+
+      notify('first', { group: 'upload' });
+      expect(notifications.value[0].message).toBe('first');
+
+      holdNotifications(true);
+      notify('second', { group: 'upload' });
+
+      expect(notifications.value[0].message).toBe('first');
+      expect(notifications.value[0].duplicateCount).toBe(1);
+      expect(queue.value).toHaveLength(1);
+      expect(queue.value[0].message).toBe('second');
+
+      holdNotifications(false);
+
+      expect(notifications.value).toHaveLength(1);
+      expect(notifications.value[0].message).toBe('second');
+      expect(notifications.value[0].duplicateCount).toBe(2);
+      expect(queue.value).toHaveLength(0);
     });
 
     it('promotes queued notifications when released', () => {

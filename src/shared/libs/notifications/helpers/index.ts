@@ -6,4 +6,4 @@ export {
   resumeNotificationTimer,
   _clearAllTimersForTesting,
 } from './timerHelpers';
-export { insertSorted, insertAndEvict, promoteFromQueue } from './priorityQueue';
+export { insertSorted, promoteFromQueue, evictExcess } from './priorityQueue';

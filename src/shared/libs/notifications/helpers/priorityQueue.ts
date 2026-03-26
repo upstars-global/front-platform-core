@@ -19,16 +19,18 @@ export function insertSorted(list: Notification[], notification: Notification): 
   }
 }
 
-export function insertAndEvict(
+export function evictExcess(
   notifications: Notification[],
   queue: Notification[],
-  notification: Notification,
-  maxVisible: number,
+  max: number,
 ): void {
-  insertSorted(notifications, notification);
+  while (notifications.length > max) {
+    const minPriority = notifications[notifications.length - 1].priority;
+    
+    const evictionIndex = notifications.findIndex(n => n.priority === minPriority);
 
-  while (notifications.length > maxVisible) {
-    const evicted = notifications.pop()!;
+    const [evicted] = notifications.splice(evictionIndex, 1);
+    
     clearTimer(evicted);
     insertSorted(queue, evicted);
   }
@@ -41,7 +43,9 @@ export function promoteFromQueue(
   onExpire: (id: string) => void,
 ): void {
   while (queue.length > 0 && notifications.length < maxVisible) {
-    const next = queue.shift()!;
+    const next = queue.shift();
+    if (!next) break; 
+
     insertSorted(notifications, next);
     startTimer(next, onExpire);
   }
