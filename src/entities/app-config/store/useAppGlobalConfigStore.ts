@@ -35,6 +35,10 @@ export const useAppGlobalConfigStore = defineStore('appGlobalConfig', () => {
     return globalConfig.value?.selfExclusionFlowType;
   });
 
+  const isSelfExclusionStandaloneFlow = computed(() => {
+    return selfExclusionFlowType.value === 'standalone';
+  });
+
   const freshChatConfig = computed(() => {
     return globalConfig.value?.freshChatConfig;
   });
@@ -54,6 +58,7 @@ export const useAppGlobalConfigStore = defineStore('appGlobalConfig', () => {
     isSelfExclusionEnabled,
     isCoolingOffEnabled,
     selfExclusionFlowType,
+    isSelfExclusionStandaloneFlow,
     betsHistoryEnabled,
 
     freshChatConfig,
