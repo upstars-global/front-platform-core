@@ -1,3 +1,25 @@
+## [7.22.0](https://github.com/upstars-global/front-platform-core/compare/v7.21.0...v7.22.0) (2026-03-25)
+
+### 🚀 Features
+
+* **FP-4829:** add limits api and store
+ ([3c60ff9](https://github.com/upstars-global/front-platform-core/commit/3c60ff98574731d075452d717d05a8308758d2d3))
+
+
+* **FP-4829:** add self-exclusion composables
+ ([0a5384f](https://github.com/upstars-global/front-platform-core/commit/0a5384f785c88d6d1d17b221b3879de7591d2d6c))
+
+
+* **FP-4829:** fixed test
+ ([c3fd94e](https://github.com/upstars-global/front-platform-core/commit/c3fd94e141d8c836daac91e25d9d74d39b517b51))
+
+
+
+### 🔨 Refactoring
+
+* **FP-4829:** replace local promise memoizer with shared utility
+ ([76ef156](https://github.com/upstars-global/front-platform-core/commit/76ef156e16015aeb090f29cc5d65faa2c54e0b05))
+
 ## [7.21.0](https://github.com/upstars-global/front-platform-core/compare/v7.20.1...v7.21.0) (2026-03-23)
 
 ### 🚀 Features
