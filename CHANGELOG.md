@@ -1,3 +1,26 @@
+## [7.23.0](https://github.com/upstars-global/front-platform-core/compare/v7.22.0...v7.23.0) (2026-03-30)
+
+### 🚀 Features
+
+* **FP-4732:** add tests for notification dismissal and queue management
+ ([f1437a3](https://github.com/upstars-global/front-platform-core/commit/f1437a3faea11ce89e630e6d6b5eed0fd2015fd0))
+
+
+* **FP-4732:** enhance notification handling
+ ([5aae26c](https://github.com/upstars-global/front-platform-core/commit/5aae26cd37427791ee175b8bc61b5e61b84cb624))
+
+
+* **FP-4732:** ensure unique notification IDs are assigned correctly
+ ([03101c3](https://github.com/upstars-global/front-platform-core/commit/03101c3b0e4796384d28b0dc21876fe10523cda0))
+
+
+* **FP-4732:** implement notification system with composables, configuration, and helper functions
+ ([975f8aa](https://github.com/upstars-global/front-platform-core/commit/975f8aac90383b2daec37845314adfa60ed66a3d))
+
+
+* **FP-4732:** improve notification handling and testing for group merging behavior
+ ([840f05f](https://github.com/upstars-global/front-platform-core/commit/840f05f0412f6a86b3ecbe91bf0cbf74adf341bf))
+
 ## [7.22.0](https://github.com/upstars-global/front-platform-core/compare/v7.21.0...v7.22.0) (2026-03-25)
 
 ### 🚀 Features
