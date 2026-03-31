@@ -1,3 +1,10 @@
+## [7.25.0](https://github.com/upstars-global/front-platform-core/compare/v7.24.0...v7.25.0) (2026-03-31)
+
+### 🚀 Features
+
+* **FP-4745:** ab-testing
+ ([6e52872](https://github.com/upstars-global/front-platform-core/commit/6e52872234d448c7edd82817c1f0138cb3d75089))
+
 ## [7.24.0](https://github.com/upstars-global/front-platform-core/compare/v7.23.0...v7.24.0) (2026-03-31)
 
 ### 🐛 Bug Fixes
