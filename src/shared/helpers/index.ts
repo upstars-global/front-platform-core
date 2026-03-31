@@ -5,3 +5,4 @@ export * from './promise';
 export * from './ssr';
 export * from './storages';
 export * from './context';
+export * from './ab-testing';
