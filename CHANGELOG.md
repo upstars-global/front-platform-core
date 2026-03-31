@@ -1,3 +1,49 @@
+## [7.24.0](https://github.com/upstars-global/front-platform-core/compare/v7.23.0...v7.24.0) (2026-03-31)
+
+### 🐛 Bug Fixes
+
+* **FP-4831:** fixed test
+ ([672791e](https://github.com/upstars-global/front-platform-core/commit/672791e7bbc26c7fa7665ed52df0ee41b5bffe45))
+
+
+
+### 🚀 Features
+
+* **FP-4831:** add `coolingOffEnabled` flag and extend `CoolingOffActivateDTO`
+ ([2bc6ee9](https://github.com/upstars-global/front-platform-core/commit/2bc6ee916e08fb0c9f2906f521df85bd349f5a7c))
+
+
+* **FP-4831:** add LIMIT_SUBTYPE_TO_DURATION_KEY mapping to constants
+ ([27dce15](https://github.com/upstars-global/front-platform-core/commit/27dce1553bafad277fdcf894b57425b4d85791af))
+
+
+* **FP-4831:** add standalone cooling-off activation
+ ([42fe4a4](https://github.com/upstars-global/front-platform-core/commit/42fe4a4c94b18ae8aeea12a1d50fef381533af25))
+
+
+* **FP-4831:** update cooling off durations and standardize limit subtypes
+ ([712b129](https://github.com/upstars-global/front-platform-core/commit/712b129eca523b3d492c05a09dc742729e340818))
+
+
+* **FP-4831:** update limit subtypes and sort order in LIMITS_SUBTYPE_ORDER
+ ([5a58699](https://github.com/upstars-global/front-platform-core/commit/5a58699fd0a4db0ff43d2e2af4bc451f21dc63f6))
+
+
+* **FP-4832:** add balance threshold constants by currency
+ ([765c386](https://github.com/upstars-global/front-platform-core/commit/765c386c4b1f75c1619515ff574527e5f94c908e))
+
+
+* **FP-4832:** add isSelfExclusionStandaloneFlow
+ ([b082570](https://github.com/upstars-global/front-platform-core/commit/b0825701f4d8e99c8eaf2bfc1bf486e064636b97))
+
+
+* **FP-4832:** add optional `selfExclusionStandaloneConfig` field to app config type, store getter
+ ([1d21ae2](https://github.com/upstars-global/front-platform-core/commit/1d21ae206d7b40bee13869a151982dc738d08ad9))
+
+
+* **FP-4832:** replace selfExclusionStandaloneConfig with selfExclusionFlowType
+ ([5c27ef3](https://github.com/upstars-global/front-platform-core/commit/5c27ef3d69fbaeb6948880f11b6fcc2b8b32d42d))
+
 ## [7.23.0](https://github.com/upstars-global/front-platform-core/compare/v7.22.0...v7.23.0) (2026-03-30)
 
 ### 🚀 Features

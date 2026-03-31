@@ -6,6 +6,7 @@ import type {
   IDisableLimitDTO,
   IManageLimitDTO,
   ISelfExclusionActivateDTO,
+  CoolingOffActivateDTO,
 } from './types';
 
 export const limitsAPI = {
@@ -138,6 +139,25 @@ export const limitsAPI = {
     }
   },
 
+  async coolingOffStandaloneActivate(params: CoolingOffActivateDTO) {
+    try {
+      const { data } = await publicApiV1<{
+        success: boolean;
+      }>({
+        type: () => 'PublicApi.V1.CoolingOff.Standalone.Activate',
+        url: '/action/limit/cooling-off/activate-standalone',
+        secured: true,
+        data: {
+          data: params,
+        },
+      });
+      return data?.success || false;
+    } catch (error) {
+      log.error('ACTIVATE_COOLING_OFF_STANDALONE_ERROR', error);
+      return false;
+    }
+  },
+
   async checkSelfExclusionToken(token: string) {
     try {
       const { data } = await publicApiV1<{
@@ -174,6 +194,21 @@ export const limitsAPI = {
       return data?.success || false;
     } catch (error) {
       log.error('SELF_EXCLUSION_ACTIVATE_ERROR', error);
+      return false;
+    }
+  },
+  async selfExclusionStandaloneActivate() {
+    try {
+      const { data } = await publicApiV1<{
+        success: boolean;
+      }>({
+        type: () => 'PublicApi.V1.Json.Limit.Self.Exclusion.Standalone.Activate',
+        url: '/action/limit/self-exclusion/standalone/activate',
+        secured: true,
+      });
+      return data?.success || false;
+    } catch (error) {
+      log.error('SELF_EXCLUSION_STANDALONE_ACTIVATE_ERROR', error);
       return false;
     }
   },
