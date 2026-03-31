@@ -27,6 +27,18 @@ export const useAppGlobalConfigStore = defineStore('appGlobalConfig', () => {
     return Boolean(globalConfig.value?.selfExclusionEnabled);
   });
 
+  const isCoolingOffEnabled = computed(() => {
+    return Boolean(globalConfig.value?.coolingOffEnabled);
+  });
+
+  const selfExclusionFlowType = computed(() => {
+    return globalConfig.value?.selfExclusionFlowType;
+  });
+
+  const isSelfExclusionStandaloneFlow = computed(() => {
+    return selfExclusionFlowType.value === 'standalone';
+  });
+
   const freshChatConfig = computed(() => {
     return globalConfig.value?.freshChatConfig;
   });
@@ -44,6 +56,9 @@ export const useAppGlobalConfigStore = defineStore('appGlobalConfig', () => {
     isLicenceDomain,
 
     isSelfExclusionEnabled,
+    isCoolingOffEnabled,
+    selfExclusionFlowType,
+    isSelfExclusionStandaloneFlow,
     betsHistoryEnabled,
 
     freshChatConfig,

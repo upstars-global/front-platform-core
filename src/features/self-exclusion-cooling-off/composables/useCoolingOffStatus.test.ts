@@ -13,9 +13,9 @@ vi.mock('../../../entities/user', () => ({
   useUserProfile: vi.fn(),
   useUserProfileStore: vi.fn(),
   SelfExclusionStatus: {
-    COOLING_OFF_ACTIVE: 'COOLING_OFF_ACTIVE',
-    SELF_EXCLUSION_ACTIVE: 'SELF_EXCLUSION_ACTIVE',
-    NONE: 'NONE',
+    COOLING_OFF_INIT: 'cooling_off_init',
+    COOLING_OFF_ACTIVE: 'cooling_off_active',
+    SELF_EXCLUSION_WAITING: 'self_exclusion_waiting',
   },
 }));
 
@@ -56,11 +56,11 @@ describe('useCoolingOffStatus', () => {
       },
     });
 
-    vi.mocked(useLimitsStore).mockReturnValue(mockLimitsStore as ReturnType<typeof useLimitsStore>);
+    vi.mocked(useLimitsStore).mockReturnValue(mockLimitsStore as unknown as ReturnType<typeof useLimitsStore>);
     vi.mocked(useUserProfile).mockReturnValue({
       isLoggedAsync: mockIsLoggedAsync,
-    } as ReturnType<typeof useUserProfile>);
-    vi.mocked(useUserProfileStore).mockReturnValue(mockUserProfileStore as ReturnType<typeof useUserProfileStore>);
+    } as unknown as ReturnType<typeof useUserProfile>);
+    vi.mocked(useUserProfileStore).mockReturnValue(mockUserProfileStore as unknown as ReturnType<typeof useUserProfileStore>);
   });
 
   afterEach(() => {
@@ -76,8 +76,8 @@ describe('useCoolingOffStatus', () => {
       expect(isCoolingOff.value).toBe(true);
     });
 
-    it('should return false when selfExclusionStatus is SELF_EXCLUSION_ACTIVE', () => {
-      mockUserProfileStore.userInfo.selfExclusionStatus = SelfExclusionStatus.SELF_EXCLUSION_ACTIVE;
+    it('should return false when selfExclusionStatus is SELF_EXCLUSION_WAITING', () => {
+      mockUserProfileStore.userInfo.selfExclusionStatus = SelfExclusionStatus.SELF_EXCLUSION_WAITING;
 
       const { isCoolingOff } = useCoolingOffStatus();
 
@@ -92,8 +92,8 @@ describe('useCoolingOffStatus', () => {
       expect(isCoolingOff.value).toBe(false);
     });
 
-    it('should return false when selfExclusionStatus is NONE', () => {
-      mockUserProfileStore.userInfo.selfExclusionStatus = SelfExclusionStatus.NONE;
+    it('should return false when selfExclusionStatus is COOLING_OFF_INIT', () => {
+      mockUserProfileStore.userInfo.selfExclusionStatus = SelfExclusionStatus.COOLING_OFF_INIT;
 
       const { isCoolingOff } = useCoolingOffStatus();
 
@@ -177,7 +177,7 @@ describe('useCoolingOffStatus', () => {
     });
 
     it('should return false when user is not cooling off', async () => {
-      mockUserProfileStore.userInfo.selfExclusionStatus = SelfExclusionStatus.SELF_EXCLUSION_ACTIVE;
+      mockUserProfileStore.userInfo.selfExclusionStatus = SelfExclusionStatus.SELF_EXCLUSION_WAITING;
 
       const { checkIsCoolingOff } = useCoolingOffStatus();
       const result = await checkIsCoolingOff();
@@ -229,7 +229,7 @@ describe('useCoolingOffStatus', () => {
     });
 
     it('should return current cooling off status after loading data', async () => {
-      mockUserProfileStore.userInfo.selfExclusionStatus = SelfExclusionStatus.NONE;
+      mockUserProfileStore.userInfo.selfExclusionStatus = null;
 
       mockLoadSelfExclusionLimit.mockImplementation(async () => {
         // Simulate status update after loading
@@ -245,7 +245,7 @@ describe('useCoolingOffStatus', () => {
 
   describe('computed reactivity', () => {
     it('isCoolingOff should react to userInfo changes', () => {
-      mockUserProfileStore.userInfo.selfExclusionStatus = SelfExclusionStatus.NONE;
+      mockUserProfileStore.userInfo.selfExclusionStatus = null;
 
       const { isCoolingOff } = useCoolingOffStatus();
       expect(isCoolingOff.value).toBe(false);
@@ -282,7 +282,7 @@ describe('useCoolingOffStatus', () => {
     });
 
     it('should reflect updates after checkIsCoolingOff', async () => {
-      mockUserProfileStore.userInfo.selfExclusionStatus = SelfExclusionStatus.NONE;
+      mockUserProfileStore.userInfo.selfExclusionStatus = null;
       mockLimitsStore.selfExclusionLimit = null;
 
       const { isCoolingOff, coolingOffDate, checkIsCoolingOff } = useCoolingOffStatus();

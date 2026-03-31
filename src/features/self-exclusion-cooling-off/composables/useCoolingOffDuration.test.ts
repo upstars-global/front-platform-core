@@ -1,41 +1,40 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { useSelfExclusionDurations } from './useSelfExclusionDurations';
-import { SELF_EXCLUSION_DURATIONS, TRANSLATE_MAP } from '../config';
+import { useCoolingOffDuration } from './useCoolingOffDuration';
+import { COOLING_OFF_DURATIONS, COOLING_OFF_TRANSLATE_MAP } from '../config';
 
 vi.mock('../config', () => ({
-  SELF_EXCLUSION_DURATIONS: [
+  COOLING_OFF_DURATIONS: [
     { type: 'DAY', value: 1 },
-    { type: 'DAY', value: 7 },
+    { type: 'DAY', value: 3 },
+    { type: 'WEEK', value: 1 },
+    { type: 'WEEK', value: 2 },
     { type: 'MONTH', value: 1 },
-    { type: 'YEAR', value: 1 },
   ],
-  TRANSLATE_MAP: {
+  COOLING_OFF_TRANSLATE_MAP: {
     DAY: 'DAY',
+    WEEK: 'WEEK',
     MONTH: 'MONTH',
-    YEAR: 'YEAR',
-    FOREVER: 'FOREVER',
   },
 }));
 
 vi.mock('../../../entities/limits', () => ({
-  SelfExclusionActivatePeriod: {
+  CollingOffActivatePeriod: {
     DAY: 'DAY',
+    WEEK: 'WEEK',
     MONTH: 'MONTH',
-    YEAR: 'YEAR',
-    FOREVER: 'FOREVER',
   },
 }));
 
-describe('useSelfExclusionDurations', () => {
+describe('useCoolingOffDuration', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  describe('selfExclusionDurations', () => {
-    it('should return formatted self exclusion durations', () => {
-      const { selfExclusionDurations } = useSelfExclusionDurations();
+  describe('coolingOffDurations', () => {
+    it('should return formatted cooling off durations', () => {
+      const { coolingOffDurations } = useCoolingOffDuration();
 
-      expect(selfExclusionDurations.value).toEqual([
+      expect(coolingOffDurations.value).toEqual([
         {
           label: 'LIMITS.SELF_EXCLUSION.DURATION_TYPES.DAY',
           value: '1_DAY',
@@ -43,65 +42,70 @@ describe('useSelfExclusionDurations', () => {
         },
         {
           label: 'LIMITS.SELF_EXCLUSION.DURATION_TYPES.DAY',
-          value: '7_DAY',
-          duration: { type: 'DAY', value: 7 },
+          value: '3_DAY',
+          duration: { type: 'DAY', value: 3 },
+        },
+        {
+          label: 'LIMITS.SELF_EXCLUSION.DURATION_TYPES.WEEK',
+          value: '1_WEEK',
+          duration: { type: 'WEEK', value: 1 },
+        },
+        {
+          label: 'LIMITS.SELF_EXCLUSION.DURATION_TYPES.WEEK',
+          value: '2_WEEK',
+          duration: { type: 'WEEK', value: 2 },
         },
         {
           label: 'LIMITS.SELF_EXCLUSION.DURATION_TYPES.MONTH',
           value: '1_MONTH',
           duration: { type: 'MONTH', value: 1 },
         },
-        {
-          label: 'LIMITS.SELF_EXCLUSION.DURATION_TYPES.YEAR',
-          value: '1_YEAR',
-          duration: { type: 'YEAR', value: 1 },
-        },
       ]);
     });
 
     it('should correctly format duration values as "value_type"', () => {
-      const { selfExclusionDurations } = useSelfExclusionDurations();
+      const { coolingOffDurations } = useCoolingOffDuration();
 
-      selfExclusionDurations.value.forEach((item) => {
+      coolingOffDurations.value.forEach((item) => {
         expect(item.value).toMatch(/^\d+_\w+$/);
         expect(item.value).toBe(`${item.duration.value || 1}_${item.duration.type}`);
       });
     });
 
     it('should map duration types to correct translation keys', () => {
-      const { selfExclusionDurations } = useSelfExclusionDurations();
+      const { coolingOffDurations } = useCoolingOffDuration();
 
-      selfExclusionDurations.value.forEach((item) => {
+      coolingOffDurations.value.forEach((item) => {
         expect(item.label).toMatch(/^LIMITS\.SELF_EXCLUSION\.DURATION_TYPES\./);
-        expect(item.label).toContain(TRANSLATE_MAP[item.duration.type]);
+        expect(item.label).toContain(COOLING_OFF_TRANSLATE_MAP[item.duration.type]);
       });
     });
 
     it('should return same number of durations as in config', () => {
-      const { selfExclusionDurations } = useSelfExclusionDurations();
+      const { coolingOffDurations } = useCoolingOffDuration();
 
-      expect(selfExclusionDurations.value).toHaveLength(SELF_EXCLUSION_DURATIONS.length);
+      expect(coolingOffDurations.value).toHaveLength(COOLING_OFF_DURATIONS.length);
     });
 
     it('should preserve the order of durations from config', () => {
-      const { selfExclusionDurations } = useSelfExclusionDurations();
+      const { coolingOffDurations } = useCoolingOffDuration();
 
-      const durations = selfExclusionDurations.value.map((d) => d.duration);
-      expect(durations).toEqual(SELF_EXCLUSION_DURATIONS);
+      const durations = coolingOffDurations.value.map((d) => d.duration);
+      expect(durations).toEqual(COOLING_OFF_DURATIONS);
     });
 
     it('should include original duration object in result', () => {
-      const { selfExclusionDurations } = useSelfExclusionDurations();
+      const { coolingOffDurations } = useCoolingOffDuration();
 
-      selfExclusionDurations.value.forEach((item, index) => {
-        expect(item.duration).toEqual(SELF_EXCLUSION_DURATIONS[index]);
+      coolingOffDurations.value.forEach((item, index) => {
+        expect(item.duration).toEqual(COOLING_OFF_DURATIONS[index]);
       });
     });
   });
 
   describe('getDurationByKey', () => {
     it('should return duration for valid key', () => {
-      const { getDurationByKey } = useSelfExclusionDurations();
+      const { getDurationByKey } = useCoolingOffDuration();
 
       const result = getDurationByKey('1_DAY');
 
@@ -109,15 +113,16 @@ describe('useSelfExclusionDurations', () => {
     });
 
     it('should return duration for different valid keys', () => {
-      const { getDurationByKey } = useSelfExclusionDurations();
+      const { getDurationByKey } = useCoolingOffDuration();
 
-      expect(getDurationByKey('7_DAY')).toEqual({ type: 'DAY', value: 7 });
+      expect(getDurationByKey('3_DAY')).toEqual({ type: 'DAY', value: 3 });
+      expect(getDurationByKey('1_WEEK')).toEqual({ type: 'WEEK', value: 1 });
+      expect(getDurationByKey('2_WEEK')).toEqual({ type: 'WEEK', value: 2 });
       expect(getDurationByKey('1_MONTH')).toEqual({ type: 'MONTH', value: 1 });
-      expect(getDurationByKey('1_YEAR')).toEqual({ type: 'YEAR', value: 1 });
     });
 
     it('should return undefined for invalid key', () => {
-      const { getDurationByKey } = useSelfExclusionDurations();
+      const { getDurationByKey } = useCoolingOffDuration();
 
       const result = getDurationByKey('99_INVALID');
 
@@ -125,7 +130,7 @@ describe('useSelfExclusionDurations', () => {
     });
 
     it('should return undefined for empty string', () => {
-      const { getDurationByKey } = useSelfExclusionDurations();
+      const { getDurationByKey } = useCoolingOffDuration();
 
       const result = getDurationByKey('');
 
@@ -133,7 +138,7 @@ describe('useSelfExclusionDurations', () => {
     });
 
     it('should return undefined for non-existent duration', () => {
-      const { getDurationByKey } = useSelfExclusionDurations();
+      const { getDurationByKey } = useCoolingOffDuration();
 
       const result = getDurationByKey('100_DAY');
 
@@ -141,7 +146,7 @@ describe('useSelfExclusionDurations', () => {
     });
 
     it('should handle keys with different formats gracefully', () => {
-      const { getDurationByKey } = useSelfExclusionDurations();
+      const { getDurationByKey } = useCoolingOffDuration();
 
       expect(getDurationByKey('INVALID')).toBeUndefined();
       expect(getDurationByKey('_')).toBeUndefined();
@@ -151,27 +156,27 @@ describe('useSelfExclusionDurations', () => {
 
   describe('computed reactivity', () => {
     it('should be a computed property', () => {
-      const { selfExclusionDurations } = useSelfExclusionDurations();
+      const { coolingOffDurations } = useCoolingOffDuration();
 
-      expect(selfExclusionDurations.value).toBeDefined();
-      expect('value' in selfExclusionDurations).toBe(true);
+      expect(coolingOffDurations.value).toBeDefined();
+      expect('value' in coolingOffDurations).toBe(true);
     });
   });
 
   describe('integration', () => {
     it('should work correctly when finding duration by key and verifying it', () => {
-      const { selfExclusionDurations, getDurationByKey } = useSelfExclusionDurations();
+      const { coolingOffDurations, getDurationByKey } = useCoolingOffDuration();
 
-      const firstItem = selfExclusionDurations.value[0];
+      const firstItem = coolingOffDurations.value[0];
       const foundDuration = getDurationByKey(firstItem.value);
 
       expect(foundDuration).toEqual(firstItem.duration);
     });
 
     it('should find all durations by their generated keys', () => {
-      const { selfExclusionDurations, getDurationByKey } = useSelfExclusionDurations();
+      const { coolingOffDurations, getDurationByKey } = useCoolingOffDuration();
 
-      selfExclusionDurations.value.forEach((item) => {
+      coolingOffDurations.value.forEach((item) => {
         const foundDuration = getDurationByKey(item.value);
         expect(foundDuration).toEqual(item.duration);
       });

@@ -1,3 +1,4 @@
+export * from "./composables/useCoolingOffDuration";
 export * from "./composables/useCoolingOffStatus";
 export * from "./composables/useCoolingOffToken";
 export * from "./composables/useSelfExclusionDurations";

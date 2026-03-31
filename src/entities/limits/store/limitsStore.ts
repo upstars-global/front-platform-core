@@ -1,14 +1,19 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { limitsAPI } from '../api/requests';
-import type { IDisableLimitDTO, ILimitResource, IManageLimitDTO } from '../api/types';
+import type { CoolingOffActivateDTO, IDisableLimitDTO, ILimitResource, IManageLimitDTO } from '../api/types';
 import { LimitType, LimitSubtype } from '../api/types';
 import { promiseMemo } from '../../../shared/helpers/promise';
 
 export const LIMITS_SUBTYPE_ORDER: Record<LimitSubtype, number> = {
   [LimitSubtype.DAILY]: 1,
-  [LimitSubtype.WEEKLY]: 2,
-  [LimitSubtype.MONTHLY]: 3,
+  [LimitSubtype.DAYS_3]: 2,
+  [LimitSubtype.DAYS_7]: 3,
+  [LimitSubtype.WEEKLY]: 4,
+  [LimitSubtype.DAYS_14]: 5,
+  [LimitSubtype.WEEKS_2]: 6,
+  [LimitSubtype.DAYS_30]: 7,
+  [LimitSubtype.MONTHLY]: 8,
 };
 
 function sortLimitsBySubtype<T extends LimitType = LimitType>(limits: Array<ILimitResource<T>>) {
@@ -96,6 +101,13 @@ export const useLimitsStore = defineStore('limits', () => {
     throw error;
   }
 
+  async function coolingOffStandaloneActivate(params: CoolingOffActivateDTO) {
+    return await limitsAPI.coolingOffStandaloneActivate(params);
+  }
+  async function selfExclusionStandaloneActivate() {
+    return await limitsAPI.selfExclusionStandaloneActivate();
+  }
+
   return {
     limits,
     selfExclusionLimit,
@@ -106,5 +118,7 @@ export const useLimitsStore = defineStore('limits', () => {
     createLimit,
     updateLimit,
     disableLimit,
+    coolingOffStandaloneActivate,
+    selfExclusionStandaloneActivate,
   };
 });
