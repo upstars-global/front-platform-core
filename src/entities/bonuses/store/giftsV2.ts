@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import {  giftsAPI } from "../api";
-import { BonusType, GetUserGiftsAvailability, GetUserGiftsSubtype, type IGiftResourceV2 } from "../../../shared/api";
+import { BonusType, GetUserGiftsAvailability, GetUserGiftsSubtype, type IGiftResourceV2 } from "../api/types";
 import { promiseMemo } from '../../../shared';
 import { useUserProfileStore, useUserProfile } from "../../user";
 

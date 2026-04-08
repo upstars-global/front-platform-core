@@ -1,4 +1,4 @@
-import type { IGiftActivateResource, IGiftResource } from "../../../shared/api";
+import type { IGiftActivateResource, IGiftResource } from "../api/types";
 import { giftsAPI } from "../api";
 import { log } from "../../../shared/helpers/log";
 import { defineStore } from "pinia";

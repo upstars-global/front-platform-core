@@ -1,4 +1,4 @@
-import { Currency, type Localisation } from "../api";
+import { Currency, type Localisation } from "../../../shared/api";
 
 export enum GetUserGiftsAvailability {
     AVAILABLE = "available",
