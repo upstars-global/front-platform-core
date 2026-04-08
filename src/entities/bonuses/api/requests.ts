@@ -13,7 +13,7 @@ import {
   type IGiftResourceV2,
   type IGetUserGiftsDTO,
   GetUserGiftsAvailability,
-} from "./types";
+} from "../../../shared/api";
 
 interface GetGiftsListResponse {
   total: number;
