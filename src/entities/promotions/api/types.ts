@@ -1,5 +1,5 @@
 import { Currency, type Localisation } from "../../../shared/api";
-import type { IGiftResource } from "./giftResources";
+import type { IGiftResource } from "../../../shared/api";
 
 export enum QuestType {
     ACTIVE = "active",
