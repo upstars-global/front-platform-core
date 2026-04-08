@@ -4,7 +4,7 @@ import { defineStore } from "pinia";
 import { storeToRefs } from "pinia";
 import { computed, ref } from "vue";
 
-export const useCurrentGame = defineStore("currentGame", () => {
+export const useCurrentGameStore = defineStore("currentGame", () => {
     const { isMobile } = storeToRefs(useContextStore());
 
     const gameData = ref<IGameResource | null>(null);
