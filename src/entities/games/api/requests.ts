@@ -99,7 +99,7 @@ export const gamesAPI = {
                     },
                 },
             });
-            return Array.isArray(response.data) ? response.data : [];
+            return response.data;
         } catch (error) {
             log.error("LOAD_GAME_BY_SLUG", error);
             throw error;
