@@ -19,7 +19,7 @@ export const gamesAPI = {
             if (response.error) {
                 log.error("LOAD_GAME_RECENT", response.error);
             }
-            return response.data || [];
+            return Array.isArray(response.data) ? response.data : [];
         } catch (error: unknown) {
             log.error("LOAD_GAME_RECENT", error);
         }
@@ -39,7 +39,7 @@ export const gamesAPI = {
                     },
                 },
             });
-            return response.data || [];
+            return Array.isArray(response.data) ? response.data : [];
         } catch (error) {
             log.error("LOAD_GAMES_PRODUCERS", error);
         }
@@ -80,7 +80,7 @@ export const gamesAPI = {
                     },
                 },
             });
-            return response.data || [];
+            return Array.isArray(response.data) ? response.data : [];
         } catch (error) {
             log.error("LOAD_GAME_CATEGORY_LIST", error);
         }
@@ -99,7 +99,7 @@ export const gamesAPI = {
                     },
                 },
             });
-            return response.data;
+            return Array.isArray(response.data) ? response.data : [];
         } catch (error) {
             log.error("LOAD_GAME_BY_SLUG", error);
             throw error;
