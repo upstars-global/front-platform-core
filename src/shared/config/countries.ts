@@ -14,3 +14,7 @@ export const COUNTRIES = {
   SPAIN: 'ES',
   NETHERLANDS: 'NL',
 };
+
+export const REGIONS_BY_COUNTRIES: Record<string, string[]> = {
+  [COUNTRIES.CANADA]: ['AB', 'BC', 'MB', 'NB', 'NL', 'NS', 'NT', 'NU', 'ON', 'PE', 'QC', 'SK', 'YT'],
+};
