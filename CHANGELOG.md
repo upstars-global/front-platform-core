@@ -1,3 +1,10 @@
+## [7.26.0](https://github.com/upstars-global/front-platform-core/compare/v7.25.0...v7.26.0) (2026-04-09)
+
+### 🚀 Features
+
+* **FP-4465:** add iosAppName context helper and tests
+ ([184a94c](https://github.com/upstars-global/front-platform-core/commit/184a94c95766e6c99c867ca06cf340a233be2b88))
+
 ## [7.25.0](https://github.com/upstars-global/front-platform-core/compare/v7.24.0...v7.25.0) (2026-03-31)
 
 ### 🚀 Features
