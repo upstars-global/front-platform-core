@@ -1,0 +1,16 @@
+export const COUNTRIES = {
+  CANADA: 'CA',
+  AUSTRALIA: 'AU',
+  NEW_ZEALAND: 'NZ',
+  USA: 'US',
+  INDIA: 'IN',
+  ENGLAND: 'GB',
+  BRASILIA: 'BR',
+  GERMANY: 'DE',
+  AUSTRIA: 'AT',
+  ITALY: 'IT',
+  FRANCE: 'FR',
+  PORTUGAL: 'PT',
+  SPAIN: 'ES',
+  NETHERLANDS: 'NL',
+};
