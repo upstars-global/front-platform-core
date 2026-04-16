@@ -1,3 +1,10 @@
+## [7.27.1](https://github.com/upstars-global/front-platform-core/compare/v7.27.0...v7.27.1) (2026-04-16)
+
+### 🔨 Refactoring
+
+* **FP-5148:** remove email replacement from useFillWithUserData
+ ([09480db](https://github.com/upstars-global/front-platform-core/commit/09480db6416982383ee87b37f0d469822c4fb85e))
+
 ## [7.27.0](https://github.com/upstars-global/front-platform-core/compare/v7.26.0...v7.27.0) (2026-04-14)
 
 ### 🚀 Features
