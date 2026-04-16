@@ -1,3 +1,10 @@
+## [7.27.0](https://github.com/upstars-global/front-platform-core/compare/v7.26.0...v7.27.0) (2026-04-14)
+
+### 🚀 Features
+
+* **FP-3177:** added bonuses
+ ([9cb66d8](https://github.com/upstars-global/front-platform-core/commit/9cb66d8b5c6ff3ecdba1c62292e4103cd2e4bcc4))
+
 ## [7.26.0](https://github.com/upstars-global/front-platform-core/compare/v7.25.0...v7.26.0) (2026-04-09)
 
 ### 🚀 Features
