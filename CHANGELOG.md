@@ -1,3 +1,18 @@
+## [7.28.0](https://github.com/upstars-global/front-platform-core/compare/v7.27.2...v7.28.0) (2026-04-16)
+
+### 🚀 Features
+
+* **FP-5076:** added promotions
+ ([fda638c](https://github.com/upstars-global/front-platform-core/commit/fda638c6a030f16013ce9e53a17693ec382f1836))
+
+
+* **FP-5076:** import fixes
+ ([c5b4f49](https://github.com/upstars-global/front-platform-core/commit/c5b4f498739dad5476911db2ebe1aa0abce888e3))
+
+
+* **FP-5076:** return bonuses to old place
+ ([82f3b33](https://github.com/upstars-global/front-platform-core/commit/82f3b33d643a06630f239da61538fe409f15b21e))
+
 ## [7.27.2](https://github.com/upstars-global/front-platform-core/compare/v7.27.1...v7.27.2) (2026-04-16)
 
 ### 🔧 Maintenance
