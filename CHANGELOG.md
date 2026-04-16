@@ -1,3 +1,10 @@
+## [7.27.2](https://github.com/upstars-global/front-platform-core/compare/v7.27.1...v7.27.2) (2026-04-16)
+
+### 🔧 Maintenance
+
+* **FP-4842:** mark isSelfExclusionEnabled as deprecated
+ ([0479e3b](https://github.com/upstars-global/front-platform-core/commit/0479e3b6552f0b716c833085a487aad2f0414f6a))
+
 ## [7.27.1](https://github.com/upstars-global/front-platform-core/compare/v7.27.0...v7.27.1) (2026-04-16)
 
 ### 🔨 Refactoring
