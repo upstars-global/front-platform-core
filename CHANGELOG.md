@@ -1,3 +1,31 @@
+## [7.27.2](https://github.com/upstars-global/front-platform-core/compare/v7.27.1...v7.27.2) (2026-04-16)
+
+### 🔧 Maintenance
+
+* **FP-4842:** mark isSelfExclusionEnabled as deprecated
+ ([0479e3b](https://github.com/upstars-global/front-platform-core/commit/0479e3b6552f0b716c833085a487aad2f0414f6a))
+
+## [7.27.1](https://github.com/upstars-global/front-platform-core/compare/v7.27.0...v7.27.1) (2026-04-16)
+
+### 🔨 Refactoring
+
+* **FP-5148:** remove email replacement from useFillWithUserData
+ ([09480db](https://github.com/upstars-global/front-platform-core/commit/09480db6416982383ee87b37f0d469822c4fb85e))
+
+## [7.27.0](https://github.com/upstars-global/front-platform-core/compare/v7.26.0...v7.27.0) (2026-04-14)
+
+### 🚀 Features
+
+* **FP-3177:** added bonuses
+ ([9cb66d8](https://github.com/upstars-global/front-platform-core/commit/9cb66d8b5c6ff3ecdba1c62292e4103cd2e4bcc4))
+
+## [7.26.0](https://github.com/upstars-global/front-platform-core/compare/v7.25.0...v7.26.0) (2026-04-09)
+
+### 🚀 Features
+
+* **FP-4465:** add iosAppName context helper and tests
+ ([184a94c](https://github.com/upstars-global/front-platform-core/commit/184a94c95766e6c99c867ca06cf340a233be2b88))
+
 ## [7.25.0](https://github.com/upstars-global/front-platform-core/compare/v7.24.0...v7.25.0) (2026-03-31)
 
 ### 🚀 Features

@@ -5,9 +5,8 @@ export function useFillWithUserData() {
 
   function fillUserData(data: string): string {
     const userID = userProfileStore.userId || '';
-    const email = userProfileStore.userEmail || '';
 
-    return data.replaceAll('[userID_value]', userID).replaceAll('[email_value]', email);
+    return data.replaceAll('[userID_value]', userID);
   }
 
   return {

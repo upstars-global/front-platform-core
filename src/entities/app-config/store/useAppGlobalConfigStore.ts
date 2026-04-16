@@ -23,6 +23,7 @@ export const useAppGlobalConfigStore = defineStore('appGlobalConfig', () => {
     return Boolean(licenceDomainConfig.value?.licenceId);
   });
 
+  // deprecated: old selfExclusion
   const isSelfExclusionEnabled = computed(() => {
     return Boolean(globalConfig.value?.selfExclusionEnabled);
   });
