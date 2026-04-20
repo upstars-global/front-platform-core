@@ -1,3 +1,10 @@
+## [7.29.0](https://github.com/upstars-global/front-platform-core/compare/v7.28.0...v7.29.0) (2026-04-20)
+
+### 🚀 Features
+
+* **web-chat:** add API for loading JSON web token
+ ([2b3fd1d](https://github.com/upstars-global/front-platform-core/commit/2b3fd1dc95acb6894c30c23253a700574275f22b))
+
 ## [7.28.0](https://github.com/upstars-global/front-platform-core/compare/v7.27.2...v7.28.0) (2026-04-16)
 
 ### 🚀 Features
