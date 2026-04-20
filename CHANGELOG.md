@@ -1,3 +1,26 @@
+## [7.30.0](https://github.com/upstars-global/front-platform-core/compare/v7.29.0...v7.30.0) (2026-04-20)
+
+### 🚀 Features
+
+* **FP-5067:** add additional check for data
+ ([d01aabb](https://github.com/upstars-global/front-platform-core/commit/d01aabb47a04932423cdd32b5d6ebacb0e327eb4))
+
+
+* **FP-5067:** add current-game
+ ([30b7492](https://github.com/upstars-global/front-platform-core/commit/30b7492759abf338894e8cf052c91ce153aa7ec5))
+
+
+* **FP-5067:** add games
+ ([68eef8e](https://github.com/upstars-global/front-platform-core/commit/68eef8ea16db9dac39072a19927236645148784c))
+
+
+* **FP-5067:** rename useCurrentGame to useCurrentGameStore
+ ([65c6f6f](https://github.com/upstars-global/front-platform-core/commit/65c6f6f5df30aef531f09cd4b8a0884ecf718faa))
+
+
+* **FP-5067:** simplify response handling in LOAD_GAME_BY_SLUG
+ ([8e2d2e7](https://github.com/upstars-global/front-platform-core/commit/8e2d2e743ab440b7b88c0a7f3a3f218487ddbfcb))
+
 ## [7.29.0](https://github.com/upstars-global/front-platform-core/compare/v7.28.0...v7.29.0) (2026-04-20)
 
 ### 🚀 Features
