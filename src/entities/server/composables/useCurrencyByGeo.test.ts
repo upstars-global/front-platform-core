@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { createPinia, setActivePinia } from 'pinia';
 import { useCurrencyByGeo } from './useCurrencyByGeo';
 import { useServerStore } from '../store';
+import { configCurrencyByGeo } from '../config';
 import { Currency } from '../../../shared/api';
 import { DEFAULT_CURRENCY } from '../../../shared/config/currencies';
 import { COUNTRIES } from '../../../shared/config/countries';
@@ -9,6 +10,7 @@ import { COUNTRIES } from '../../../shared/config/countries';
 describe('useCurrencyByGeo', () => {
   beforeEach(() => {
     setActivePinia(createPinia());
+    configCurrencyByGeo.reset();
   });
 
   it('returns geo currency when it is in server currencies list', () => {
@@ -74,5 +76,17 @@ describe('useCurrencyByGeo', () => {
     expect(getCurrencyByGeo(COUNTRIES.ENGLAND)).toBe(Currency.GBP);
     expect(getCurrencyByGeo(COUNTRIES.NETHERLANDS)).toBe(Currency.EUR);
     expect(getCurrencyByGeo(COUNTRIES.FRANCE)).toBe(Currency.EUR);
+  });
+
+  it('uses platform override map when set via configCurrencyByGeo.set()', () => {
+    configCurrencyByGeo.set({ [COUNTRIES.BRASILIA]: Currency.BRL });
+
+    const store = useServerStore();
+    store.serverData = { currencies: [Currency.BRL, Currency.USD], defaultCurrency: Currency.USD, metrics: {} };
+
+    const { getCurrencyByGeo } = useCurrencyByGeo();
+
+    expect(getCurrencyByGeo(COUNTRIES.BRASILIA)).toBe(Currency.BRL);
+    expect(getCurrencyByGeo(COUNTRIES.CANADA)).toBe(Currency.USD);
   });
 });
