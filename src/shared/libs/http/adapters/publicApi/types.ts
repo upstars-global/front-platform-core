@@ -34,11 +34,20 @@ export type PublicApiV1ResponseSuccess<T> = {
   data: T;
   pagination?: PublicApiV1ResponsePagination;
 };
+
+export type PublicApiV1ResponseValidationError = {
+  field: string;
+  code: string;
+  template: string;
+  params: unknown[];
+};
+
 export type PublicApiV1ResponseError = {
   responseId: string;
   error: {
     type: PublicApiV1ErrorType;
     description: string;
+    validationErrors?: PublicApiV1ResponseValidationError[];
   };
   data: null;
 };
