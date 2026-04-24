@@ -14,7 +14,7 @@ export interface DIInfoResource {
   todayActivationsLeft: number;
   todayInsuredSum: number;
   userDepositPercent: number;
-  userMinBalance: number;
+  userBalanceLimit: number;
   lastInsuranceDatetime: string | null;
   giftWinLimit: number;
   giftWager: number;
