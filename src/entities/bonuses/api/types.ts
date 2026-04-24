@@ -48,6 +48,7 @@ export enum GiftResourceType {
     XP = "XP",
     VIP_POINTS = "XP & SP",
     CUSTOM_GIFT = "Custom Gift",
+    DEPOSIT_INSURANCE = "Deposit insurance",
 }
 
 export enum GiftResourceSubtype {
