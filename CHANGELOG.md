@@ -1,3 +1,18 @@
+## [7.31.0](https://github.com/upstars-global/front-platform-core/compare/v7.30.0...v7.31.0) (2026-05-11)
+
+### 🚀 Features
+
+* **FP-5092:** deposit-insurance
+ ([e576d9f](https://github.com/upstars-global/front-platform-core/commit/e576d9f49a006ff23233b39ae1051794ed75c6f0))
+
+
+* **FP-5092:** rename BALANCE_LOW to BALANCE_LIMIT
+ ([c5ee9d4](https://github.com/upstars-global/front-platform-core/commit/c5ee9d4534dcc69f3e64b0c7190771db71353837))
+
+
+* **FP-5092:** rename userMinBalance to userBalanceLimit
+ ([cce1c76](https://github.com/upstars-global/front-platform-core/commit/cce1c76c0c5acd372e15f170ecd48db720a3963a))
+
 ## [7.30.0](https://github.com/upstars-global/front-platform-core/compare/v7.29.0...v7.30.0) (2026-04-20)
 
 ### 🚀 Features
