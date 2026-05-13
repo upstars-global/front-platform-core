@@ -1,6 +1,6 @@
 import { isServer } from '../../../shared/helpers/ssr';
 
-const SCRIPT_ID = 'CookiebotGDPR';
+const SCRIPT_ID = 'Cookiebot';
 
 export function injectGDPRScript(domainGroupId: string): void {
   if (isServer) return;
