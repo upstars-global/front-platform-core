@@ -1,3 +1,4 @@
+import type { Pinia } from "pinia";
 import { giftsAPI } from "../api";
 import { BonusType, GetUserGiftsAvailability, GetUserGiftsSubtype, type IGiftResourceV2 } from "../api/types";
 import { promiseMemo } from '../../../shared';
@@ -15,10 +16,10 @@ interface IUpdateGift {
     [BonusType.INSURANCE]?: IUpdateGiftItem,
 }
 
-export function useLoadGiftsV2() {
-    const store = useGiftsStoreV2();
-    const { isLoggedAsync } = useUserProfile();
-    const userProfileStore = useUserProfileStore();
+export function useLoadGiftsV2(pinia?: Pinia) {
+    const store = useGiftsStoreV2(pinia);
+    const { isLoggedAsync } = useUserProfile(pinia);
+    const userProfileStore = useUserProfileStore(pinia);
 
     async function request(subType: GetUserGiftsSubtype, availability: GetUserGiftsAvailability) {
         return await giftsAPI.getUserGiftsV2({

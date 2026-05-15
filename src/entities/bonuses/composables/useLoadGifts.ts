@@ -1,12 +1,13 @@
+import type { Pinia } from "pinia";
 import { giftsAPI } from "../api";
 import { log } from "../../../shared/helpers/log";
 import { useGiftsStore } from "../store";
 import { useUserProfileStore } from "../../user/store";
 import { GIFT_UNSELECTED } from "../config";
 
-export function useLoadGifts() {
-    const store = useGiftsStore();
-    const userProfileStore = useUserProfileStore();
+export function useLoadGifts(pinia?: Pinia) {
+    const store = useGiftsStore(pinia);
+    const userProfileStore = useUserProfileStore(pinia);
 
     async function loadGiftsData() {
         if (!userProfileStore.userInfo.multi_account) {

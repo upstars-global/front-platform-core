@@ -1,11 +1,12 @@
+import type { Pinia } from "pinia";
 import { promoAPI } from "../api/requests";
 import { promiseMemo } from "../../../shared/helpers/promise";
 import { configPromotions } from "../config";
 import { useUserProfile } from "../../user/composables";
 import { usePromoStore } from "../store";
 
-export function useLoadPromo() {
-  const store = usePromoStore();
+export function useLoadPromo(pinia?: Pinia) {
+  const store = usePromoStore(pinia);
   const { isLoggedAsync } = useUserProfile();
 
   async function loadPromoList(tag?: string | string[], page: number = 1, perPage: number = 15) {

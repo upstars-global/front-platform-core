@@ -1,3 +1,4 @@
+import type { Pinia } from "pinia";
 import type {
   ITournamentResource,
   IUserTournamentListResource,
@@ -6,8 +7,8 @@ import { tournamentsAPI } from "../api";
 import { configPromotions } from "../config";
 import { useTournamentsStore } from "../store";
 
-export function useLoadTournaments() {
-    const store = useTournamentsStore();
+export function useLoadTournaments(pinia?: Pinia) {
+    const store = useTournamentsStore(pinia);
 
     async function loadTournamentList(tag: string | string[] = [], page: number = 1, perPage: number = 15) {
         const response = await tournamentsAPI.loadTournamentList(tag, page, perPage);
