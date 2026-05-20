@@ -1,3 +1,10 @@
+## [7.32.1](https://github.com/upstars-global/front-platform-core/compare/v7.32.0...v7.32.1) (2026-05-20)
+
+### 🔧 Maintenance
+
+* **FP-3926:** add TODO comments for legacy user status data removal and fix code formatting
+ ([955ffeb](https://github.com/upstars-global/front-platform-core/commit/955ffebca55d814445f3ad84854e72fcebf411d9))
+
 ## [7.32.0](https://github.com/upstars-global/front-platform-core/compare/v7.31.0...v7.32.0) (2026-05-18)
 
 ### 🚀 Features
