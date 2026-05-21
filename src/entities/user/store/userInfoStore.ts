@@ -22,7 +22,7 @@ export const useUserInfoStore = defineStore('userInfo', () => {
       overallProgress: 0,
     };
   }
-
+  // TODO userStatusData - legacy. видалити коли FP-3926 буде на всіх проєктах
   const userStatusData = ref<IUserStatusResource>(baseUserStatusData());
 
   function setUserStatusData(data: IUserStatusResource) {
@@ -59,7 +59,7 @@ export const useUserInfoStore = defineStore('userInfo', () => {
     isLoaded: false,
     types: [], //  "Betting", "Gambling" ...
   });
-  
+
   function setRefcode(data: IUserRefcodeResource) {
     refcode.value = data;
   }
