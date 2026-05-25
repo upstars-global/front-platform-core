@@ -39,7 +39,7 @@ export function useUserInfoLoad(pinia?: Pinia) {
       types,
     });
   }
-
+  // TODO loadUserStatusData - legacy. видалити коли FP-3926 буде на всіх проєктах
   const loadUserStatusData = promiseMemo(
     async () => {
       const data = await userAPI.loadUserStatusData();

@@ -246,16 +246,16 @@ export function useStatusData() {
     };
   });
 
-    const nextLevelGiftCount = computed<number>(() => {
-        const rewards = nextLevelOrStatus.value?.data.data.rewards;
+  const nextLevelGiftCount = computed<number>(() => {
+    const rewards = nextLevelOrStatus.value?.data.data.rewards;
 
-        if (!isLastStatus.value && Array.isArray(rewards)) {
-            const list = getRewardGifts(rewards)
+    if (!isLastStatus.value && Array.isArray(rewards)) {
+      const list = getRewardGifts(rewards);
 
-            return list.length;
-        }
-        return 0;
-    });
+      return list.length;
+    }
+    return 0;
+  });
 
   function isCashbackReward(reward: Rewards): reward is { type: RewardType.Cashback; value: RewardsTypeCashbackValue } {
     return reward.type === RewardType.Cashback;
@@ -270,7 +270,7 @@ export function useStatusData() {
     const rewardTypes = [RewardType.DepositBonus, RewardType.Freespin];
     return data.filter((reward) => rewardTypes.includes(reward.type));
   }
-
+  // TODO - getStatusNameByCode - не використовується. видалити коли FP-3926 буде на всіх проєктах
   function getStatusNameByCode(code: number): string | undefined {
     if (!code) return undefined;
     const status = dynamicStatuses.value.find((status) => status.code === code);

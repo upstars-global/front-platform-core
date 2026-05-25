@@ -1,3 +1,40 @@
+## [7.33.0](https://github.com/upstars-global/front-platform-core/compare/v7.32.1...v7.33.0) (2026-05-21)
+
+### 🚀 Features
+
+* **FP-5098:** add Cookiebot GDPR script injection and domain config
+ ([fda98e3](https://github.com/upstars-global/front-platform-core/commit/fda98e3fb67843aef6cfec5c91e9d2309dd094c4))
+
+
+* **FP-5098:** changed SCRIPT_ID = 'Cookiebot'
+ ([2d6f458](https://github.com/upstars-global/front-platform-core/commit/2d6f45858f12650b4fb749c6406dcd3a1749dde0))
+
+## [7.32.1](https://github.com/upstars-global/front-platform-core/compare/v7.32.0...v7.32.1) (2026-05-20)
+
+### 🔧 Maintenance
+
+* **FP-3926:** add TODO comments for legacy user status data removal and fix code formatting
+ ([955ffeb](https://github.com/upstars-global/front-platform-core/commit/955ffebca55d814445f3ad84854e72fcebf411d9))
+
+## [7.32.0](https://github.com/upstars-global/front-platform-core/compare/v7.31.0...v7.32.0) (2026-05-18)
+
+### 🚀 Features
+
+* **FP-4976:** add REGIONS_BY_COUNTRIES
+ ([0831d24](https://github.com/upstars-global/front-platform-core/commit/0831d247f2256a0f08af66c52184e6da0f0d7f30))
+
+
+* **FP-4976:** add useCurrencyByGeo composable
+ ([1bab23c](https://github.com/upstars-global/front-platform-core/commit/1bab23c8731081e1deed2c7b1a08103ee53ae755))
+
+
+* **server:** add configCurrencyByGeo for platform-level override of DEFAULT_CURRENCY_BY_GEO
+ ([5ae9a95](https://github.com/upstars-global/front-platform-core/commit/5ae9a95f9707b906762901956667e522341a3f3e))
+
+
+
+    Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
+
 ## [7.31.0](https://github.com/upstars-global/front-platform-core/compare/v7.30.0...v7.31.0) (2026-05-11)
 
 ### 🚀 Features
