@@ -38,7 +38,7 @@ const fullAddressComponents: PlaceAddressComponent[] = [
 describe('mapAddressComponents', () => {
   it('maps a full address to profile fields', () => {
     expect(mapAddressComponents(fullAddressComponents, '123 Main Street, Toronto, ON M5V 2T6, Canada')).toEqual({
-      street: '123 Main St',
+      street: '123 Main Street',
       city: 'Toronto',
       state: 'ON',
       zip: 'M5V 2T6',

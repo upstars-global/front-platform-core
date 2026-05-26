@@ -29,7 +29,11 @@ export function jsonHttp<R = unknown>(url: string, request?: RequestInit, option
   const measurementRequestDurationStart = performance.now();
   return new Promise((resolve, reject: (error: JsonHttpError) => void) => {
     function requestAttempt(attempt = 1) {
-      const { signal } = createHttpAbortController(timeout);
+      const controller = createHttpAbortController(timeout);
+      
+      const signal = request?.signal
+        ? AbortSignal.any([controller.signal, request.signal])
+        : controller.signal;
 
       fetch(requestUrl, {
         ...request,
@@ -112,7 +116,7 @@ export function jsonHttp<R = unknown>(url: string, request?: RequestInit, option
           }
         })
         .catch((error: unknown) => {
-          const isTimeoutExceed = checkTimeoutExceed(signal);
+          const isTimeoutExceed = checkTimeoutExceed(controller.signal);
           const isOnLine = typeof window === 'undefined' || window.navigator.onLine;
 
           if (isTimeoutExceed || (!isOnLine && attempt < retryCount)) {

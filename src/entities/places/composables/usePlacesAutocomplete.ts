@@ -133,12 +133,12 @@ export function usePlacesAutocomplete(options: UsePlacesAutocompleteOptions) {
       cache.set(cacheKey, parsed);
 
       suggestions.value = parsed;
-      isLoadingAutocomplete.value = false;
     } catch (err) {
       if (isAbortError(err)) return;
   
       error.value = err;
       suggestions.value = [];
+    } finally {
       isLoadingAutocomplete.value = false;
     }
   }
@@ -164,6 +164,8 @@ export function usePlacesAutocomplete(options: UsePlacesAutocompleteOptions) {
         id: placeId,
         lang: toValue(options.lang),
       });
+
+      if (!response.addressComponents) return null;
 
       const address = mapAddressComponents(response.addressComponents, response.formattedAddress);
 
