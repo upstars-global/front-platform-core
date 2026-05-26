@@ -3,7 +3,7 @@ import * as z from "zod";
 import {
   createEmailSchema,
   createFormSchema,
-} from '../../../../shared';
+} from '../../../../shared/libs/validation/schemas/common';
 import { AUTH_BACKEND_ERROR_KEY } from "../../../../entities/auth";
 
 const emailSchema = createEmailSchema({

@@ -6,7 +6,8 @@ import {
   type I18nErrorMapper,
   type FormValidationMode,
 } from '../../../shared/libs/validation';
-import { RegistrationFormSchema, VerifyEmailStatus, type RegistrationFormSchemaType } from '../libs';
+import { RegistrationFormSchema, type RegistrationFormSchemaType } from '../libs/validation/registration';
+import { VerifyEmailStatus } from '../libs/handleVerifyEmailResponse';
 import { useEmailVerify } from './useEmailVerify';
 import { useRegister } from './useRegister';
 import { fingerprintHelper } from '../../../entities/covery';
