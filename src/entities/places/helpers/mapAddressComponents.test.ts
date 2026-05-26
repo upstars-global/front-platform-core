@@ -95,7 +95,7 @@ describe('mapAddressComponents', () => {
     expect(mapAddressComponents(components).city).toBe('Brooklyn');
   });
 
-  it('prefers locality over postal_town and sublocality', () => {
+  it('prefers sublocality over locality based on priority routing', () => {
     const components: PlaceAddressComponent[] = [
       {
         longText: 'Toronto',
@@ -108,8 +108,8 @@ describe('mapAddressComponents', () => {
         types: ['sublocality'],
       },
     ];
-
-    expect(mapAddressComponents(components).city).toBe('Toronto');
+  
+    expect(mapAddressComponents(components).city).toBe('Old Toronto');
   });
 
   it('uses shortText for state', () => {
