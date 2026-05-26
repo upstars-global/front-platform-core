@@ -1,6 +1,6 @@
 import type { MappedPlaceAddress, PlaceAddressComponent } from '../api/types';
 
-const CITY_TYPES = ['locality', 'postal_town', 'sublocality'] as const;
+const CITY_TYPES = ['postal_town', 'sublocality', 'locality'] as const;
 
 function getComponent(
   components: PlaceAddressComponent[],
