@@ -1,3 +1,10 @@
+## [7.34.0](https://github.com/upstars-global/front-platform-core/compare/v7.33.0...v7.34.0) (2026-05-27)
+
+### 🚀 Features
+
+* **FP-5214:** add DepositInsuranceResource type and update StatusDataResources
+ ([0403daa](https://github.com/upstars-global/front-platform-core/commit/0403daa169b1e85ebb8e71e3d739013f34be5ff5))
+
 ## [7.33.0](https://github.com/upstars-global/front-platform-core/compare/v7.32.1...v7.33.0) (2026-05-21)
 
 ### 🚀 Features
