@@ -1,8 +1,11 @@
 import type { IGameResource } from "../../../entities/games/api";
-import { defineStore } from "pinia";
-import { ref } from "vue";
+import { useContextStore } from "../../../entities/context/store/contextStore";
+import { defineStore, storeToRefs } from "pinia";
+import { computed, ref } from "vue";
 
 export const useCurrentGameStore = defineStore("currentGame", () => {
+    const { isMobile } = storeToRefs(useContextStore());
+
     const gameData = ref<IGameResource | null>(null);
     const gamePrevious = ref<IGameResource | null>(null);
 
@@ -29,6 +32,17 @@ export const useCurrentGameStore = defineStore("currentGame", () => {
         clearGamePrevious();
     }
 
+    /** @deprecated Use `useCurrentGameUrl().gameUrl` instead. */
+    const gameUrl = computed<string | null>(() => {
+        if (gameData.value?.id) {
+            const demoPathPart = isDemo.value ? "/demo" : "";
+            const platform = isMobile.value ? "mobile" : "desktop";
+
+            return `/games${demoPathPart}/start/${platform}/${gameData.value.slug}?exit_url=exit_iframe`;
+        }
+        return null;
+    });
+
     const gameLoading = ref(false);
     function setGameLoading(value: boolean) {
         gameLoading.value = value;
@@ -43,6 +57,7 @@ export const useCurrentGameStore = defineStore("currentGame", () => {
         gameData,
         setGame,
         clearGame,
+        gameUrl,
         gameLoading,
         setGameLoading,
         isDemo,
