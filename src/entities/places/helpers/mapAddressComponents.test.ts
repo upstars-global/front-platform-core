@@ -47,6 +47,29 @@ describe('mapAddressComponents', () => {
     });
   });
 
+  it('formats street as "Number Route" for number-first countries (e.g., CA)', () => {
+    expect(mapAddressComponents(fullAddressComponents).street).toBe('123 Main Street');
+  });
+
+  it('formats street as "Route Number" for default/European countries (e.g., UA)', () => {
+    const components: PlaceAddressComponent[] = [
+      { longText: '22', types: ['street_number'] },
+      { longText: 'Khreshchatyk', types: ['route'] },
+      { shortText: 'UA', types: ['country'] },
+    ];
+
+    expect(mapAddressComponents(components).street).toBe('Khreshchatyk 22');
+  });
+
+  it('formats street as "Route Number" if country code is missing', () => {
+    const components: PlaceAddressComponent[] = [
+      { longText: '10', types: ['street_number'] },
+      { longText: 'Unknown Street', types: ['route'] },
+    ];
+
+    expect(mapAddressComponents(components).street).toBe('Unknown Street 10');
+  });
+
   it('uses route only when street_number is missing', () => {
     const components = fullAddressComponents.filter((component) => !component.types?.includes('street_number'));
 

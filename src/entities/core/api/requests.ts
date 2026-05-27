@@ -14,11 +14,13 @@ export const coreAPI = {
                     },
                 },
             });
+            
             if (response.error) {
                 log.error("REGIONS_BY_COUNTRY_CODE_SERVER", response.error);
                 return [];
             }
-            return response.data;
+
+            return Array.isArray(response.data) ? response.data : [];
         } catch (error) {
             log.error("REGIONS_BY_COUNTRY_CODE", error);
             return [];

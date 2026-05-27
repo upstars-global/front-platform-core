@@ -2,6 +2,10 @@ import type { MappedPlaceAddress, PlaceAddressComponent } from '../api/types';
 
 const CITY_TYPES = ['postal_town', 'sublocality', 'locality'] as const;
 
+const NUMBER_FIRST_COUNTRIES = [
+  'US', 'CA', 'GB', 'AU', 'NZ', 'IE', 'FR', 'ZA', 'IN', 'SG', 'PH'
+];
+
 function getComponent(
   components: PlaceAddressComponent[],
   type: string,
@@ -21,12 +25,16 @@ function getShortText(component: PlaceAddressComponent | undefined): string | nu
   return component?.shortText?.trim() || component?.longText?.trim() || null;
 }
 
-function getStreet(components: PlaceAddressComponent[]): string | null {
+function getStreet(components: PlaceAddressComponent[], countryCode?: string | null): string | null {
   const streetNumber = getComponentText(getComponent(components, 'street_number'));
   const route = getComponentText(getComponent(components, 'route'));
 
   if (streetNumber && route) {
-    return `${streetNumber} ${route}`;
+    if (countryCode && NUMBER_FIRST_COUNTRIES.includes(countryCode.toUpperCase())) {
+      return `${streetNumber} ${route}`;
+    }
+    
+    return `${route} ${streetNumber}`;
   }
 
   return route || streetNumber;
@@ -51,8 +59,10 @@ export function mapAddressComponents(
   const stateComponent = getComponent(list, 'administrative_area_level_1');
   const countryComponent = getComponent(list, 'country');
 
+  const countryCode = countryComponent?.shortText?.trim() || null;
+  
   return {
-    street: getStreet(list),
+    street: getStreet(list, countryCode),
     city: getCity(list),
     state: getShortText(stateComponent),
     zip: getComponentText(getComponent(list, 'postal_code')),
