@@ -1,9 +1,6 @@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
-import {  giftsAPI } from "../api";
-import { BonusType, GetUserGiftsAvailability, GetUserGiftsSubtype, type IGiftResourceV2 } from "../api/types";
-import { promiseMemo } from '../../../shared';
-import { useUserProfileStore, useUserProfile } from "../../user";
+import { BonusType, type IGiftResourceV2 } from "../api/types";
 
 interface IGiftsByType {
     [BonusType.CASINO]: IGiftResourceV2[];
@@ -17,25 +14,12 @@ const defaultGiftsByType = (): IGiftsByType => ({
     [BonusType.INSURANCE]: [],
 });
 
-interface IUpdateGiftItem {
-    giftId: string;
-    bonus: number;
-    bonusWagering: number;
-}
-interface IUpdateGift {
-    [BonusType.CASINO]?: IUpdateGiftItem,
-    [BonusType.SPORT]?: IUpdateGiftItem,
-    [BonusType.INSURANCE]?: IUpdateGiftItem,
-}
+export type { IGiftsByType };
 
 export const useGiftsStoreV2 = defineStore("giftsV2", () => {
-    const { isLoggedAsync } = useUserProfile();
-    const userProfileStore = useUserProfileStore();
-
     const isInit = ref<boolean>(false);
     const shouldBeUpdatedSilently = ref<boolean>(false);
     const isSilentLoading = ref<boolean>(false);
-
 
     const activeGifts = ref<IGiftsByType>(defaultGiftsByType());
     const availableGifts = ref<IGiftsByType>(defaultGiftsByType());
@@ -48,138 +32,23 @@ export const useGiftsStoreV2 = defineStore("giftsV2", () => {
         return activeCount + availableCount;
     });
 
-    async function request(subType: GetUserGiftsSubtype, availability: GetUserGiftsAvailability) {
-        return await giftsAPI.getUserGiftsV2({
-            filter: {
-                subType,
-                availability,
-            },
-            pagination: {
-                pageNumber: 1,
-                perPage: 100,
-            },
-        });
+    function setActiveGifts(data: IGiftsByType) {
+        activeGifts.value = data;
     }
-
+    function setAvailableGifts(data: IGiftsByType) {
+        availableGifts.value = data;
+    }
+    function setHistoryGifts(data: IGiftsByType) {
+        historyGifts.value = data;
+    }
+    function setIsInit(value: boolean) {
+        isInit.value = value;
+    }
     function setFlagUpdatedSilently(value: boolean) {
         shouldBeUpdatedSilently.value = value;
     }
-
-    async function checkLoadingGifts() {
-        const isLogged = await isLoggedAsync();
-        return isLogged && !userProfileStore.userInfo.multi_account;
-    }
-
-    const loadHistoryGifts = promiseMemo(async () => {
-        if (!await checkLoadingGifts()) {
-            return;
-        }
-
-        const promises = [ GetUserGiftsSubtype.SPORT, GetUserGiftsSubtype.CASINO ].map(async (subtype) => {
-            return await request(subtype, GetUserGiftsAvailability.HISTORY);
-        });
-        const [ sport, casino ] = await Promise.all(promises);
-        historyGifts.value = {
-            [BonusType.CASINO]: casino.items,
-            [BonusType.SPORT]: sport.items,
-        };
-    });
-
-    async function updateActiveGifts(update: IUpdateGift, silent?: boolean) {
-        const [ activeCasinoGift ] = activeGifts.value[BonusType.CASINO];
-        const [ activeSportGift ] = activeGifts.value[BonusType.SPORT];
-
-        const casinoUpdate = update[BonusType.CASINO];
-        const sportUpdate = update[BonusType.SPORT];
-
-        const compareGiftUpdate = (gift?: IGiftResourceV2, updateItem?: IUpdateGiftItem) => {
-            if (!updateItem && !gift) {
-                return true;
-            }
-            return updateItem && gift && updateItem.giftId === gift.id;
-        };
-
-        const activeNeedUpdate = !compareGiftUpdate(activeCasinoGift, casinoUpdate);
-        const sportNeedUpdate = !compareGiftUpdate(activeCasinoGift, sportUpdate);
-
-        if (!silent && (activeNeedUpdate || sportNeedUpdate)) {
-            await loadData();
-            return;
-        }
-
-        if (casinoUpdate && activeCasinoGift?.bonus) {
-            activeCasinoGift.bonus = {
-                ...activeCasinoGift.bonus,
-                value: casinoUpdate.bonus,
-                wager: {
-                    ...activeCasinoGift.bonus.wager,
-                    value: casinoUpdate.bonusWagering,
-                },
-            };
-        }
-
-        if (sportUpdate && activeSportGift?.bonus) {
-            activeSportGift.bonus = {
-                ...activeSportGift.bonus,
-                value: sportUpdate.bonus,
-                wager: {
-                    ...activeSportGift.bonus.wager,
-                    value: sportUpdate.bonusWagering,
-                },
-            };
-        }
-    }
-
-    const fetchGifts = async () => {
-        const response = await giftsAPI.getAllUserGiftsV2();
-        const casinoActive = response[GetUserGiftsAvailability.ACTIVE].filter((gift) => {
-            return gift.subType === GetUserGiftsSubtype.CASINO;
-        });
-        const sportActive = response[GetUserGiftsAvailability.ACTIVE].filter((gift) => {
-            return gift.subType === GetUserGiftsSubtype.SPORT;
-        });
-
-        const casinoAvailable = response[GetUserGiftsAvailability.AVAILABLE].filter((gift) => {
-            return gift.subType === GetUserGiftsSubtype.CASINO;
-        });
-        const sportAvailable = response[GetUserGiftsAvailability.AVAILABLE].filter((gift) => {
-            return gift.subType === GetUserGiftsSubtype.SPORT;
-        });
-
-        activeGifts.value = {
-            [BonusType.CASINO]: casinoActive,
-            [BonusType.SPORT]: sportActive,
-        };
-
-        availableGifts.value = {
-            [BonusType.CASINO]: casinoAvailable,
-            [BonusType.SPORT]: sportAvailable,
-        };
-    };
-
-    const loadDataSilently = async () => {
-        if (!shouldBeUpdatedSilently.value) {
-            return;
-        }
-        isSilentLoading.value = true;
-        await fetchGifts();
-        isSilentLoading.value = false;
-        setFlagUpdatedSilently(false);
-    };
-
-    const loadData = promiseMemo(async () => {
-        if (!await checkLoadingGifts()) {
-            isInit.value = true;
-            return;
-        }
-        await fetchGifts();
-        isInit.value = true;
-    });
-
-    async function initData() {
-        if (!isInit.value && await isLoggedAsync()) {
-            await loadData();
-        }
+    function setIsSilentLoading(value: boolean) {
+        isSilentLoading.value = value;
     }
 
     function resetData() {
@@ -198,12 +67,12 @@ export const useGiftsStoreV2 = defineStore("giftsV2", () => {
         shouldBeUpdatedSilently,
         isSilentLoading,
 
+        setActiveGifts,
+        setAvailableGifts,
+        setHistoryGifts,
+        setIsInit,
         setFlagUpdatedSilently,
-        loadData,
-        loadDataSilently,
-        initData,
+        setIsSilentLoading,
         resetData,
-        updateActiveGifts,
-        loadHistoryGifts,
     };
 });

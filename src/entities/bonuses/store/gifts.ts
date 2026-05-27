@@ -1,36 +1,22 @@
-import type { IGiftActivateResource, IGiftResource } from "../api/types";
-import { giftsAPI } from "../api";
-import { log } from "../../../shared/helpers/log";
+import type { IGiftResource } from "../api/types";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
-import { useUserProfileStore } from "../../user/store";
 import { GIFT_UNSELECTED } from "../config";
 
 export const useGiftsStore = defineStore("gifts", () => {
-    const userProfileStore = useUserProfileStore();
-
     const gifts = ref<IGiftResource[]>([]);
     const giftsLoaded = ref<boolean>(false);
 
-    async function loadGiftsData(): Promise<void> {
-        if (!userProfileStore.userInfo.multi_account) {
-            const { items } = await giftsAPI.getGiftsList();
-            gifts.value = items;
-            giftsLoaded.value = true;
-            loadPayoutGiftCount();
-        }
+    function setGifts(data: IGiftResource[]) {
+        gifts.value = data;
+    }
+    function setGiftsLoaded(value: boolean) {
+        giftsLoaded.value = value;
     }
     function removeGiftById(id: string): void {
         gifts.value = gifts.value.filter((item) => {
             return item.id !== id;
         });
-    }
-    async function activateGift(id: string): Promise<IGiftActivateResource | undefined> {
-        return await giftsAPI.activateGift(id);
-    }
-    async function activatePromoGift(giftName: string): Promise<void> {
-        await giftsAPI.activatePromoGift(giftName);
-        loadGiftsData();
     }
     function cleanGiftsData(): void {
         gifts.value = [];
@@ -79,27 +65,11 @@ export const useGiftsStore = defineStore("gifts", () => {
         return array[0].restrictions.depositLimit;
     });
 
-    async function takeNonDepositGift(id: string): Promise<void> {
-        const data = await giftsAPI.takeNonDepositGiftPrize(id);
-        if (data) {
-            if (data.success) {
-                loadGiftsData();
-                return;
-            }
-            log.error("Gift was not taked", data.error);
-        }
-    }
-
     const currentGiftId = ref<string>(GIFT_UNSELECTED.id);
     function setCurrentGift(giftId: string) {
         currentGiftId.value = giftId;
     }
 
-    async function sendCurrentGift(operationId: string): Promise<void> {
-        if (currentGiftId.value !== GIFT_UNSELECTED.id) {
-            await giftsAPI.sendCurrentGift(currentGiftId.value, operationId);
-        }
-    }
     const getCurrentGift = computed<IGiftResource | undefined>(() => {
         return gifts.value.find((gift: IGiftResource) => {
             return gift.id === currentGiftId.value;
@@ -107,10 +77,6 @@ export const useGiftsStore = defineStore("gifts", () => {
     });
 
     const payoutGiftCount = ref<number>(0);
-    async function loadPayoutGiftCount(): Promise<void> {
-        const count = await giftsAPI.loadPayoutGiftCount();
-        setPayoutGiftCount(count);
-    }
     function setPayoutGiftCount(count: number): void {
         payoutGiftCount.value = count;
     }
@@ -118,10 +84,9 @@ export const useGiftsStore = defineStore("gifts", () => {
     return {
         gifts,
         giftsLoaded,
-        loadGiftsData,
+        setGifts,
+        setGiftsLoaded,
         removeGiftById,
-        activateGift,
-        activatePromoGift,
         cleanGiftsData,
         getCashboxGifts,
         getCashboxGiftsByDepositNumber,
@@ -130,15 +95,11 @@ export const useGiftsStore = defineStore("gifts", () => {
         getGiftById,
         getMinDepositToReceiveBonus,
 
-        takeNonDepositGift,
-
         currentGiftId,
         setCurrentGift,
-        sendCurrentGift,
         getCurrentGift,
 
         payoutGiftCount,
-        loadPayoutGiftCount,
         setPayoutGiftCount,
     };
 });
