@@ -1,83 +1,40 @@
 import type {
-  ExchangePrizeResource,
   IPromoDataResource,
   IPromoListResource,
   IUserPromoResource,
 } from "../api";
-import { promoAPI } from "../api/requests";
-import { promiseMemo } from "../../../shared/helpers/promise";
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import { configPromotions } from "../config";
-import { useUserProfile } from "../../user/composables";
 
-/**
- * @refactor rewrite to composable; store must not use composable, api, or another store
- */
 export const usePromoStore = defineStore("promo", () => {
-  const { isLoggedAsync } = useUserProfile();
-
   const promoList = ref<IPromoListResource[]>([]);
-
-  async function loadPromoList(tag?: string | string[], page: number = 1, perPage: number = 15) {
-      const response = await promoAPI.loadPromoList(tag, page, perPage);
-
-      if (response?.data) {
-          const filteredData = configPromotions.getFilterItemsFn()(response.data);
-          promoList.value = filteredData;
-          return filteredData;
-      }
-      return [];
+  function setPromoList(data: IPromoListResource[]) {
+      promoList.value = data;
   }
 
   const activePromoData = ref<IPromoDataResource>();
   const isActivePromoDataLoaded = ref<boolean>(false);
 
-  const loadActivePromo = promiseMemo(async (): Promise<IPromoDataResource> => {
-      const data = await promoAPI.loadActivePromo(await isLoggedAsync());
-
-      isActivePromoDataLoaded.value = true;
+  function setActivePromoData(data: IPromoDataResource) {
       activePromoData.value = data;
-      return data;
-  });
+  }
 
-  async function exchangePrize(
-      actionId: string,
-      prizeId: string,
-      giftsNumber: number,
-  ): Promise<ExchangePrizeResource> {
-      const data = await promoAPI.exchangePrize(
-          {
-              actionId,
-              prizeId,
-              giftsNumber,
-          },
-          await isLoggedAsync(),
-      );
-
-      if (!data?.error) {
-          await loadActivePromo();
-
-          if (currentPromoData.value?.slug) {
-              await loadCurrentPromoBySlug(currentPromoData.value.slug);
-          }
-      }
-      return data;
+  function setIsActivePromoDataLoaded(value: boolean) {
+      isActivePromoDataLoaded.value = value;
   }
 
   const currentPromoData = ref<IPromoDataResource>();
-  async function loadCurrentPromoBySlug(slug: string): Promise<IPromoDataResource> {
-      const data = await promoAPI.loadCurrentPromoBySlug(slug, await isLoggedAsync());
+  function setCurrentPromoData(data: IPromoDataResource) {
       currentPromoData.value = data;
-      return data;
   }
 
   function cleanCurrentPromo() {
       currentPromoData.value = undefined;
   }
+
   const userPromo = ref<IUserPromoResource[]>([]);
-  async function loadUserPromoData(): Promise<IUserPromoResource[] | void> {
-      userPromo.value = await promoAPI.loadUserPromoData();
+  function setUserPromo(data: IUserPromoResource[]) {
+      userPromo.value = data;
   }
 
   function updateUserPromoData(data: IUserPromoResource): void {
@@ -92,19 +49,19 @@ export const usePromoStore = defineStore("promo", () => {
 
   return {
       promoList,
-      loadPromoList,
+      setPromoList,
 
       activePromoData,
       isActivePromoDataLoaded,
-      loadActivePromo,
+      setActivePromoData,
+      setIsActivePromoDataLoaded,
 
       currentPromoData,
-      loadCurrentPromoBySlug,
+      setCurrentPromoData,
       cleanCurrentPromo,
-      exchangePrize,
 
       userPromo,
-      loadUserPromoData,
+      setUserPromo,
       updateUserPromoData,
       cleanUserPromoData,
   };

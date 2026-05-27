@@ -81,6 +81,14 @@ export type DynamicsSeasonInfoResources = {
   description: string;
   id: string;
 };
+
+export type DepositInsuranceResource = {
+  isEnabled: boolean;
+  bonus: number;
+  wager: number;
+  winLimit: number;
+}
+
 export type StatusDataResources = {
   staticProgressionConfig: {
     levels: StaticLevelDataResources[];
@@ -89,4 +97,5 @@ export type StatusDataResources = {
     seasonInfo: DynamicsSeasonInfoResources;
     statuses: DynamicStatusDataResources[];
   };
+  diConfig: Record<string, DepositInsuranceResource>
 };

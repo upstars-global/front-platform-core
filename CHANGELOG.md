@@ -1,3 +1,25 @@
+## [7.35.0](https://github.com/upstars-global/front-platform-core/compare/v7.34.0...v7.35.0) (2026-05-27)
+
+### 🚀 Features
+
+* **FP-5145:** add composables for bonuses, games, and promotions;
+ ([daf8347](https://github.com/upstars-global/front-platform-core/commit/daf83477f2c0bb2415b69f774909ca0153232aad))
+
+
+* **FP-5145:** add winners module with API, composables, and store
+ ([4d6ffef](https://github.com/upstars-global/front-platform-core/commit/4d6ffef64b6b01a04a21d2678e4ab9e9ea3ee755))
+
+
+* **FP-5145:** update composables to accept Pinia as an optional parameter
+ ([4750711](https://github.com/upstars-global/front-platform-core/commit/4750711659e2ccebefa8889dcf85369e09042ce6))
+
+## [7.34.0](https://github.com/upstars-global/front-platform-core/compare/v7.33.0...v7.34.0) (2026-05-27)
+
+### 🚀 Features
+
+* **FP-5214:** add DepositInsuranceResource type and update StatusDataResources
+ ([0403daa](https://github.com/upstars-global/front-platform-core/commit/0403daa169b1e85ebb8e71e3d739013f34be5ff5))
+
 ## [7.33.0](https://github.com/upstars-global/front-platform-core/compare/v7.32.1...v7.33.0) (2026-05-21)
 
 ### 🚀 Features
