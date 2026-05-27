@@ -47,6 +47,10 @@ export const useAppGlobalConfigStore = defineStore('appGlobalConfig', () => {
     return globalConfig.value?.betsHistoryEnabled;
   });
 
+  const gdprDomainsConfig = computed(() => {
+    return globalConfig.value?.gdprDomainsConfig;
+  });
+
 
   return {
     isLoaded,
@@ -63,6 +67,7 @@ export const useAppGlobalConfigStore = defineStore('appGlobalConfig', () => {
     betsHistoryEnabled,
 
     freshChatConfig,
+    gdprDomainsConfig,
 
     setGlobalConfig,
   };

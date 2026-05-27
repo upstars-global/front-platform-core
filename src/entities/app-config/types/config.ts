@@ -32,6 +32,10 @@ export type SocialLink = {
   url?: string;
 };
 
+export type GdprDomainsConfig = {
+  domainGroupId: string;
+};
+
 export type AppGlobalConfig = Partial<{
   allowedForSegmentation: boolean;
   isLockAuthForGuestUser: boolean;
@@ -56,6 +60,7 @@ export type AppGlobalConfig = Partial<{
     scriptUrl?: string;
   };
   selfExclusionFlowType: SelfExclusionFlowType;
+  gdprDomainsConfig: GdprDomainsConfig;
 }>;
 
 export type ReelsVersion = {

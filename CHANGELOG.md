@@ -1,3 +1,21 @@
+## [7.33.0](https://github.com/upstars-global/front-platform-core/compare/v7.32.1...v7.33.0) (2026-05-21)
+
+### 🚀 Features
+
+* **FP-5098:** add Cookiebot GDPR script injection and domain config
+ ([fda98e3](https://github.com/upstars-global/front-platform-core/commit/fda98e3fb67843aef6cfec5c91e9d2309dd094c4))
+
+
+* **FP-5098:** changed SCRIPT_ID = 'Cookiebot'
+ ([2d6f458](https://github.com/upstars-global/front-platform-core/commit/2d6f45858f12650b4fb749c6406dcd3a1749dde0))
+
+## [7.32.1](https://github.com/upstars-global/front-platform-core/compare/v7.32.0...v7.32.1) (2026-05-20)
+
+### 🔧 Maintenance
+
+* **FP-3926:** add TODO comments for legacy user status data removal and fix code formatting
+ ([955ffeb](https://github.com/upstars-global/front-platform-core/commit/955ffebca55d814445f3ad84854e72fcebf411d9))
+
 ## [7.32.0](https://github.com/upstars-global/front-platform-core/compare/v7.31.0...v7.32.0) (2026-05-18)
 
 ### 🚀 Features

@@ -353,7 +353,7 @@ export const userAPI = {
   },
 
   // statuses
-
+  // TODO loadUserStatusData - legacy. видалити коли FP-3926 буде на всіх проєктах
   async loadUserStatusData() {
     try {
       const data = await jsonHttp<IUserStatusResource>('/fe-api/user-status-data');
