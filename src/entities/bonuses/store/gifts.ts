@@ -1,9 +1,14 @@
-import type { IGiftResource } from "../api/types";
+import type { IGiftActivateResource, IGiftResource } from "../api/types";
+import { giftsAPI } from "../api";
+import { log } from "../../../shared/helpers/log";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
+import { useUserProfileStore } from "../../user/store";
 import { GIFT_UNSELECTED } from "../config";
 
 export const useGiftsStore = defineStore("gifts", () => {
+    const userProfileStore = useUserProfileStore();
+
     const gifts = ref<IGiftResource[]>([]);
     const giftsLoaded = ref<boolean>(false);
 
@@ -13,16 +18,40 @@ export const useGiftsStore = defineStore("gifts", () => {
     function setGiftsLoaded(value: boolean) {
         giftsLoaded.value = value;
     }
+
+    /** @deprecated Use `useLoadGifts().loadGiftsData` instead. */
+    async function loadGiftsData(): Promise<void> {
+        if (!userProfileStore.userInfo.multi_account) {
+            const { items } = await giftsAPI.getGiftsList();
+            gifts.value = items;
+            giftsLoaded.value = true;
+            loadPayoutGiftCount();
+        }
+    }
+
     function removeGiftById(id: string): void {
         gifts.value = gifts.value.filter((item) => {
             return item.id !== id;
         });
     }
+
+    /** @deprecated Use `useLoadGifts().activateGift` instead. */
+    async function activateGift(id: string): Promise<IGiftActivateResource | undefined> {
+        return await giftsAPI.activateGift(id);
+    }
+
+    /** @deprecated Use `useLoadGifts().activatePromoGift` instead. */
+    async function activatePromoGift(giftName: string): Promise<void> {
+        await giftsAPI.activatePromoGift(giftName);
+        loadGiftsData();
+    }
+
     function cleanGiftsData(): void {
         gifts.value = [];
         currentGiftId.value = "";
         payoutGiftCount.value = 0;
     }
+
     const getCashboxGifts = computed<IGiftResource[]>(() => {
         return gifts.value.filter((gift: IGiftResource) => {
             const depositLimit: number = gift.restrictions.depositLimit || 0;
@@ -65,11 +94,29 @@ export const useGiftsStore = defineStore("gifts", () => {
         return array[0].restrictions.depositLimit;
     });
 
+    /** @deprecated Use `useLoadGifts().takeNonDepositGift` instead. */
+    async function takeNonDepositGift(id: string): Promise<void> {
+        const data = await giftsAPI.takeNonDepositGiftPrize(id);
+        if (data) {
+            if (data.success) {
+                loadGiftsData();
+                return;
+            }
+            log.error("Gift was not taked", data.error);
+        }
+    }
+
     const currentGiftId = ref<string>(GIFT_UNSELECTED.id);
     function setCurrentGift(giftId: string) {
         currentGiftId.value = giftId;
     }
 
+    /** @deprecated Use `useLoadGifts().sendCurrentGift` instead. */
+    async function sendCurrentGift(operationId: string): Promise<void> {
+        if (currentGiftId.value !== GIFT_UNSELECTED.id) {
+            await giftsAPI.sendCurrentGift(currentGiftId.value, operationId);
+        }
+    }
     const getCurrentGift = computed<IGiftResource | undefined>(() => {
         return gifts.value.find((gift: IGiftResource) => {
             return gift.id === currentGiftId.value;
@@ -77,6 +124,11 @@ export const useGiftsStore = defineStore("gifts", () => {
     });
 
     const payoutGiftCount = ref<number>(0);
+    /** @deprecated Use `useLoadGifts().loadPayoutGiftCount` instead. */
+    async function loadPayoutGiftCount(): Promise<void> {
+        const count = await giftsAPI.loadPayoutGiftCount();
+        setPayoutGiftCount(count);
+    }
     function setPayoutGiftCount(count: number): void {
         payoutGiftCount.value = count;
     }
@@ -86,7 +138,10 @@ export const useGiftsStore = defineStore("gifts", () => {
         giftsLoaded,
         setGifts,
         setGiftsLoaded,
+        loadGiftsData,
         removeGiftById,
+        activateGift,
+        activatePromoGift,
         cleanGiftsData,
         getCashboxGifts,
         getCashboxGiftsByDepositNumber,
@@ -95,11 +150,15 @@ export const useGiftsStore = defineStore("gifts", () => {
         getGiftById,
         getMinDepositToReceiveBonus,
 
+        takeNonDepositGift,
+
         currentGiftId,
         setCurrentGift,
+        sendCurrentGift,
         getCurrentGift,
 
         payoutGiftCount,
+        loadPayoutGiftCount,
         setPayoutGiftCount,
     };
 });
