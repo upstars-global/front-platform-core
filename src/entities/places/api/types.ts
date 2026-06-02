@@ -7,7 +7,7 @@ export interface PlacesAutocompleteParams {
 
 export interface PlacesDetailsParams {
   sessionToken: string;
-  id: string;
+  placeId: string;
   lang: string;
 }
 
@@ -39,7 +39,9 @@ export interface PlaceSuggestion {
 }
 
 export interface PlacesAutocompleteResponse {
-  suggestions?: PlaceSuggestion[];
+  payload: {
+    suggestions?: PlaceSuggestion[];
+  }
 }
 
 export interface PlaceAddressComponent {
@@ -50,10 +52,12 @@ export interface PlaceAddressComponent {
 }
 
 export interface PlacesDetailsResponse {
-  id?: string;
-  displayName?: string;
-  formattedAddress?: string;
-  addressComponents?: PlaceAddressComponent[];
+  payload: {
+    id?: string;
+    displayName?: string;
+    formattedAddress?: string;
+    addressComponents?: PlaceAddressComponent[];
+  }
 }
 
 export interface MappedPlaceAddress {

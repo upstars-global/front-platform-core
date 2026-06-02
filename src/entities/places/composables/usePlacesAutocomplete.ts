@@ -45,9 +45,9 @@ function getSuggestionLabel(prediction: PlacePrediction): string {
 }
 
 function parseSuggestions(response: PlacesAutocompleteResponse | undefined): PlaceAutocompleteSuggestion[] {
-  if (!response?.suggestions) return [];
+  if (!response?.payload.suggestions) return [];
 
-  return response.suggestions
+  return response.payload.suggestions
     .map((suggestion) => {
       const prediction = suggestion.placePrediction;
 
@@ -127,8 +127,12 @@ export function usePlacesAutocomplete(options: UsePlacesAutocompleteOptions) {
         },
         abortController.signal,
       );
+
+      if (response.error) {
+        throw new Error(response.error.description);
+      }
   
-      const parsed = parseSuggestions(response);
+      const parsed = parseSuggestions(response.data);
 
       cache.set(cacheKey, parsed);
 
@@ -161,13 +165,13 @@ export function usePlacesAutocomplete(options: UsePlacesAutocompleteOptions) {
     try {
       const response = await placesAPI.details({
         sessionToken: sessionToken.value,
-        id: placeId,
+        placeId,
         lang: toValue(options.lang),
       });
 
-      if (!response.addressComponents) return null;
+      if (!response.data?.payload?.addressComponents) return null;
 
-      const address = mapAddressComponents(response.addressComponents, response.formattedAddress);
+      const address = mapAddressComponents(response.data.payload.addressComponents, response.data.payload.formattedAddress);
 
       resetSession();
       clearSuggestions();

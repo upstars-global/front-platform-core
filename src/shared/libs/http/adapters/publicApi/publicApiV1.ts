@@ -15,7 +15,7 @@ import { type PublicApiV1Params, type PublicApiV1Response, SecuredType, SecuredU
  * publicApiV1({ url: "upload", formData: myFormData }); // Send FormData with multipart/form-data
  */
 export function publicApiV1<R = unknown>(params: PublicApiV1Params) {
-  const { url, type, secured = false, data = {}, formData } = params;
+  const { url, type, secured = false, data = {}, formData, signal } = params;
   const trimmedUrl = url[0] === '/' ? url.slice(1) : url;
 
   const securedType = secured ? SecuredUrlType.SECURED : SecuredUrlType.ANON;
@@ -41,5 +41,6 @@ export function publicApiV1<R = unknown>(params: PublicApiV1Params) {
   return jsonHttp<PublicApiV1Response<R>>(`/public-api/v1/json/${securedType}/${trimmedUrl}`, {
     method: 'post',
     body,
+    signal,
   });
 }

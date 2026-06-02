@@ -16,6 +16,7 @@ export type PublicApiV1Params = {
   secured?: boolean;
   data?: Record<string, unknown>;
   formData?: FormData;
+  signal?: AbortSignal;
 };
 export enum PublicApiV1ErrorType {
   VALIDATION = 'VALIDATION',
