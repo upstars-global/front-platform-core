@@ -62,6 +62,7 @@ export type AppGlobalConfig = Partial<{
   selfExclusionFlowType: SelfExclusionFlowType;
   gdprDomainsConfig: GdprDomainsConfig;
   additionalSupportEmail?: string;
+  googlePlacesEnabled: boolean;
 }>;
 
 export type ReelsVersion = {
