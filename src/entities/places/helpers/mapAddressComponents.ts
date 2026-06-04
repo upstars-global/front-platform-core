@@ -1,4 +1,4 @@
-import { COUNTRIES } from 'src/shared';
+import { COUNTRIES } from '../../../shared';
 import type { MappedPlaceAddress, PlaceAddressComponent } from '../api/types';
 
 const DEFAULT_CITY_TYPES = ['locality', 'postal_town', 'sublocality'] as const;
