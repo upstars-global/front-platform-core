@@ -1,6 +1,6 @@
 import type { MappedPlaceAddress, PlaceAddressComponent } from '../api/types';
 
-const CITY_TYPES = ['postal_town', 'sublocality', 'locality'] as const;
+const CITY_TYPES = ['postal_town', 'locality', 'sublocality'] as const;
 
 const NUMBER_FIRST_COUNTRIES = [
   'US', 'CA', 'GB', 'AU', 'NZ', 'IE', 'FR', 'ZA', 'IN', 'SG', 'PH'
