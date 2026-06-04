@@ -9,7 +9,7 @@ const DEFAULT_STATE_TYPES = [
   'administrative_area_level_2',
 ] as const;
 
-const IT_FR_STATE_TYPES = [
+const LEVEL_2_STATE_TYPES = [
   'administrative_area_level_2',
   'administrative_area_level_1',
 ] as const;
@@ -28,7 +28,11 @@ const NUMBER_FIRST_COUNTRIES = new Set([
   COUNTRIES.PHILIPPINES,
 ]);
 
-const IT_FR_COUNTRIES = new Set([COUNTRIES.ITALY, COUNTRIES.FRANCE]);
+const LEVEL_2_STATE_COUNTRIES = new Set([
+  COUNTRIES.ITALY, 
+  COUNTRIES.FRANCE, 
+  COUNTRIES.ENGLAND
+]);
 
 function getComponent(
   components: PlaceAddressComponent[],
@@ -73,7 +77,9 @@ function getCity(components: PlaceAddressComponent[], countryCode?: string | nul
 }
 
 function getState(components: PlaceAddressComponent[], countryCode?: string | null): string | null {
-  const types = IT_FR_COUNTRIES.has(countryCode ?? '') ? IT_FR_STATE_TYPES : DEFAULT_STATE_TYPES;
+  const types = LEVEL_2_STATE_COUNTRIES.has(countryCode ?? '') 
+    ? LEVEL_2_STATE_TYPES 
+    : DEFAULT_STATE_TYPES;
 
   for (const type of types) {
     const state = getComponentText(getComponent(components, type), 'short');
