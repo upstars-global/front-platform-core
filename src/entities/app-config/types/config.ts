@@ -61,6 +61,7 @@ export type AppGlobalConfig = Partial<{
   };
   selfExclusionFlowType: SelfExclusionFlowType;
   gdprDomainsConfig: GdprDomainsConfig;
+  additionalSupportEmail?: string;
 }>;
 
 export type ReelsVersion = {

@@ -1,3 +1,17 @@
+## [7.36.0](https://github.com/upstars-global/front-platform-core/compare/v7.35.1...v7.36.0) (2026-06-03)
+
+### 🚀 Features
+
+* **config:** add optional `additionalSupportEmail` field to app config type
+ ([001da91](https://github.com/upstars-global/front-platform-core/commit/001da91972dd7cc6ba89a36c5e59ff20698ddfb4))
+
+## [7.35.1](https://github.com/upstars-global/front-platform-core/compare/v7.35.0...v7.35.1) (2026-05-28)
+
+### 🐛 Bug Fixes
+
+* **FP-5145-1:** return old methods to support backward compatibility
+ ([17cc8bc](https://github.com/upstars-global/front-platform-core/commit/17cc8bc3264c0336eb0e9176b00b9a2311b5c474))
+
 ## [7.35.0](https://github.com/upstars-global/front-platform-core/compare/v7.34.0...v7.35.0) (2026-05-27)
 
 ### 🚀 Features
