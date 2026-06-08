@@ -1,3 +1,58 @@
+## [7.37.0](https://github.com/upstars-global/front-platform-core/compare/v7.36.0...v7.37.0) (2026-06-08)
+
+### 🚀 Features
+
+* **FP-4971:** add core entity with regions
+ ([0d4534e](https://github.com/upstars-global/front-platform-core/commit/0d4534e3d40bc7604f7ff34960bf17c0a9fd632f))
+
+
+* **FP-4971:** add googlePlacesEnabled
+ ([19fc28c](https://github.com/upstars-global/front-platform-core/commit/19fc28ccdf21c353eaa249160d081ce24b8c5c66))
+
+
+* **FP-4971:** correct test expectation for locality
+ ([28e8041](https://github.com/upstars-global/front-platform-core/commit/28e80417cf188c4c48f428cd6e153f9960cc6555))
+
+
+* **FP-4971:** enhance address component mapping
+ ([c3111c1](https://github.com/upstars-global/front-platform-core/commit/c3111c1410ffd2498fae70af5c0650cce0bcdeab))
+
+
+* **FP-4971:** enhance address formatting for number-first countries
+ ([786bbcb](https://github.com/upstars-global/front-platform-core/commit/786bbcb2f433df5ed063833e1a5665b3c4e2610f))
+
+
+* **FP-4971:** fix loading, signal and tests
+ ([a89148d](https://github.com/upstars-global/front-platform-core/commit/a89148de878724b47fbdfe8923c3dc620d232db1))
+
+
+* **FP-4971:** implement places API and autocomplete composable
+ ([e380c42](https://github.com/upstars-global/front-platform-core/commit/e380c4205686e960517dfe73750ac34597171a73))
+
+
+* **FP-4971:** migrate to public API v1 and update response structure for autocomplete and details
+ ([1331b65](https://github.com/upstars-global/front-platform-core/commit/1331b65d79ca8b663f8f8344b963bb4fd8078704))
+
+
+* **FP-4971:** rename and expand state country set for address mapping
+ ([736a5d6](https://github.com/upstars-global/front-platform-core/commit/736a5d6b58ec669c1c3ed4467bb200049caa7f85))
+
+
+* **FP-4971:** reorder CITY_TYPES array for consistency
+ ([f922db5](https://github.com/upstars-global/front-platform-core/commit/f922db53a9097bc8e6a2504a10abd4542f74e67a))
+
+
+* **FP-4971:** reorder CITY_TYPES array for consistency
+ ([61501c9](https://github.com/upstars-global/front-platform-core/commit/61501c906b2e74d39845e66b367d7760d259ae83))
+
+
+* **FP-4971:** update import path
+ ([e9d2550](https://github.com/upstars-global/front-platform-core/commit/e9d2550a96567390893e37f8479bf7cd9ffd1d6f))
+
+
+* **FP-4971:** update test case to reflect priority routing for sublocality over locality
+ ([555b65f](https://github.com/upstars-global/front-platform-core/commit/555b65fbefe266096d53312cd9a89347d315518d))
+
 ## [7.36.0](https://github.com/upstars-global/front-platform-core/compare/v7.35.1...v7.36.0) (2026-06-03)
 
 ### 🚀 Features
