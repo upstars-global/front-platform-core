@@ -13,6 +13,10 @@ export const COUNTRIES = {
   PORTUGAL: 'PT',
   SPAIN: 'ES',
   NETHERLANDS: 'NL',
+  IRELAND: 'IE',
+  SOUTH_AFRICA: 'ZA',
+  SINGAPORE: 'SG',
+  PHILIPPINES: 'PH',
 };
 
 export const REGIONS_BY_COUNTRIES: Record<string, string[]> = {
