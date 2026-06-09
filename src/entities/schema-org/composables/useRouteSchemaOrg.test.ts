@@ -1,9 +1,9 @@
 // @vitest-environment jsdom
 import { describe, it, expect, beforeEach, vi, type Mock } from 'vitest';
+import { ref, nextTick } from 'vue';
 import { mount, flushPromises } from '@vue/test-utils';
 import { createTestingPinia } from '@pinia/testing';
 import { setActivePinia } from 'pinia';
-import { createRouter, createMemoryHistory } from 'vue-router';
 
 import { useRouteSchemaOrg } from './useRouteSchemaOrg';
 import { useSchemaOrgStore } from '../store';
@@ -40,7 +40,7 @@ vi.mock('../../app-config', () => ({
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-let router: ReturnType<typeof createRouter>;
+let currentPath = ref('/');
 
 function setupPinia() {
   const pinia = createTestingPinia({ stubActions: false, createSpy: vi.fn });
@@ -51,12 +51,12 @@ function setupPinia() {
 function mountComposable() {
   const TestHost = {
     setup() {
-      useRouteSchemaOrg({ bookmarkPath: '/bookmark.svg', logoPath: '/logo.png' });
+      useRouteSchemaOrg({ bookmarkPath: '/bookmark.svg', logoPath: '/logo.png', currentPath });
       return {};
     },
     template: '<div />',
   };
-  return mount(TestHost, { global: { plugins: [router] } });
+  return mount(TestHost);
 }
 
 function getHeadScripts(): unknown[] {
@@ -66,23 +66,13 @@ function getHeadScripts(): unknown[] {
 // ─── Tests ────────────────────────────────────────────────────────────────────
 
 describe('useRouteSchemaOrg — CSR', () => {
-  beforeEach(async () => {
+  beforeEach(() => {
     vi.clearAllMocks();
     headInputCapture = null;
     mockRuntimeHostname.value = '';
     mockFetchResult.value = null;
-
+    currentPath = ref('/');
     setupPinia();
-    router = createRouter({
-      history: createMemoryHistory(),
-      routes: [
-        { path: '/', name: 'main', component: { template: '' } },
-        { path: '/casino', name: 'casino', component: { template: '' } },
-        { path: '/blog', name: 'blog', component: { template: '' } },
-      ],
-    });
-    await router.push('/');
-    await router.isReady();
   });
 
   it('passes a getter function to useHead', () => {
@@ -127,7 +117,9 @@ describe('useRouteSchemaOrg — CSR', () => {
     mountComposable();
     await flushPromises();
 
-    await router.push('/blog');
+    currentPath.value = '/blog';
+    await nextTick();
+
     expect(getHeadScripts()).toEqual([]);
   });
 
@@ -138,7 +130,8 @@ describe('useRouteSchemaOrg — CSR', () => {
     mountComposable();
     await flushPromises();
 
-    await router.push('/casino');
+    currentPath.value = '/casino';
+    await nextTick();
 
     expect(getHeadScripts()).toHaveLength(1);
     const parsed = JSON.parse((getHeadScripts()[0] as { innerHTML: string }).innerHTML);
@@ -152,23 +145,26 @@ describe('useRouteSchemaOrg — CSR', () => {
     mountComposable();
     await flushPromises();
 
-    await router.push('/casino');
+    currentPath.value = '/casino';
+    await nextTick();
     expect(getHeadScripts()).toHaveLength(1);
 
-    await router.push('/blog');
+    currentPath.value = '/blog';
+    await nextTick();
     expect(getHeadScripts()).toEqual([]);
 
-    await router.push('/casino');
+    currentPath.value = '/casino';
+    await nextTick();
     expect(getHeadScripts()).toHaveLength(1);
   });
 
-  it('fetches exactly once on mount regardless of how many navigations occur', async () => {
+  it('fetches exactly once on mount regardless of how many path changes occur', async () => {
     mockFetchResult.value = { '/': [], '/casino': [], '/blog': [] };
 
     mountComposable();
-    await router.push('/casino');
-    await router.push('/blog');
-    await router.push('/');
+    currentPath.value = '/casino';
+    currentPath.value = '/blog';
+    currentPath.value = '/';
     await flushPromises();
 
     expect(configAPI.loadSchemaOrgByPath).toHaveBeenCalledTimes(1);
@@ -213,7 +209,7 @@ describe('useRouteSchemaOrg — CSR', () => {
     expect(store.isLoading).toBe(false);
   });
 
-  it('setActivePath tracks navigation independently of the fetch', async () => {
+  it('setActivePath tracks path changes independently of the fetch', async () => {
     const store = useSchemaOrgStore();
     const casinoNode = { '@type': 'GameServer' };
 
@@ -224,7 +220,8 @@ describe('useRouteSchemaOrg — CSR', () => {
     mountComposable();
     expect(store.activeRoutePath).toBe('/');
 
-    await router.push('/casino');
+    currentPath.value = '/casino';
+    await nextTick();
     expect(store.activeRoutePath).toBe('/casino');
 
     expect(store.schemasByPath).toBeNull();

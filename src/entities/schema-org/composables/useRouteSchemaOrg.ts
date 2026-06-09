@@ -1,5 +1,5 @@
-import { onServerPrefetch, watch } from 'vue';
-import { useRoute } from 'vue-router';
+import { onServerPrefetch, toValue, watch } from 'vue';
+import type { Ref } from 'vue';
 import { useHead } from '@unhead/vue';
 import { useMultiLangStore } from '../../multilang';
 import { configAPI } from '../../app-config';
@@ -8,23 +8,23 @@ import { useSchemaOrgStore } from '../store';
 import { buildSchemaFetchParams, buildSchemaScriptEntry, isServerSchemaFetchAllowed } from '../helpers';
 import type { SchemaFetchAssets, SchemaHost, SchemasByPath } from '../types';
 
+type SchemaOrgOptions = SchemaFetchAssets & {
+  currentPath: Ref<string> | (() => string);
+}
 
 async function fetchSchemasForHost(fetchParams: string): Promise<SchemasByPath> {
   const raw = await configAPI.loadSchemaOrgByPath<SchemasByPath>(fetchParams);
   return raw ?? {};
 }
 
-export function useRouteSchemaOrg(options: SchemaFetchAssets): void {
-  const { bookmarkPath, logoPath } = options;
+export function useRouteSchemaOrg(options: SchemaOrgOptions): void {
+  const { bookmarkPath, logoPath, currentPath } = options;
 
-  const route = useRoute();
   const multiLangStore = useMultiLangStore();
   const store = useSchemaOrgStore();
 
   const fetchParams = buildSchemaFetchParams({ bookmarkPath, logoPath });
 
-  // UseHeadInput<T> accepts () => ReactiveHead as a getter function.
-  // Fresh object literals bypass the DataKeys index signature check on Script<E>.
   useHead(() => {
     const entry = buildSchemaScriptEntry(store.activeSchemas);
     if (!entry) {
@@ -38,7 +38,7 @@ export function useRouteSchemaOrg(options: SchemaFetchAssets): void {
 
   if (isServerSchemaFetchAllowed(isServer, ssrHost)) {
     onServerPrefetch(async () => {
-      store.setActivePath(route.path);
+      store.setActivePath(toValue(currentPath));
       if (!store.isLoadedForHost(ssrHost)) {
         store.setLoading(true);
         const schemas = await fetchSchemasForHost(fetchParams);
@@ -49,19 +49,14 @@ export function useRouteSchemaOrg(options: SchemaFetchAssets): void {
   }
 
   if (isServer) {
-    // SSG build: skip fetch, register activePath so head getter returns []
     onServerPrefetch(() => {
-      store.setActivePath(route.path);
+      store.setActivePath(toValue(currentPath));
     });
     return;
   }
 
-  // CSR: track navigation synchronously, fetch once per host
-  watch(
-    () => route.path,
-    (newPath) => store.setActivePath(newPath),
-    { immediate: true },
-  );
+  // currentPath is a Ref<string> or () => string — both are valid watch sources
+  watch(currentPath, (newPath) => store.setActivePath(newPath), { immediate: true });
 
   const host: SchemaHost = window.location.hostname;
   if (!store.isLoadedForHost(host) && !store.isLoading) {
