@@ -227,3 +227,36 @@ export enum BonusType {
     SPORT = "betting",
     INSURANCE = "insurance"
 }
+
+export enum ActivityRewardStatus {
+  AVAILABLE = 'available',
+  APPLIED_FOR_GIFT = 'appliedForGift',
+  GIFT_RECEIVED = 'giftReceived',
+}
+
+export enum ActivityRewardName {
+  GIFT_FOR_REVIEW = 'GiftForReview',
+}
+
+export interface ActivityRewardsStateResource {
+  activityName: ActivityRewardName;
+  status: ActivityRewardStatus;
+  nextApplicationDate: string | null;
+}
+
+export enum ActivityRewardsSubmitFileErrorCode {
+    MISSING_FILE = 'MISSING_FILE',
+    TOO_MANY_FILES = 'TOO_MANY_FILES',
+    EMPTY_FILE = 'EMPTY_FILE',
+    FILE_TOO_LARGE = 'FILE_TOO_LARGE',
+    UNSUPPORTED_FORMAT = 'UNSUPPORTED_FORMAT',
+    COOLDOWN_ACTIVE = 'COOLDOWN_ACTIVE',
+    SERVER_MISCONFIGURED = 'SERVER_MISCONFIGURED',
+    PALMA_UNAVAILABLE = 'PALMA_UNAVAILABLE'
+  }
+  
+  export interface ActivityRewardsSubmitFileResource{
+    activityName: ActivityRewardName;
+    status: ActivityRewardStatus;
+    nextApplicationDate: string;
+  }

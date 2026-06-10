@@ -21,7 +21,9 @@ export type PublicApiV1Params = {
 export enum PublicApiV1ErrorType {
   VALIDATION = 'VALIDATION',
   NOT_FOUND = 'NOT_FOUND',
+  BAD_REQUEST = 'BAD_REQUEST',
   UNAUTHORIZED = 'UNAUTHORIZED',
+  SERVER_MISCONFIGURED = 'SERVER_MISCONFIGURED',
 }
 export type PublicApiV1ResponsePagination = {
   pageNumber: number;
