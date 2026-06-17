@@ -1,3 +1,26 @@
+## [7.38.0](https://github.com/upstars-global/front-platform-core/compare/v7.37.0...v7.38.0) (2026-06-17)
+
+### 🚀 Features
+
+* **FPS-70:** add fetch loadSchemaOrgByPath
+ ([45027e9](https://github.com/upstars-global/front-platform-core/commit/45027e96572a1784e49359564d1b0aaacda1a3b7))
+
+
+* **FPS-70:** create src/entities/schema-org
+ ([93ea9c6](https://github.com/upstars-global/front-platform-core/commit/93ea9c623fef882aab6d2da0733691af232ce11f))
+
+
+* **FPS-70:** delete vue-router usage from core package
+ ([e59ffba](https://github.com/upstars-global/front-platform-core/commit/e59ffba5c523c3b8ee343bdd2e774cf9edb5d302))
+
+
+* **FPS-70:** delete vue-router usage from core package
+ ([a2d814c](https://github.com/upstars-global/front-platform-core/commit/a2d814ce730149ca8613f4bf9558f5ed2a266845))
+
+
+* **FPS-70:** update lock file
+ ([0b46cf6](https://github.com/upstars-global/front-platform-core/commit/0b46cf65e0c55c41b1b7e64e3d4054eb21563a6b))
+
 ## [7.37.0](https://github.com/upstars-global/front-platform-core/compare/v7.36.0...v7.37.0) (2026-06-08)
 
 ### 🚀 Features
