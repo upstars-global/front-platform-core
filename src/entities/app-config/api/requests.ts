@@ -78,4 +78,14 @@ export const configAPI = {
     }
     return {};
   },
+
+  async loadSchemaOrgByPath<UseSchemaOrgInput>(urlParams: string): Promise<UseSchemaOrgInput | null> {
+    try {
+      const schemas = await jsonHttp<UseSchemaOrgInput | null>(`/fe-api/schema-org?${urlParams}`, { method: 'GET' });
+      return schemas ?? null;
+    } catch (error: unknown) {
+      log.error('LOAD_SCHEMA_ORG_BY_PATH_FAILED', error);
+    }
+    return null;
+  },
 };
