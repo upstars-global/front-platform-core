@@ -1,3 +1,10 @@
+## [7.39.0](https://github.com/upstars-global/front-platform-core/compare/v7.38.0...v7.39.0) (2026-06-18)
+
+### 🚀 Features
+
+* **promotions:** add websocket and event handling for tournament auto-choice feature
+ ([1c68464](https://github.com/upstars-global/front-platform-core/commit/1c68464a509101c485378c0db5317d606436fc6a))
+
 ## [7.38.0](https://github.com/upstars-global/front-platform-core/compare/v7.37.0...v7.38.0) (2026-06-17)
 
 ### 🚀 Features
