@@ -267,8 +267,11 @@ export function useStatusData() {
   }
 
   function getRewardGifts(data: Array<Rewards>) {
-    const rewardTypes = [RewardType.DepositBonus, RewardType.Freespin];
-    return data.filter((reward) => rewardTypes.includes(reward.type));
+    const rewardTypes = [RewardType.DepositBonus, RewardType.Freespin, RewardType.ActionCurrency];
+
+    return data
+      .filter((reward) => rewardTypes.includes(reward.type))
+      .sort((a, b) => rewardTypes.indexOf(a.type) - rewardTypes.indexOf(b.type));
   }
   // TODO - getStatusNameByCode - не використовується. видалити коли FP-3926 буде на всіх проєктах
   function getStatusNameByCode(code: number): string | undefined {

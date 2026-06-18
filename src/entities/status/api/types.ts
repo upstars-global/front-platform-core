@@ -4,6 +4,7 @@ export enum RewardType {
   Cashback = 'cashback',
   DepositBonus = 'depositBonus',
   Freespin = 'freeSpins',
+  ActionCurrency = 'actionCurrency',
 }
 
 export type RewardsTypeCashbackValue = {
@@ -45,9 +46,15 @@ export type RewardsTypeFreeSpinsValue = {
   currency: Currency
 };
 
+export type RewardsTypeActionCurrencyValue = {
+  title: string;
+  currencyId: string;
+  sum: number;
+};
+
 export type Rewards = {
   type: RewardType;
-  value: RewardsTypeCashbackValue | RewardsTypeDepositBonusValue | RewardsTypeFreeSpinsValue;
+  value: RewardsTypeCashbackValue | RewardsTypeDepositBonusValue | RewardsTypeFreeSpinsValue | RewardsTypeActionCurrencyValue;
 };
 export type StaticLevelDataResources = {
   id: string;
