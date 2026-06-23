@@ -117,9 +117,8 @@ export function jsonHttp<R = unknown>(url: string, request?: RequestInit, option
         })
         .catch((error: unknown) => {
           const isTimeoutExceed = checkTimeoutExceed(controller.signal);
-          const isOnLine = typeof window === 'undefined' || window.navigator.onLine;
 
-          if (isTimeoutExceed || (!isOnLine && attempt < retryCount)) {
+          if (isTimeoutExceed || attempt < retryCount) {
             exponentialBackoff(attempt)
               .then(() => {
                 requestAttempt(attempt + 1);
