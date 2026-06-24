@@ -13,6 +13,9 @@ import {
   type IGiftResourceV2,
   type IGetUserGiftsDTO,
   GetUserGiftsAvailability,
+  ActivityRewardName,
+  type ActivityRewardsStateResource,
+  type ActivityRewardsSubmitFileResource,
 } from "./types";
 
 interface GetGiftsListResponse {
@@ -196,4 +199,32 @@ export const giftsAPI = {
           log.error("ACTIVE_PROMO_GIFT_BY_CODE", error);
       }
   },
+  async getActivityRewards(activityName: ActivityRewardName) {
+    try {
+      const response = await publicApiV1<ActivityRewardsStateResource>({
+        url: "gifts/activity-rewards/state",
+        type: (securedType) => `Gift.V1.${securedType}.ActivityRewards.State`,
+        secured: true,
+        data: { 
+            data: { activityName } 
+        } 
+      });
+
+      if (response.error) {
+        log.error("GET_ACTIVITY_REWARDS", response.error.description);
+      }
+
+      return response;
+    } catch (error) {
+      log.error("GET_ACTIVITY_REWARDS", error);
+    }
+  },
+  async submitFileForReview(formData: FormData) {
+      return await publicApiV1<ActivityRewardsSubmitFileResource>({
+        url: "gifts/gift-for-review/submit",
+        type: (securedType) => `Gift.V1.${securedType}.GiftForReview.Submit`,
+        secured: true,
+        formData,
+      });
+  }
 };

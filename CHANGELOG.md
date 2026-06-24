@@ -1,3 +1,17 @@
+## [7.40.0](https://github.com/upstars-global/front-platform-core/compare/v7.39.1...v7.40.0) (2026-06-24)
+
+### 🚀 Features
+
+* **FP-5422:** add API methods for activity rewards state and file submission
+ ([835e3d6](https://github.com/upstars-global/front-platform-core/commit/835e3d6abf1308474a2c141585a475727c0b0fb4))
+
+## [7.39.1](https://github.com/upstars-global/front-platform-core/compare/v7.39.0...v7.39.1) (2026-06-23)
+
+### 🐛 Bug Fixes
+
+* **FP-5677:** remove online checking for retries
+ ([a68d7cd](https://github.com/upstars-global/front-platform-core/commit/a68d7cd27dc22cff46bfea85841a4091b381904a))
+
 ## [7.39.0](https://github.com/upstars-global/front-platform-core/compare/v7.38.0...v7.39.0) (2026-06-18)
 
 ### 🚀 Features
