@@ -1,3 +1,10 @@
+## [7.41.0](https://github.com/upstars-global/front-platform-core/compare/v7.40.0...v7.41.0) (2026-06-25)
+
+### 🚀 Features
+
+* **FP-5484:** add ActionCurrency reward type and update filtering logic
+ ([6490db2](https://github.com/upstars-global/front-platform-core/commit/6490db295f92a8a297588794d157aca11f8721ed))
+
 ## [7.40.0](https://github.com/upstars-global/front-platform-core/compare/v7.39.1...v7.40.0) (2026-06-24)
 
 ### 🚀 Features
