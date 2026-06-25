@@ -36,6 +36,13 @@ export type GdprDomainsConfig = {
   domainGroupId: string;
 };
 
+export type DmcaProtectionConfig = {
+  // Project-wide account id — the `ID` of the badge status link.
+  accountId: string;
+  // Per-domain verification key — the `dmca-site-verification` meta content.
+  key: string;
+};
+
 export type AppGlobalConfig = Partial<{
   allowedForSegmentation: boolean;
   isLockAuthForGuestUser: boolean;
@@ -63,6 +70,7 @@ export type AppGlobalConfig = Partial<{
   gdprDomainsConfig: GdprDomainsConfig;
   additionalSupportEmail?: string;
   googlePlacesEnabled: boolean;
+  dmcaProtection: DmcaProtectionConfig;
 }>;
 
 export type ReelsVersion = {
