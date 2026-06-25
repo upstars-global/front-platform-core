@@ -41,12 +41,12 @@ describe('useDmcaBadge', () => {
     expect(href.value).toBe(`${STATUS}&refurl=https://winspirit3.com/casino`);
   });
 
-  it('falls back to window.location host on the client (SPA, no runtime SSR host)', () => {
+  it('falls back to window.location hostname on the client (SPA, no runtime SSR host)', () => {
     useAppGlobalConfigStore().setGlobalConfig({ dmcaProtection: { accountId: ACCOUNT_ID, key: KEY } });
 
     const { href } = useDmcaBadge({ currentPath: () => '/promotions' });
 
-    expect(href.value).toBe(`${STATUS}&refurl=https://${window.location.host}/promotions`);
+    expect(href.value).toBe(`${STATUS}&refurl=https://${window.location.hostname}/promotions`);
   });
 
   it('defaults the path to "/" when no currentPath is provided', () => {
