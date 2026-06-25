@@ -1,22 +1,34 @@
-import { computed, onMounted, ref } from 'vue';
-import type { Pinia } from 'pinia';
+import { computed, toValue } from 'vue';
+import type { Ref } from 'vue';
 import { useAppGlobalConfigStore } from '../../../entities/app-config';
+import { useMultiLangStore } from '../../../entities/multilang';
+import { isServer } from '../../../shared';
 import { DMCA_REFURL_PARAM, DMCA_STATUS_URL_BASE } from '../config';
+
+type UseDmcaBadgeOptions = {
+  // Current page path (e.g. route.fullPath) used to build the `refurl`.
+  // Passed in by the consuming app so this feature stays router-agnostic.
+  currentPath?: Ref<string> | (() => string);
+};
 
 /**
  * Reusable DMCA badge logic.
  *
- * The site-specific key comes from the global config (resolved per-domain on the
- * server). Rendering off the reactive store getter makes the badge:
+ * The config (project-wide account id + per-domain key) comes from the global
+ * config, resolved per-domain on the server. Rendering off the reactive store
+ * getter makes the badge:
  *  - absent during SSG warming (config not loaded — domain unknown),
  *  - present during runtime SSR for bots (config loaded via onServerPrefetch),
  *  - present in SPA after the config is fetched on mount.
  *
- * The `refurl` query param (current page url) is appended on the client only,
- * replicating the official DMCABadgeHelper.min.js so we avoid loading a 3rd-party script.
+ * The `refurl` query param (current page url) replicates the official
+ * DMCABadgeHelper.min.js so we avoid loading a 3rd-party script. It is built
+ * deterministically from the runtime host + current path, so it is present in
+ * the SSR markup (for bots) and matches on client hydration.
  */
-export function useDmcaBadge(pinia?: Pinia) {
-  const appGlobalConfigStore = useAppGlobalConfigStore(pinia);
+export function useDmcaBadge({ currentPath }: UseDmcaBadgeOptions = {}) {
+  const appGlobalConfigStore = useAppGlobalConfigStore();
+  const multiLangStore = useMultiLangStore();
 
   const dmcaConfig = computed(() => appGlobalConfigStore.dmcaProtection);
 
@@ -29,13 +41,16 @@ export function useDmcaBadge(pinia?: Pinia) {
 
   const baseHref = computed(() => (accountId.value ? `${DMCA_STATUS_URL_BASE}${accountId.value}` : ''));
 
-  // Filled on the client only — `document` is unavailable during SSR/SSG.
-  const refUrl = ref('');
-
-  onMounted(() => {
-    if (typeof document !== 'undefined') {
-      refUrl.value = document.location.href;
+  // Host is known during runtime SSR (bots) via the store, and on the client via
+  // window.location — both available at hydration, so the value stays consistent.
+  const refUrl = computed(() => {
+    const host = multiLangStore.runtimeHostnameDuringSSR || (isServer ? '' : window.location.host);
+    if (!host) {
+      return '';
     }
+    const path = currentPath ? toValue(currentPath) || '/' : '/';
+
+    return `https://${host}${path}`;
   });
 
   const href = computed(() => {

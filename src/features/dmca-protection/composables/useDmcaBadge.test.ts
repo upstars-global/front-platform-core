@@ -1,10 +1,9 @@
 // @vitest-environment jsdom
 import { describe, it, expect, beforeEach } from 'vitest';
 import { createPinia, setActivePinia } from 'pinia';
-import { mount } from '@vue/test-utils';
-import { defineComponent, h, nextTick } from 'vue';
 import { useDmcaBadge } from './useDmcaBadge';
 import { useAppGlobalConfigStore } from '../../../entities/app-config';
+import { useMultiLangStore } from '../../../entities/multilang';
 
 const ACCOUNT_ID = 'b7fb5656-515a-46c6-b509-ca0df3b316b3';
 const KEY = 'cWFONlZObnd4ZmxuS0lRZnQxc09jQT090';
@@ -23,32 +22,39 @@ describe('useDmcaBadge', () => {
     expect(href.value).toBe('');
   });
 
-  it('builds the badge href from the account id, exposes the per-domain key (no refurl before mount / during SSR)', () => {
+  it('exposes the account id and per-domain key from config', () => {
     useAppGlobalConfigStore().setGlobalConfig({ dmcaProtection: { accountId: ACCOUNT_ID, key: KEY } });
 
-    const { isEnabled, dmcaKey, accountId, href } = useDmcaBadge();
+    const { isEnabled, dmcaKey, accountId } = useDmcaBadge();
 
     expect(isEnabled.value).toBe(true);
     expect(dmcaKey.value).toBe(KEY);
     expect(accountId.value).toBe(ACCOUNT_ID);
-    expect(href.value).toBe(STATUS);
   });
 
-  it('appends refurl (current page url) on mount, replicating DMCABadgeHelper.min.js', async () => {
+  it('builds the href with refurl from runtimeHostnameDuringSSR + path (bot runtime SSR)', () => {
+    useAppGlobalConfigStore().setGlobalConfig({ dmcaProtection: { accountId: ACCOUNT_ID, key: KEY } });
+    useMultiLangStore().setRuntimeHostnameDuringSSR('winspirit3.com');
+
+    const { href } = useDmcaBadge({ currentPath: () => '/casino' });
+
+    expect(href.value).toBe(`${STATUS}&refurl=https://winspirit3.com/casino`);
+  });
+
+  it('falls back to window.location host on the client (SPA, no runtime SSR host)', () => {
     useAppGlobalConfigStore().setGlobalConfig({ dmcaProtection: { accountId: ACCOUNT_ID, key: KEY } });
 
-    let api: ReturnType<typeof useDmcaBadge> | undefined;
-    const Comp = defineComponent({
-      setup() {
-        api = useDmcaBadge();
+    const { href } = useDmcaBadge({ currentPath: () => '/promotions' });
 
-        return () => h('a', { class: 'dmca-badge', href: api?.href.value });
-      },
-    });
+    expect(href.value).toBe(`${STATUS}&refurl=https://${window.location.host}/promotions`);
+  });
 
-    mount(Comp);
-    await nextTick();
+  it('defaults the path to "/" when no currentPath is provided', () => {
+    useAppGlobalConfigStore().setGlobalConfig({ dmcaProtection: { accountId: ACCOUNT_ID, key: KEY } });
+    useMultiLangStore().setRuntimeHostnameDuringSSR('winspirit3.com');
 
-    expect(api?.href.value).toBe(`${STATUS}&refurl=${document.location.href}`);
+    const { href } = useDmcaBadge();
+
+    expect(href.value).toBe(`${STATUS}&refurl=https://winspirit3.com/`);
   });
 });
