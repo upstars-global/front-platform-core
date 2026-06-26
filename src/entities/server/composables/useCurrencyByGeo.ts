@@ -2,9 +2,10 @@ import { useServerStore } from '../store';
 import { configCurrencyByGeo } from '../config';
 import { DEFAULT_CURRENCY } from '../../../shared/config/currencies';
 import type { Currency } from '../../../shared/api';
+import type { Pinia } from 'pinia';
 
-export function useCurrencyByGeo() {
-  const serverStore = useServerStore();
+export function useCurrencyByGeo(pinia?: Pinia) {
+  const serverStore = useServerStore(pinia);
 
   function getCurrencyByGeo(geo: string): Currency {
     const geoCurrency = configCurrencyByGeo.get()[geo];
