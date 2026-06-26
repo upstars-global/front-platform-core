@@ -44,11 +44,12 @@ export function useDmcaBadge({ currentPath }: UseDmcaBadgeOptions = {}) {
   // Host is known during runtime SSR (bots) via the store, and on the client via
   // window.location — both available at hydration, so the value stays consistent.
   const refUrl = computed(() => {
-    const host = multiLangStore.runtimeHostnameDuringSSR || (isServer ? '' : window.location.hostname);
+    const windowHostname = isServer ? '' : window.location.hostname;
+    const host = multiLangStore.runtimeHostnameDuringSSR || windowHostname;
     if (!host) {
       return '';
     }
-    const path = currentPath ? toValue(currentPath) || '/' : '/';
+    const path = toValue(currentPath) || '/';
 
     return `https://${host}${path}`;
   });
