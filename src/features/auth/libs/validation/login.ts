@@ -4,8 +4,8 @@ import {
   createEmailSchema,
   createFormSchema,
   createPasswordSchema,
-  PASSWORD_REQUIRED_LENGTH,
-} from '../../../../shared';
+} from '../../../../shared/libs/validation/schemas/common';
+import { PASSWORD_REQUIRED_LENGTH } from '../../../../shared/libs/validation/config/keys';
 
 const emailSchema = createEmailSchema();
 const passwordSchema = createPasswordSchema({

@@ -1,6 +1,6 @@
 import { authAPI } from '../../../entities/auth';
 import { ref } from 'vue';
-import { handleVerifyEmailResponse, VerifyEmailStatus } from '../libs';
+import { handleVerifyEmailResponse, VerifyEmailStatus } from '../libs/handleVerifyEmailResponse';
 import { log } from '../../../shared/helpers';
 import { afterEmailVerifyHook } from '../config';
 

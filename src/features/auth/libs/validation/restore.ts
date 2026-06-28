@@ -3,9 +3,8 @@ import * as z from "zod";
 import {
   createFormSchema,
   createPasswordSchema,
-  PASSWORD_REQUIRED_LENGTH,
-  BASE_CLIENT_ERROR_KEY,
-} from '../../../../shared';
+} from '../../../../shared/libs/validation/schemas/common';
+import { PASSWORD_REQUIRED_LENGTH, BASE_CLIENT_ERROR_KEY } from '../../../../shared/libs/validation/config/keys';
 
 export const RestorePasswordFormSchema = createFormSchema({
   password: z.string().optional().default(''),
