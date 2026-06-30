@@ -11,19 +11,25 @@ export function useSmartico(pinia?: Pinia) {
   const { setSmarticoLoaded } = useSmarticoStore(pinia);
 
   function setSmarticoUserId(userId: string | null) {
-    if (isServer) {
-      return;
-    }
-
     window._smartico_user_id = userId;
   }
 
   function setSmarticoUserLocale(locale: string | null) {
+    window._smartico_language = locale;
+  }
+
+  function setSmarticoUser(isLogged: boolean) {
     if (isServer) {
       return;
     }
 
-    window._smartico_language = locale;
+    if (isLogged) {
+      setSmarticoUserId(userProfileStore.userInfo.user_id);
+      setSmarticoUserLocale(userProfileStore.userInfo.localization);
+    } else {
+      setSmarticoUserId(null);
+      setSmarticoUserLocale(null);
+    }
   }
 
   function initSmartico() {
@@ -49,9 +55,7 @@ export function useSmartico(pinia?: Pinia) {
     script.onload = () => {
       _smartico?.init(token, { brand_key: key });
       _smartico?.on('init', () => {
-        setSmarticoUserId(userProfileStore.userInfo.user_id);
-        setSmarticoUserLocale(userProfileStore.userInfo.localization);
-        console.log('SMARTICO_INIT', Object.entries(window).filter(([key]) => key.startsWith('_smartico')));
+        setSmarticoUser(userProfileStore.isLogged);
       })
       _smartico?.on('identify', (errCode: number) => {
         setSmarticoLoaded(errCode === 0);
@@ -77,15 +81,7 @@ export function useSmartico(pinia?: Pinia) {
 
   watch(
     () => userProfileStore.isLogged,
-    (value) => {
-      if (value) {
-        setSmarticoUserId(userProfileStore.userInfo.user_id);
-        setSmarticoUserLocale(userProfileStore.userInfo.localization);
-      } else {
-        setSmarticoUserId(null);
-        setSmarticoUserLocale(null);
-      }
-    },
+    (isLogged) => setSmarticoUser(isLogged),
     { immediate: true },
   );
 
