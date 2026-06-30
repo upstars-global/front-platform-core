@@ -378,21 +378,6 @@ export enum UserVipStatus {
 
 export const USER_REGULAR_STATUS = 'REGULAR' as const;
 
-export type IUserStatusResource = {
-  userId: string | null;
-  currency: Currency;
-  currentStatus: keyof typeof UserStatusResource;
-  currentStatusInt: UserStatusResource;
-  nextStatus: UserVipStatus;
-  nextStatusInt: UserStatusResource;
-  activeStatus: UserVipStatus | typeof USER_REGULAR_STATUS;
-  depositAmountCents: number;
-  depositThresholdCents: number;
-  betSumCents: number;
-  betSumThresholdCents: number;
-  overallProgress: number;
-};
-
 export type BalanceChangedDataChange = {
   real: number;
   bonus: number;

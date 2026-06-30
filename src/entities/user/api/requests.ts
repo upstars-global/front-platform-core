@@ -21,7 +21,6 @@ import {
   type IUserCallbackDataDTO,
   type IUserCallbackDataResource,
   type IUserFastTrackSIDResource,
-  type IUserStatusResource,
   type UserBetListResource,
   type UserBetListDTO,
 } from './types';
@@ -350,18 +349,5 @@ export const userAPI = {
       log.error('LOAD_FAST_TRACK_USER_SID', error);
       throw error;
     }
-  },
-
-  // statuses
-  // TODO loadUserStatusData - legacy. видалити коли FP-3926 буде на всіх проєктах
-  async loadUserStatusData() {
-    try {
-      const data = await jsonHttp<IUserStatusResource>('/fe-api/user-status-data');
-      return data || ({} as IUserStatusResource);
-    } catch (error) {
-      log.error('LOAD_USER_STATUS_DATA', error);
-    }
-
-    return {} as IUserStatusResource;
   },
 };

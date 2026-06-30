@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { useCashboxServiceWorks } from './useCashboxServiceWorks';
-import type { IUserFeatureResource, IUserStatusResource } from '../../../../entities/user';
+import type { IUserFeatureResource } from '../../../../entities/user';
 
 // Mock dependencies
 vi.mock('../../../../entities/cashbox/config', () => ({
@@ -44,17 +44,10 @@ describe('useCashboxServiceWorks', () => {
   const createUserInfoLoadMock = (
     loadUserFeatures: PromiseMemoizerCallback<() => Promise<IUserFeatureResource[]>>
   ): ReturnType<typeof useUserInfoLoad> => {
-    // Using as unknown as to add clearCache to the vi.fn() mock, simulating promiseMemo behavior
-    const mockLoadUserStatusData = vi.fn() as unknown as PromiseMemoizerCallback<
-      () => Promise<IUserStatusResource>
-    >;
-    mockLoadUserStatusData.clearCache = vi.fn();
-
     return {
       loadUserFeatures,
       loadUserBettingToken: vi.fn().mockResolvedValue('mock-token'),
       loadRefcodeTypes: vi.fn().mockResolvedValue(undefined),
-      loadUserStatusData: mockLoadUserStatusData,
     };
   };
 
