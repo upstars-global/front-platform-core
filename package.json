@@ -24,6 +24,7 @@
     "uuid": "^10.0.0"
   },
   "peerDependencies": {
+    "@smartico/public-api": "^0.0.408",
     "@unhead/vue": "^1.11.20",
     "firebase": "11.6.0",
     "mitt": "^3.0.1",
@@ -44,6 +45,7 @@
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/release-notes-generator": "^14.0.3",
     "@sentry/vue": "8.55.0",
+    "@smartico/public-api": "^0.0.408",
     "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^8.28.0",
     "@typescript-eslint/parser": "^8.28.0",
