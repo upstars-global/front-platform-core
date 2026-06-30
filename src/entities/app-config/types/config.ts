@@ -63,6 +63,7 @@ export type AppGlobalConfig = Partial<{
   gdprDomainsConfig: GdprDomainsConfig;
   additionalSupportEmail?: string;
   googlePlacesEnabled: boolean;
+  pokerRestricted: boolean;
 }>;
 
 export type ReelsVersion = {
