@@ -48,6 +48,11 @@ export function useSmartico(pinia?: Pinia) {
     script.async = true;
     script.onload = () => {
       _smartico?.init(token, { brand_key: key });
+      _smartico?.on('init', () => {
+        setSmarticoUserId(userProfileStore.userInfo.user_id);
+        setSmarticoUserLocale(userProfileStore.userInfo.localization);
+        console.log('SMARTICO_INIT', Object.entries(window).filter(([key]) => key.startsWith('_smartico')));
+      })
       _smartico?.on('identify', (errCode: number) => {
         setSmarticoLoaded(errCode === 0);
       });
