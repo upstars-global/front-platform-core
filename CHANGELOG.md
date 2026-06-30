@@ -1,3 +1,10 @@
+## [7.42.0](https://github.com/upstars-global/front-platform-core/compare/v7.41.0...v7.42.0) (2026-06-30)
+
+### 🚀 Features
+
+* **FP-5294:** remove old vip club code
+ ([d2cd7fa](https://github.com/upstars-global/front-platform-core/commit/d2cd7fae8e77acbc49fd264f8c133e5eadf989b1))
+
 ## [7.41.0](https://github.com/upstars-global/front-platform-core/compare/v7.40.0...v7.41.0) (2026-06-25)
 
 ### 🚀 Features
