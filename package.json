@@ -24,7 +24,6 @@
     "uuid": "^10.0.0"
   },
   "peerDependencies": {
-    "@smartico/public-api": "^0.0.408",
     "@unhead/vue": "^1.11.20",
     "firebase": "11.6.0",
     "mitt": "^3.0.1",
