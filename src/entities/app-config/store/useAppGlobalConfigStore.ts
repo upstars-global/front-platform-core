@@ -55,6 +55,10 @@ export const useAppGlobalConfigStore = defineStore('appGlobalConfig', () => {
     return globalConfig.value?.googlePlacesEnabled;
   });
 
+  const dmcaProtection = computed(() => {
+    return globalConfig.value?.dmcaProtection;
+  });
+
   return {
     isLoaded,
     globalConfig,
@@ -72,6 +76,7 @@ export const useAppGlobalConfigStore = defineStore('appGlobalConfig', () => {
     freshChatConfig,
     gdprDomainsConfig,
     googlePlacesEnabled,
+    dmcaProtection,
 
     setGlobalConfig,
   };
