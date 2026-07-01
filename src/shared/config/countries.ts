@@ -17,6 +17,7 @@ export const COUNTRIES = {
   SOUTH_AFRICA: 'ZA',
   SINGAPORE: 'SG',
   PHILIPPINES: 'PH',
+  HUNGARIAN: 'HU',
 };
 
 export const REGIONS_BY_COUNTRIES: Record<string, string[]> = {
