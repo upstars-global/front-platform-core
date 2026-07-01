@@ -7,7 +7,7 @@ import { useSmarticoStore } from '../store';
 
 export function useSmartico(pinia?: Pinia) {
   const { globalConfig } = storeToRefs(useAppGlobalConfigStore(pinia));
-  const userProfileStore = useUserProfileStore(pinia);
+  const { isLogged, userInfo } = storeToRefs(useUserProfileStore(pinia));
   const { setSmarticoLoaded } = useSmarticoStore(pinia);
 
   function setSmarticoUserId(userId: string | null) {
@@ -24,8 +24,8 @@ export function useSmartico(pinia?: Pinia) {
     }
 
     if (isLogged) {
-      setSmarticoUserId(userProfileStore.userInfo.user_id);
-      setSmarticoUserLocale(userProfileStore.userInfo.localization);
+      setSmarticoUserId(userInfo.value.user_id);
+      setSmarticoUserLocale(userInfo.value.localization);
     } else {
       setSmarticoUserId(null);
       setSmarticoUserLocale(null);
@@ -55,7 +55,7 @@ export function useSmartico(pinia?: Pinia) {
     script.onload = () => {
       _smartico?.init(token, { brand_key: key });
       _smartico?.on('init', () => {
-        setSmarticoUser(userProfileStore.isLogged);
+        setSmarticoUser(isLogged.value);
       })
       _smartico?.on('identify', (errCode: number) => {
         setSmarticoLoaded(errCode === 0);
@@ -80,7 +80,7 @@ export function useSmartico(pinia?: Pinia) {
   );
 
   watch(
-    () => userProfileStore.isLogged,
+    () => isLogged.value,
     (isLogged) => setSmarticoUser(isLogged),
     { immediate: true },
   );
