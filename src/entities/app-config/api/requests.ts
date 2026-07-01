@@ -1,13 +1,13 @@
-import { jsonHttp } from '../../../shared/libs/http';
+import { jsonHttp, publicApiV1 } from '../../../shared/libs/http';
 import { log } from '../../../shared/helpers/log';
 import type {
   ClientContextResource,
   DigitainConfigResource,
   FastTrackConfigResource,
+  PokerLaunchSessionResource,
   TopLeaders,
 } from './resources';
 import type { AppGlobalConfig, ReelsVersion, HreflangListConfig } from '../types';
-
 export const configAPI = {
   async getFastTrack() {
     try {
@@ -22,6 +22,20 @@ export const configAPI = {
     } catch (error) {
       log.error('LOAD_DIGITAIN_CONFIG', error);
     }
+  },
+  async launchPokerSession() {
+      try {
+        const response = await publicApiV1<PokerLaunchSessionResource>({
+          url: '/poker/session/create',
+          secured: true,
+          type: () => 'PublicApi.V1.Secured.Poker.Session.Create',
+        })
+
+        return response.data;
+      } catch(error: unknown) {
+        log.error('LAUNCH_POKER_SESSION', error);
+        throw error;
+      }
   },
   async getClientContext() {
     try {
