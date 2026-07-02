@@ -3,7 +3,7 @@ import { publicApiV1 } from '../../../shared/libs/http';
 import type { PokerLaunchSessionResource } from './types';
 
 export const pokerAPI = {
-    async launchPokerSession() {
+    async launchPokerSession(): Promise<PokerLaunchSessionResource | null> {
         try {
           const { data } = await publicApiV1<PokerLaunchSessionResource>({
             url: '/poker/session/create',
