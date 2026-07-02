@@ -46,7 +46,3 @@ export type TopLeaders = {
   [key: string]: TopLeaderCategoryResource;
 };
 
-export type PokerLaunchSessionResource = {
-  launchUrl: string;
-  pokerUserId: string;
-};
