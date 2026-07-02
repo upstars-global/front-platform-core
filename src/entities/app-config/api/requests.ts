@@ -7,7 +7,6 @@ import type {
   TopLeaders,
 } from './resources';
 import type { AppGlobalConfig, ReelsVersion, HreflangListConfig } from '../types';
-
 export const configAPI = {
   async getFastTrack() {
     try {

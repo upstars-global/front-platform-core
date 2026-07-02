@@ -45,3 +45,4 @@ export type TopLeaderCategoryResource = {
 export type TopLeaders = {
   [key: string]: TopLeaderCategoryResource;
 };
+
